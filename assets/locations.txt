@@ -45,14 +45,16 @@
 10, 8
 9, 8	Right - Left
 
-8, 9 
+8, 9
+*
 8, 14    Up - Down
 
 
 7, 14	Down
 
 
-6, 9	Down - Up
+6, 14	Down - Up
+*9
 
 
 5, 8	Right - Left
