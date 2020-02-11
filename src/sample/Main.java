@@ -35,7 +35,7 @@ public class Main extends Application {
         Scene theScene = new Scene( root );
         theStage.setScene( theScene );
 
-        Canvas canvas = new Canvas( 400, 200 );
+        Canvas canvas = new Canvas( 600, 600 );
         root.getChildren().add( canvas );
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
