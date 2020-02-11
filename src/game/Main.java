@@ -40,17 +40,18 @@ public class Main extends Application {
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        gc.setFill( Color.RED );
-        gc.setStroke( Color.BLACK );
-        gc.setLineWidth(2);
-        Font theFont = Font.font( "Times New Roman", FontWeight.BOLD, 48 );
-        gc.setFont( theFont );
-        gc.fillText( "Hello, World!", 60, 50 );
-        gc.strokeText( "Hello, World!", 60, 50 );
+        Image board = new Image( "/ludo-board.png");
+        Image red = new Image("/green-piece.png");
+        GameGrid grid = new GameGrid();
 
-//        Image earth = new Image( "earth.png" );
-//        gc.drawImage( earth, 180, 100 );
+        Tile tile = grid.getTile(42);
 
+
+
+        gc.drawImage( board, 0, 0 );
+        int drawX = (tile.getLocation().getxPos()  * 40);
+        int drawY = (tile.getLocation().getyPos() * 40);
+        gc.drawImage(red, drawX, drawY);
         theStage.show();
     }
 

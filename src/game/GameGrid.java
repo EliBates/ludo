@@ -9,7 +9,11 @@ public class GameGrid {
 
     private HashMap<Integer, Tile> grid = new HashMap<Integer, Tile>();
 
-    public GameGrid(){
+    public Tile getTile(int index) {
+        return grid.get(index);
+    }
+
+    public GameGrid() {
         grid.put(0, new Tile(new Location(0, 6)));
         grid.put(1, new Tile(new Location(1, 6)));
         grid.put(2, new Tile(new Location(2, 6)));
@@ -74,11 +78,6 @@ public class GameGrid {
         grid.put(50, new Tile(new Location(0, 8)));
 
         grid.put(51, new Tile(new Location(0, 7)));
-
-
-
-
-
     }
 
 
