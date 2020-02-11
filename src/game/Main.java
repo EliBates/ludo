@@ -41,11 +41,11 @@ public class Main extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         Image board = new Image( "/ludo-board.png");
-        Image red = new Image("blue-piece.png");
+        Image red = new Image("red-piece.png");
         GameGrid grid = new GameGrid();
 
-        Tile tile = grid.getTile(1);
-        Tile tile2 = grid.getTile(50);
+        Tile tile = grid.getTile(20);
+        Tile tile2 = grid.getTile(31);
 
 
 
