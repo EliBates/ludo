@@ -1,16 +1,40 @@
 package game;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 public class GameGrid {
 
-    private static final int RED_START = 1, GREEN_START = 14, YELLOW_START = 25, BLUE_START = 38;
-    private static final int LAST_RED = 50, LAST_GREEN = 11, LAST_YELLOW = 24, LAST_BLUE = 37;
+    public static final int RED_START = 1, GREEN_START = 14, YELLOW_START = 25, BLUE_START = 38;
+    public static final int LAST_RED = 50, LAST_GREEN = 11, LAST_YELLOW = 24, LAST_BLUE = 37;
 
     private HashMap<Integer, Tile> grid = new HashMap<>();
 
     public Tile getTile(int index) {
         return grid.get(index);
+    }
+
+    public void writeXml() throws IOException {
+        FileWriter fw = new FileWriter("grid.xml",false);
+        BufferedWriter buffWriter = new BufferedWriter(fw);
+        buffWriter.write("<grid>");
+        for (Map.Entry<Integer, Tile> entry : grid.entrySet()) {
+            buffWriter.write("<tile>");
+            buffWriter.write("<id>"+ +entry.getKey() + "</id>");
+            buffWriter.write("<location>");
+            buffWriter.write("<xpos>"+ entry.getValue().getLocation().getXPos()+"</xpos>");
+            buffWriter.write("<ypos>"+ entry.getValue().getLocation().getYPos()+"</ypos>");
+            buffWriter.write("</location>");
+            buffWriter.write("</tile>");
+            buffWriter.newLine();
+        }
+        buffWriter.write("</grid>");
+        buffWriter.flush();
+        buffWriter.close();
     }
 
     public GameGrid() {

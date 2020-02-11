@@ -2,12 +2,19 @@ package game;
 
 public class Tile {
 
+    private int id;
     private Location location;
 
-    private GamePiece[] gamePieces = new GamePiece[4];
+    public Tile() {
+
+    }
 
     public Tile(Location location) {
         this.location = location;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Location getLocation() {
