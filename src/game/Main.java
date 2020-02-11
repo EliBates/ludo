@@ -41,17 +41,23 @@ public class Main extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         Image board = new Image( "/ludo-board.png");
-        Image red = new Image("/green-piece.png");
+        Image red = new Image("blue-piece.png");
         GameGrid grid = new GameGrid();
 
-        Tile tile = grid.getTile(42);
+        Tile tile = grid.getTile(1);
+        Tile tile2 = grid.getTile(50);
 
 
 
         gc.drawImage( board, 0, 0 );
-        int drawX = (tile.getLocation().getxPos()  * 40);
-        int drawY = (tile.getLocation().getyPos() * 40);
+        int drawX = (tile.getLocation().getxPos()  * 40) + 6;
+        int drawY = (tile.getLocation().getyPos() * 40) - 10;
         gc.drawImage(red, drawX, drawY);
+
+        int drawX2 = (tile2.getLocation().getxPos()  * 40) + 6;
+        int drawY2 = (tile2.getLocation().getyPos() * 40) - 10;
+        gc.drawImage(red, drawX2, drawY2);
+
         theStage.show();
     }
 
