@@ -4,10 +4,10 @@ import java.util.HashMap;
 
 public class GameGrid {
 
-    private static final int RED_START = 0, GREEN_START = 13, YELLOW_START = 26, BLUE_START = 39;
+    private static final int RED_START = 1, GREEN_START = 14, YELLOW_START = 25, BLUE_START = 38;
     private static final int LAST_RED = 50, LAST_GREEN = 11, LAST_YELLOW = 24, LAST_BLUE = 37;
 
-    private HashMap<Integer, Tile> grid = new HashMap<Integer, Tile>();
+    private HashMap<Integer, Tile> grid = new HashMap<>();
 
     public Tile getTile(int index) {
         return grid.get(index);
@@ -59,7 +59,6 @@ public class GameGrid {
         grid.put(35, new Tile(new Location(8, 12)));
         grid.put(36, new Tile(new Location(8, 13)));
         grid.put(37, new Tile(new Location(8, 14)));
-
 
         grid.put(38, new Tile(new Location(7, 14)));
 

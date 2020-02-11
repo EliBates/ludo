@@ -1,20 +1,20 @@
 package game;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.SVGPath;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
+    Canvas canvas = new Canvas( 600, 600 );
+    GraphicsContext gc = canvas.getGraphicsContext2D();
+    int index = 0;
+
+    public boolean isRunning = false;
 
     @Override
     public void start(Stage theStage) throws Exception {
@@ -24,43 +24,60 @@ public class Main extends Application {
 //        primaryStage.show();
 
         theStage.setTitle( "Canvas Example" );
-        SVGPath svgPath = new SVGPath();
 
-        String path = "M 100 100 L 300 100 L 200 300 z";
-
-        //Setting the SVGPath in the form of string
-        svgPath.setContent(path);
-
-        Group root = new Group(svgPath);
+        Group root = new Group();
         Scene theScene = new Scene( root );
         theStage.setScene( theScene );
 
-        Canvas canvas = new Canvas( 600, 600 );
         root.getChildren().add( canvas );
-
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        Image board = new Image( "/ludo-board.png");
-        Image red = new Image("red-piece.png");
-        GameGrid grid = new GameGrid();
-
-        Tile tile = grid.getTile(20);
-        Tile tile2 = grid.getTile(31);
-
-
-
-        gc.drawImage( board, 0, 0 );
-        int drawX = (tile.getLocation().getxPos()  * 40) + 6;
-        int drawY = (tile.getLocation().getyPos() * 40) - 10;
-        gc.drawImage(red, drawX, drawY);
-
-        int drawX2 = (tile2.getLocation().getxPos()  * 40) + 6;
-        int drawY2 = (tile2.getLocation().getyPos() * 40) - 10;
-        gc.drawImage(red, drawX2, drawY2);
-
+        drawImages();
         theStage.show();
     }
 
+    Image board = new Image( "/ludo-board.png");
+    Image red = new Image("/green-piece.png");
+
+    public void drawImages() {
+        GameGrid grid = new GameGrid();
+        Tile tile2 = grid.getTile(50);
+        gc.drawImage( board, 0, 0 );
+        int drawX2 = (tile2.getLocation().getXPos() * 40) + 6;
+        int drawY2 = (tile2.getLocation().getYPos() * 40) - 10;
+        //gc.drawImage(red, drawX2, drawY2);
+
+        Thread th = new Thread(new Render(grid));
+        th.start();
+
+    }
+
+     class Render implements Runnable {
+
+        GameGrid grid;
+        public Render(GameGrid grid) {
+            this.grid = grid;
+            isRunning = true;
+        }
+
+        @Override
+        public void run() {
+            while (isRunning) {
+                Tile tile = grid.getTile(index);
+                int drawX = (tile.getLocation().getXPos()  * 40) + 6;
+                int drawY = (tile.getLocation().getYPos() * 40) - 10;
+                System.out.println("made");
+                gc.drawImage(board, 0, 0);
+                gc.drawImage(red, drawX, drawY);
+                index++;
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (index == 52)
+                    isRunning = false;
+            }
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);

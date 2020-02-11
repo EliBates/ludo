@@ -10,11 +10,11 @@ public class Location {
     }
 
 
-    public int getxPos() {
+    public int getXPos() {
         return xPos;
     }
 
-    public int getyPos() {
+    public int getYPos() {
         return yPos;
     }
 }
