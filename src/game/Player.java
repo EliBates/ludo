@@ -1,7 +1,5 @@
 package game;
 
-import javafx.scene.canvas.GraphicsContext;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -20,17 +18,11 @@ public class Player {
         }
     }
 
-    public void drawPieces(GraphicsContext g, GameGrid grid) {
-        for (GamePiece piece : gamePieces) {
-            piece.draw(g, grid);
-        }
-    }
-
     public void movePiece(int roll, GameGrid grid) {
         if (roll == 6) {
             GamePiece gp = getDefaultPiece();
             if (gp != null) {
-                gp.setIndex(GameGrid.RED_START, grid);
+                gp.setIndex(Config.GamePiece.values()[id].getStartTile(), grid);
                 return;
             }
         }
@@ -43,9 +35,19 @@ public class Player {
 
     private GamePiece getBoardPiece() {
         ArrayList<GamePiece> gp = new ArrayList<>();
+        int score = 0;
         for (int i = 0; i < 4; i++) { // find all the pieces that are on board
-            if (gamePieces[i].getIndex() != -1)
-                gp.add(gamePieces[i]);
+            if (gamePieces[i].getIndex() != -1) {
+                if (gamePieces[i].getHomeRunIndex() == 0) { //add a score for pieces that made it home
+                    score++;
+                } else { // consider moving the piece
+                    gp.add(gamePieces[i]);
+                }
+            }
+        }
+        if (score == 4) {
+            System.out.println(name + " has won the game!");
+            Main.gameOver = true;
         }
         if (gp.size() > 0) { // if there are some board pieces we will random choose one to move
             Random random = new Random();
