@@ -14,6 +14,10 @@ public class Controller {
 
     private Client client;
 
+    private GraphicsContext gc;
+
+    private ClientConnection connection;
+
     @FXML
     Canvas canvas;
 
@@ -23,9 +27,14 @@ public class Controller {
 
     @FXML
     private void initialize() {
+        gc = canvas.getGraphicsContext2D();
+    }
+
+    @FXML
+    private void startServer() {
         gameServer = new GameServer();
-        GraphicsContext gc = canvas.getGraphicsContext2D();
         client = new Client(gc, gameServer);
+
         canvas.setOnMouseClicked(event -> {
             int x = (int)(event.getX() / 40);
             int y = (int)(event.getY() / 40);
@@ -34,13 +43,22 @@ public class Controller {
         });
     }
 
+    @FXML
+    private void connect() {
+        connection = new ClientConnection(client, "127.0.0.1", 43594);
+        connection.start();
+    }
+
     public int getTileId(Position position) {
-        return (int)(position.getY() * 17 + position.getX()); // y * rowLength + x = tileID
+        return (position.getY() * 17 + position.getX()); // y * rowLength + x = tileID
     }
 
 
     @FXML
     protected void diceRoll() {
+        if (connection != null) {
+            connection.sendUpdate("dice:hello");
+        }
         gameServer.recieveRollClick();
     }
 
