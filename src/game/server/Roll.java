@@ -1,11 +1,12 @@
-package game;
+package game.server;
 
 import java.util.Random;
 
-public class Dice {
+public class Roll {
 
-    public int roll() {
+    public static int getDiceRoll() {
         Random random = new Random();
         return random.nextInt(6) + 1;
     }
+
 }
