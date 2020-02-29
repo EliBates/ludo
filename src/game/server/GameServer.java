@@ -1,7 +1,12 @@
 package game.server;
 
 import game.client.Client;
+import game.server.environment.Player;
+import game.server.io.Connection;
+import game.server.io.Listener;
 import game.server.service.GameManager;
+
+import java.util.Vector;
 
 public class GameServer extends Thread implements Runnable{
 
@@ -11,10 +16,16 @@ public class GameServer extends Thread implements Runnable{
 
     private Client client;
 
+    private Vector<Connection> playerClients = new Vector<>();
+
     public GameServer() {
         //TODO all the networking stuff later
         initialize();
         start();
+    }
+
+    public void addConnection(Connection connection) {
+        playerClients.add(connection);
     }
 
     @Override
@@ -54,6 +65,8 @@ public class GameServer extends Thread implements Runnable{
     }
 
     private void initialize() {
+        Listener listener = new Listener(this, 43594);
+        listener.start();
         isRunning = true;
         gameManager = new GameManager();
         gameManager.start();

@@ -44,7 +44,7 @@ public class Player {
             }
             gamePiece[i] = new GamePiece(id);
             gamePiece[i].setPosition(tm.getTile(tileId).getPosition());
-            System.out.println("Attempting to occupy " +tileId);
+            //System.out.println("Attempting to occupy " +tileId);
             tm.occupyTile(tileId, gamePiece[i]);
         }
     }

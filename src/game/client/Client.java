@@ -22,7 +22,16 @@ public class Client extends Thread implements Runnable {
 
     private GamePiece[] gamePieces;
 
+    public void recieveUpdate(String update) {
+        System.out.println("Client Received: " + update);
+    }
+
     public Client(GraphicsContext gtx, GameServer gameServer) {
+        ClientConnection connection = new ClientConnection(this, "127.0.0.1", 43594);
+        connection.start();
+
+
+
         gameServer.acceptClientConnection(this);
         this.gtx = gtx;
         this.gameServer = gameServer;

@@ -1,4 +1,4 @@
-package game;
+package game.client;
 
 import game.client.Client;
 import game.server.GameServer;
@@ -32,7 +32,6 @@ public class Controller {
             //System.out.println("Position: " + x + ", " + y);
             gameServer.recieveTileClick(getTileId(new Position(x, y)));
         });
-
     }
 
     public int getTileId(Position position) {
