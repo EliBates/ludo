@@ -8,7 +8,7 @@ public class Client extends Thread implements Runnable {
 
     private GraphicsContext gtx;
 
-    private GameServer gameServer;
+    //private GameServer gameServer;
 
     private String playerName;
 
@@ -27,14 +27,9 @@ public class Client extends Thread implements Runnable {
     }
 
     public Client(GraphicsContext gtx, GameServer gameServer) {
-        ClientConnection connection = new ClientConnection(this, "127.0.0.1", 43594);
-        connection.start();
-
-
-
         gameServer.acceptClientConnection(this);
         this.gtx = gtx;
-        this.gameServer = gameServer;
+        //this.gameServer = gameServer;
         this.playerName = "Eli";
         this.ludoBoard = new Image("assets/ludo-board.png");
         gamePieces = new GamePiece[16];
@@ -57,7 +52,7 @@ public class Client extends Thread implements Runnable {
         this.currentPlayaer = player;
     }
 
-    public void sendGamePieceUpdate() {
+    /*public void sendGamePieceUpdate() {
         int index = 0;
         String dataIn = gameServer.sendPieceInfo();
         if (dataIn != null) {
@@ -76,7 +71,7 @@ public class Client extends Thread implements Runnable {
 
             }
         }
-    }
+    }*/
 
     @Override
     public void run() {
@@ -87,7 +82,8 @@ public class Client extends Thread implements Runnable {
                 gtx.drawImage(ludoBoard, 0, 0);
                 for (GamePiece gamePiece : gamePieces) {
                     if (gamePiece != null)
-                        gtx.drawImage(gamePieceImage[gamePiece.getId()], gamePiece.getDrawX(), gamePiece.getDrawY());
+                        if (gamePiece.getDrawX() != 0 && gamePiece.getDrawY() != 0)
+                            gtx.drawImage(gamePieceImage[gamePiece.getId()], gamePiece.getDrawX(), gamePiece.getDrawY());
                 }
                 Thread.sleep(100);
             }

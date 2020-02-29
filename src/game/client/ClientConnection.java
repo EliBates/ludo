@@ -6,8 +6,6 @@ import java.net.Socket;
 public class ClientConnection extends Thread {
 
     private Client client;
-    private String ip;
-    private int port;
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
     private InputStream inputStream;
@@ -15,8 +13,6 @@ public class ClientConnection extends Thread {
 
     public ClientConnection(Client client, String ip, int port) {
         this.client = client;
-        this.ip = ip;
-        this.port = port;
 
         try {
             Socket socket = new Socket(ip, port);

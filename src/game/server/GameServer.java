@@ -35,10 +35,12 @@ public class GameServer extends Thread implements Runnable{
             while (isRunning) {
                 sleep(100);
                 if (gameManager.requestClientUpdate) {
-                    client.sendGamePieceUpdate();
+                    for (Connection connection : playerClients) {
+                        connection.sendMessage("Active Player Is: "+gameManager.getPlayerManager().getActivePlayer().getId() + " and the Dice Roll Was: "+gameManager.getPlayerManager().getActiveDiceRoll());
+                    }
+                    //client.sendGamePieceUpdate();
                     client.sendRollUpdate(gameManager.getPlayerManager().getActiveDiceRoll());
                     client.sendPlayerUpdate(gameManager.getPlayerManager().getActivePlayer().getId());
-                    //System.out.println("Sending client update!");
                     gameManager.requestClientUpdate = false;
                 }
             }

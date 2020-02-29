@@ -86,6 +86,7 @@ public class PlayerManager {
     }
 
     private boolean hasRolledAlready = false;
+
     public void conductRoll() {
         if (hasRolledAlready)
             return;
@@ -101,6 +102,8 @@ public class PlayerManager {
     }
 
     public void handleMoveIntent(Player p, int tileId) {
+        if (!hasRolledAlready)
+            return;
        // System.out.println(gameManager.getTileManager().getTile(tileId).getPosition().toString());
         if (p.getId() == activePlayerIndex) { //The active player is the only one that can move a piece
             if (gameManager.getTileManager().getTile(tileId).getOccupantColorId() == p.getId()) { // The tile contains a gamePiece the player owns
