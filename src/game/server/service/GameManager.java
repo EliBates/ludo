@@ -32,11 +32,6 @@ public class GameManager extends Thread {
     }
 
     @Override
-    public synchronized void start() {
-        super.start();
-    }
-
-    @Override
     public void run() {
         super.run();
         while (true) {

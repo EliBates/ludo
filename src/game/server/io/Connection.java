@@ -30,8 +30,6 @@ public class Connection extends Thread {
         try {
             String message;
             while ((message = reader.readLine()) != null) {
-                System.out.println("Server Recieved: " + message);
-                sendMessage("Welcome to the server!");
                 server.processPacket(this, message);
             }
             socket.close();

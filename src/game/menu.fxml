@@ -32,7 +32,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="joinGameButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#joinGame" prefHeight="50.0" prefWidth="120.0" text="Join Game" />
+                  <Button fx:id="joinGameButton" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#joinGame" prefHeight="50.0" prefWidth="120.0" text="Join Game" />
                </children>
             </HBox>
          </children>
@@ -58,7 +58,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" text="Network" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" text="Network" />
                </children>
             </HBox>
          </children>

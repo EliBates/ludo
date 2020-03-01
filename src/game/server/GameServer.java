@@ -16,6 +16,8 @@ public class GameServer extends Thread implements Runnable{
 
     private Vector<Connection> playerClients = new Vector<>();
 
+    public boolean acceptingNewConnections = true;
+
     public GameServer() {
         //TODO all the networking stuff later
         initialize();
@@ -36,6 +38,7 @@ public class GameServer extends Thread implements Runnable{
         if (packet.startsWith("setup") && needsSetup) {
             gameManager.buildPlayers(packet.substring(packet.indexOf(':') +1));
             gameManager.start();
+            acceptingNewConnections = false;
         } else {
             System.out.println("not handling other packets yet");
         }

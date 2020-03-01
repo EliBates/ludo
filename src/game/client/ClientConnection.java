@@ -8,16 +8,14 @@ public class ClientConnection extends Thread {
     private Client client;
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
-    private InputStream inputStream;
-    private OutputStream outputStream;
 
     public ClientConnection(Client client, String ip, int port) {
         this.client = client;
 
         try {
             Socket socket = new Socket(ip, port);
-            inputStream = socket.getInputStream();
-            outputStream = socket.getOutputStream();
+            InputStream inputStream = socket.getInputStream();
+            OutputStream outputStream = socket.getOutputStream();
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             printWriter = new PrintWriter(new OutputStreamWriter(outputStream));
             System.out.println("Attempting to connect client... " + ip + ":" + port);
@@ -35,7 +33,6 @@ public class ClientConnection extends Thread {
     public void run() {
         String feedback;
         try {
-            sendUpdate("HEY! I'm the client!");
             while ((feedback = bufferedReader.readLine()) != null) {
                 if (client != null)
                     client.recieveUpdate(feedback);
@@ -43,9 +40,7 @@ public class ClientConnection extends Thread {
                     System.out.println("Client is null.. But here is the message anyways: " + feedback);
                 Thread.sleep(100);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
