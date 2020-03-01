@@ -6,7 +6,7 @@ public class Config {
 
     public static final int RED = 0, GREEN = 1, YELLOW = 2, BLUE = 3;
 
-    public enum PlayerType {HUMAN, AI, NETWORK_HUMAN}
+    public enum PlayerType {HUMAN, AI}
 
     public enum GameType {LOCAL, NETWORK}
 

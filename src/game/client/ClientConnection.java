@@ -11,6 +11,7 @@ public class ClientConnection extends Thread {
 
     public ClientConnection(Client client, String ip, int port) {
         this.client = client;
+        client.setConnection(this);
 
         try {
             Socket socket = new Socket(ip, port);

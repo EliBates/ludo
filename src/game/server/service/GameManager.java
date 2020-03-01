@@ -17,17 +17,17 @@ public class GameManager extends Thread {
 
     public void buildPlayers(String playerData) { //TODO add connection later for multiplayer
         String[] info = playerData.split(":"); // divide all the players up
-        for (String playerInfo : info) { // iterate through each players info
-            String[] buildData = playerInfo.split(","); // divide the players info up
+        playerManager.turnOrder = new int[info.length];
+        for (int i = 0; i < info.length; i++) { // iterate through each players info
+            String[] buildData = info[i].split(","); // divide the players info up
             System.out.println("Building player ID: " + Integer.parseInt(buildData[0]) + " Name: " +  buildData[1] + " Type: " + buildData[2] );
-            playerManager.addPlayer(
-                    new Player(
-                            Integer.parseInt(buildData[0]), // color (playerID)
-                            buildData[1],                   // player name
-                            Integer.parseInt(buildData[2])  // player type (Human / AI)
-                    ),
-                    tileManager
+            Player player = new Player(
+                    Integer.parseInt(buildData[0]), // color (playerID)
+                    buildData[1],                   // player name
+                    Integer.parseInt(buildData[2])  // player type (Human / AI)
             );
+            playerManager.turnOrder[i] = player.getId();
+            playerManager.addPlayer(player, tileManager);
         }
     }
 

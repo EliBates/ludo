@@ -1,10 +1,11 @@
 package game.client;
 
-import game.server.GameServer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Client extends Thread implements Runnable {
+
+    private ClientConnection connection;
 
     private GraphicsContext gtx;
 
@@ -14,8 +15,16 @@ public class Client extends Thread implements Runnable {
 
     private GamePiece[] gamePieces;
 
+    public void setConnection(ClientConnection c) {
+        this.connection = c;
+    }
+
     public void recieveUpdate(String update) {
-        System.out.println("Client Received: " + update);
+        //System.out.println("Client Received: " + update);
+
+        if (update.startsWith("pieceupdate")) {
+            receiveGamePieceUpdate(update.substring(update.indexOf("pieceupdate") + 11));
+        }
     }
 
     public Client(GraphicsContext gtx) {
@@ -33,11 +42,11 @@ public class Client extends Thread implements Runnable {
         this.start();
     }
 
-    /*public void sendGamePieceUpdate() {
+    public void receiveGamePieceUpdate(String update) {
         int index = 0;
-        String dataIn = gameServer.sendPieceInfo();
-        if (dataIn != null) {
-            String[] players = dataIn.split("-");
+
+        if (update != null) {
+            String[] players = update.split("-");
             for (String data : players) {
                 //System.out.println(data);
                 String[] playerData = data.split(",");
@@ -49,10 +58,9 @@ public class Client extends Thread implements Runnable {
                     gamePieces[index] = gamePiece;
                     index++;
                 }
-
             }
         }
-    }*/
+    }
 
     @Override
     public void run() {
@@ -71,5 +79,9 @@ public class Client extends Thread implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public ClientConnection getConnection() {
+        return connection;
     }
 }

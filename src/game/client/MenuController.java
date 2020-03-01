@@ -17,12 +17,10 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.util.*;
-import java.util.stream.Stream;
 
 public class MenuController {
 
     private ClientConnection connection;
-
 
     @FXML
     private Pane gameMenu;
@@ -53,8 +51,8 @@ public class MenuController {
     private static final ObservableList<String> playerColorOptions =
             FXCollections.observableArrayList(
                     "Red",
-                    "Yellow",
                     "Green",
+                    "Yellow",
                     "Blue"
             );
 
@@ -110,8 +108,8 @@ public class MenuController {
         player4Type.setItems(playerTypeOptions);
 
         player1Color.setValue("Red");
-        player2Color.setValue("Yellow");
-        player3Color.setValue("Green");
+        player2Color.setValue("Green");
+        player3Color.setValue("Yellow");
         player4Color.setValue("Blue");
         player1Color.setItems(playerColorOptions);
         player2Color.setItems(playerColorOptions);
@@ -208,14 +206,5 @@ public class MenuController {
             connect();
             connection.sendUpdate("setup" + getPlayer1Data() + getPlayer2Data() + getPlayer3Data() + getPlayer4Data());
         }
-
-        //startButton.setDisable(true);
-
-        /*canvas.setOnMouseClicked(event -> {
-            int x = (int)(event.getX() / 40);
-            int y = (int)(event.getY() / 40);
-            //System.out.println("Position: " + x + ", " + y);
-            gameServer.recieveTileClick(getTileId(new Position(x, y)));
-        });*/
     }
 }

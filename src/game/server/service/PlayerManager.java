@@ -4,14 +4,15 @@ import game.server.Roll;
 import game.server.environment.GamePiece;
 import game.server.environment.Player;
 import game.server.environment.Position;
-
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class PlayerManager {
 
     private GameManager gameManager;
 
-    private ArrayList<Player> players;
+    private LinkedHashMap<Integer, Player> players;
+    public int[] turnOrder;
 
     protected int activePlayerIndex = -1;
 
@@ -25,60 +26,50 @@ public class PlayerManager {
 
     public PlayerManager(GameManager gameManager) {
         this.gameManager = gameManager;
-        players = new ArrayList<>();
+        players = new LinkedHashMap<>();
     }
 
     public String getPlayerData() {
-        String output = "";
-        for (Player p : players) {
-            output = output +p.getId();
-            for (GamePiece gamePiece : p.getGamePieces()) {
+        StringBuilder output = new StringBuilder();
+        output.append("pieceupdate");
+        for (Map.Entry<Integer, Player> integerPlayerEntry : players.entrySet()) {
+            output.append(integerPlayerEntry.getKey());
+            for (GamePiece gamePiece : integerPlayerEntry.getValue().getGamePieces()) {
                 Position pos = gamePiece.getPosition();
-                output = output +"," + pos.getX() + "/" + pos.getY();
+                output.append(",").append(pos.getX()).append("/").append(pos.getY());
             }
-            output = output + "-";
+            output.append("-");
         }
-        return output;
+        return output.toString();
     }
 
     public void addPlayer(Player player, TileManager tm) {
-        if (players.size() < 4 && !containsPlayer(player.getId())) {
-            players.add(player);
+        if (players.size() < 4 && !playerExists(player.getId())) {
+            players.put(player.getId(), player);
             player.initGamePieces(tm);
         }
     }
 
     public void removePlayer(Player player) {
-        players.remove(player);
+        players.remove(player.getId());
     }
 
-    private boolean containsPlayer(int playerId) {
-        for (Player p : players) {
-            if (p.getId() == playerId) {
-                return true;
-            }
-        }
-        return false;
+    private boolean playerExists(int playerId) {
+        return players.containsKey(playerId);
     }
 
     public Player getActivePlayer() {
-        for (Player p : players) {
-            if (p.getId() == activePlayerIndex) {
-                return p;
-            }
-        }
-        System.out.println("NULL PLAYER");
-        return null;
+        return players.get(turnOrder[activePlayerIndex]);
     }
 
     protected void nextTurn() {
         gameManager.requestClientUpdate = true;
         conductingTurn = true; // lock the game loop from calling this while we conduct turn
         activePlayerIndex++;
-        if (activePlayerIndex > players.size() -1) {
+        if (activePlayerIndex > turnOrder.length -1) {
             activePlayerIndex = 0;
         }
-        System.out.println("Starting a turn for player " + activePlayerIndex);
+        System.out.println("Starting a turn for player " + turnOrder[activePlayerIndex]);
     }
 
     private boolean hasRolledAlready = false;
@@ -101,7 +92,7 @@ public class PlayerManager {
         if (!hasRolledAlready)
             return;
        // System.out.println(gameManager.getTileManager().getTile(tileId).getPosition().toString());
-        if (p.getId() == activePlayerIndex) { //The active player is the only one that can move a piece
+        if (p.getId() == turnOrder[activePlayerIndex]) { //The active player is the only one that can move a piece
             if (gameManager.getTileManager().getTile(tileId).getOccupantColorId() == p.getId()) { // The tile contains a gamePiece the player owns
                 int destinationId = p.getPath().getDestinationId(tileId, activeDiceRoll); //check if the amount of the roll can be navigated to on the path
                 if (destinationId != -1) { // The player can actually move the gamepiece according to the dice roll
