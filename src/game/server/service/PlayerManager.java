@@ -1,5 +1,6 @@
 package game.server.service;
 
+import game.server.Config;
 import game.server.Roll;
 import game.server.environment.GamePiece;
 import game.server.environment.Player;
@@ -15,14 +16,14 @@ public class PlayerManager {
     public int[] turnOrder;
 
     protected int activePlayerIndex = -1;
+    protected int activeDiceRoll = -1;
 
     public int getActiveDiceRoll() {
         return activeDiceRoll;
     }
 
-    protected int activeDiceRoll = -1;
-
     protected boolean conductingTurn = false;
+    private boolean hasRolledAlready = false;
 
     public PlayerManager(GameManager gameManager) {
         this.gameManager = gameManager;
@@ -71,8 +72,6 @@ public class PlayerManager {
         }
         System.out.println("Starting a turn for player " + turnOrder[activePlayerIndex]);
     }
-
-    private boolean hasRolledAlready = false;
 
     public void conductRoll() {
         if (hasRolledAlready)
