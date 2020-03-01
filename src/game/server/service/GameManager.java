@@ -12,16 +12,23 @@ public class GameManager extends Thread {
 
     public GameManager() {
         tileManager = new TileManager();
-        Player[] players = new Player[4];
-        players[0] = new Player(0, "Eli");
-        players[1] = new Player(1, "Jeff");
-        players[2] = new Player(2, "Dom");
-        players[3] = new Player(3, "Maria");
-        for (Player p : players) {
-            if (p != null)
-                p.initGamePieces(tileManager);
+        playerManager = new PlayerManager(this);
+    }
+
+    public void buildPlayers(String playerData) { //TODO add connection later for multiplayer
+        String[] info = playerData.split(":"); // divide all the players up
+        for (String playerInfo : info) { // iterate through each players info
+            String[] buildData = playerInfo.split(","); // divide the players info up
+            System.out.println("Building player ID: " + Integer.parseInt(buildData[0]) + " Name: " +  buildData[1] + " Type: " + buildData[2] );
+            playerManager.addPlayer(
+                    new Player(
+                            Integer.parseInt(buildData[0]), // color (playerID)
+                            buildData[1],                   // player name
+                            Integer.parseInt(buildData[2])  // player type (Human / AI)
+                    ),
+                    tileManager
+            );
         }
-        playerManager = new PlayerManager(players, this);
     }
 
     @Override

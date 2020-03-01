@@ -8,14 +8,6 @@ public class Client extends Thread implements Runnable {
 
     private GraphicsContext gtx;
 
-    //private GameServer gameServer;
-
-    private String playerName;
-
-    protected int roll;
-
-    protected int currentPlayaer;
-
     private Image[] gamePieceImage;
 
     private Image ludoBoard;
@@ -26,11 +18,8 @@ public class Client extends Thread implements Runnable {
         System.out.println("Client Received: " + update);
     }
 
-    public Client(GraphicsContext gtx, GameServer gameServer) {
-        gameServer.acceptClientConnection(this);
+    public Client(GraphicsContext gtx) {
         this.gtx = gtx;
-        //this.gameServer = gameServer;
-        this.playerName = "Eli";
         this.ludoBoard = new Image("assets/ludo-board.png");
         gamePieces = new GamePiece[16];
         for (int i = 0; i < 16; i++) {
@@ -42,14 +31,6 @@ public class Client extends Thread implements Runnable {
         gamePieceImage[2] = new Image("assets/yellow-piece.png");
         gamePieceImage[3] = new Image("assets/blue-piece.png");
         this.start();
-    }
-
-    public void sendRollUpdate(int roll) {
-        this.roll = roll;
-    }
-
-    public void sendPlayerUpdate(int player) {
-        this.currentPlayaer = player;
     }
 
     /*public void sendGamePieceUpdate() {

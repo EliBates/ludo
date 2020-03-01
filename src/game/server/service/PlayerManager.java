@@ -23,13 +23,9 @@ public class PlayerManager {
 
     protected boolean conductingTurn = false;
 
-    public PlayerManager(Player[] newPlayers, GameManager gameManager) {
+    public PlayerManager(GameManager gameManager) {
         this.gameManager = gameManager;
         players = new ArrayList<>();
-        for (Player p : newPlayers) {
-            if (p != null)
-                addPlayer(p);
-        }
     }
 
     public String getPlayerData() {
@@ -38,17 +34,17 @@ public class PlayerManager {
             output = output +p.getId();
             for (GamePiece gamePiece : p.getGamePieces()) {
                 Position pos = gamePiece.getPosition();
-                output = output +"," + (int)pos.getX() + "/" + (int)pos.getY();
+                output = output +"," + pos.getX() + "/" + pos.getY();
             }
             output = output + "-";
-            //System.out.println(output);
         }
         return output;
     }
 
-    public void addPlayer(Player player) {
+    public void addPlayer(Player player, TileManager tm) {
         if (players.size() < 4 && !containsPlayer(player.getId())) {
             players.add(player);
+            player.initGamePieces(tm);
         }
     }
 

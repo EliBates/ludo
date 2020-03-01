@@ -29,7 +29,7 @@ public class Listener extends Thread {
             Socket socket;
             while (true) {
                  socket = serverSocket.accept();
-                 Connection connection = new Connection(socket);
+                 Connection connection = new Connection(socket, server);
 
                  connection.start();
                  server.addConnection(connection);

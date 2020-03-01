@@ -1,21 +1,36 @@
 package game;
 
+import game.client.Client;
+import game.server.GameServer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    public static Parent root, game;
+
+    public static Stage primaryStage;
+
+    public static GameServer gameServer;
+
+    public static GraphicsContext graphicsContext;
+
+    public static Client client;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Main.primaryStage = primaryStage;
+        root = FXMLLoader.load(getClass().getResource("menu.fxml"));
+        game = FXMLLoader.load(getClass().getResource("game.fxml"));
         primaryStage.setTitle("ISTE-121 Ludo Project");
-        primaryStage.setScene(new Scene(root, 1100, 750));
+        primaryStage.setScene(new Scene(root, 600, 450));
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);

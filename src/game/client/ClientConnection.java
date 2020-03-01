@@ -37,7 +37,10 @@ public class ClientConnection extends Thread {
         try {
             sendUpdate("HEY! I'm the client!");
             while ((feedback = bufferedReader.readLine()) != null) {
-                client.recieveUpdate(feedback);
+                if (client != null)
+                    client.recieveUpdate(feedback);
+                else
+                    System.out.println("Client is null.. But here is the message anyways: " + feedback);
                 Thread.sleep(100);
             }
         } catch (IOException e) {

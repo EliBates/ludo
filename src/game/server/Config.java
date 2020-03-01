@@ -6,6 +6,12 @@ public class Config {
 
     public static final int RED = 0, GREEN = 1, YELLOW = 2, BLUE = 3;
 
+    public enum PlayerType {HUMAN, AI, NETWORK_HUMAN}
+
+    public enum GameType {LOCAL, NETWORK}
+
+    public enum Color{RED, YELLOW, GREEN, BLUE}
+
     public static final int[] RED_STARTING = {71, 72, 88, 89};
     public static final int[] GREEN_STARTING = {80, 81, 97, 98};
     public static final int[] YELLOW_STARTING = {233, 234, 250, 251};

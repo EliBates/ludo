@@ -10,11 +10,9 @@ import java.util.Vector;
 
 public class GameServer extends Thread implements Runnable{
 
-    private boolean isRunning = false;
+    private boolean isRunning = false, needsSetup = true;
 
     private GameManager gameManager;
-
-    private Client client;
 
     private Vector<Connection> playerClients = new Vector<>();
 
@@ -24,23 +22,31 @@ public class GameServer extends Thread implements Runnable{
         start();
     }
 
+    public boolean needsSetup() {
+        return needsSetup;
+    }
+
     public void addConnection(Connection connection) {
         playerClients.add(connection);
     }
 
+    public void processPacket(Connection c, String packet) {
+        System.out.println(packet);
+
+        if (packet.startsWith("setup") && needsSetup) {
+            gameManager.buildPlayers(packet.substring(packet.indexOf(':') +1));
+            gameManager.start();
+        } else {
+            System.out.println("not handling other packets yet");
+        }
+    }
+
     @Override
     public void run() {
-        super.run();
         try {
             while (isRunning) {
                 sleep(100);
-                if (gameManager.requestClientUpdate) {
-                    for (Connection connection : playerClients) {
-                        connection.sendMessage("Active Player Is: "+gameManager.getPlayerManager().getActivePlayer().getId() + " and the Dice Roll Was: "+gameManager.getPlayerManager().getActiveDiceRoll());
-                    }
-                    //client.sendGamePieceUpdate();
-                    client.sendRollUpdate(gameManager.getPlayerManager().getActiveDiceRoll());
-                    client.sendPlayerUpdate(gameManager.getPlayerManager().getActivePlayer().getId());
+                if (gameManager.requestClientUpdate) { // update all the clients
                     gameManager.requestClientUpdate = false;
                 }
             }
@@ -49,30 +55,11 @@ public class GameServer extends Thread implements Runnable{
         }
     }
 
-    public void recieveTileClick(int tileId) {
-        //System.out.println("Recieved click: " +tileId);
-        gameManager.getPlayerManager().handleMoveIntent(gameManager.getPlayerManager().getActivePlayer(), tileId);
-    }
-
-    public void recieveRollClick() {
-        gameManager.getPlayerManager().conductRoll();
-    }
-
-    public String sendPieceInfo() {
-        return gameManager.getPlayerManager().getPlayerData();
-    }
-
-    public void acceptClientConnection(Client c) {
-        this.client = c;
-    }
-
     private void initialize() {
         Listener listener = new Listener(this, 43594);
         listener.start();
         isRunning = true;
         gameManager = new GameManager();
-        gameManager.start();
-        System.out.println("Game is running");
     }
 
     private void process() {
@@ -92,9 +79,5 @@ public class GameServer extends Thread implements Runnable{
     public void restart() {
         shutdown();
         initialize();
-    }
-
-    public Client getClient() {
-        return client;
     }
 }
