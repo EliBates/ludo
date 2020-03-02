@@ -87,6 +87,7 @@ public class PlayerManager {
         gameManager.requestClientUpdate = true;
     }
 
+    private boolean secondTurn = false;
     public void handleMoveIntent(Player p, int tileId) {
         if (!hasRolledAlready)
             return;
@@ -102,13 +103,17 @@ public class PlayerManager {
                     if (!gameManager.getTileManager().moveGamePieces(tileId, p.getPath().getStartPoint())) {
                         return;
                     }
-                    hasRolledAlready = false; // you get to roll again!
-                    gameManager.requestClientUpdate = true;
-                    return;
+                    if (!secondTurn) { // you get to roll again!
+                        hasRolledAlready = false;
+                        gameManager.requestClientUpdate = true;
+                        secondTurn = true;
+                        return;
+                    }
                 } else {
                     return;
                 }
                 hasRolledAlready = false;
+                secondTurn = false;
                 conductingTurn = false;
                 gameManager.requestClientUpdate = true;
             } else {
