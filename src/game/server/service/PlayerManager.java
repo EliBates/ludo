@@ -95,9 +95,16 @@ public class PlayerManager {
             if (gameManager.getTileManager().getTile(tileId).getOccupantColorId() == p.getId()) { // The tile contains a gamePiece the player owns
                 int destinationId = p.getPath().getDestinationId(tileId, activeDiceRoll); //check if the amount of the roll can be navigated to on the path
                 if (destinationId != -1) { // The player can actually move the gamepiece according to the dice roll
-                    gameManager.getTileManager().moveGamePieces(tileId, destinationId);
+                    if (!gameManager.getTileManager().moveGamePieces(tileId, destinationId)) {
+                        return;
+                    }
                 } else if (activeDiceRoll == 6) {
-                    gameManager.getTileManager().moveGamePieces(tileId, p.getPath().getStartPoint());
+                    if (!gameManager.getTileManager().moveGamePieces(tileId, p.getPath().getStartPoint())) {
+                        return;
+                    }
+                    hasRolledAlready = false; // you get to roll again!
+                    gameManager.requestClientUpdate = true;
+                    return;
                 } else {
                     return;
                 }

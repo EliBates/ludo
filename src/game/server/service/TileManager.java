@@ -37,25 +37,28 @@ public class TileManager {
     }
 
     public int getTileId(Position position) {
-        int id = (int)(position.getX() * 17 + position.getY());
+        int id = (position.getX() * 17 + position.getY());
         System.out.println("Position " + position.getX() + ", " + position.getY() + " translated to id: " + id);
         return id; // x * rowLength + y = tileID
     }
 
-    public void moveGamePieces(int oldId, int newId) {
+    public boolean moveGamePieces(int oldId, int newId) {
         GameTile oldTile = getTile(oldId);
 
         ArrayList<GamePiece> gamePieces = oldTile.getGamePieces();
         //System.out.println("The size of gamePieces " +gamePieces.size());
 
         for (GamePiece gp : gamePieces) {
-            occupyTile(newId, gp);
+            if (!occupyTile(newId, gp)) {
+                return false;
+            }
             //System.out.println(gp.getColorId() + " has occupied " + newId);
         }
         oldTile.reset();
+        return true;
     }
 
-    public void occupyTile(int tileId, GamePiece gamePiece) {
+    public boolean occupyTile(int tileId, GamePiece gamePiece) {
         GameTile tile = getTile(tileId);
         if (tile.isOccupied()) { // Someone is on the tile
             System.out.println("attempting to occupy tile");
@@ -69,10 +72,13 @@ public class TileManager {
                     System.out.println(enemy.getColorId() + " has had a piece sent back to the start!");
                     tile.reset();
                 }
+            } else {
+                return false;
             }
         }
         //System.out.println("This is the set we are attempting...  Piece: " + gamePiece.getPosition().print() + " Tile: " + tile.getPosition().print());
         gamePiece.setPosition(tile.getPosition());
         tile.getGamePieces().add(gamePiece); //finally add yourself to the tile
+        return true;
     }
 }
