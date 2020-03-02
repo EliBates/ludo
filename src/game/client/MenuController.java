@@ -128,8 +128,8 @@ public class MenuController {
     private void joinGame() {
         Main.client = new Client(Main.graphicsContext);
         Stage stage = Main.primaryStage;
-        stage.setScene(new Scene(Main.game, 800, 750));
-        stage.sizeToScene();
+        stage.setScene(new Scene(Main.game, 1800, 1000));
+        //stage.sizeToScene();
         stage.show();
         connect();
     }
@@ -192,6 +192,10 @@ public class MenuController {
 
     @FXML
     private void startServer() {
+        if (connection != null) {
+            //connection.dispose();
+            connection = null;
+        }
         if (!validColors()) {
             JOptionPane.showMessageDialog(null, "One or more players are trying to use the same color!");
             return;
@@ -200,7 +204,7 @@ public class MenuController {
             Main.client = new Client(Main.graphicsContext);
             Main.gameServer = new GameServer();
             Stage stage = Main.primaryStage;
-            stage.setScene(new Scene(Main.game, 800, 750));
+            stage.setScene(Main.gameScene);
             stage.sizeToScene();
             stage.show();
             connect();
