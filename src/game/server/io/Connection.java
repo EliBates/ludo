@@ -29,7 +29,7 @@ public class Connection extends Thread {
         System.out.println("Client connected!");
         try {
             String message;
-            while ((message = reader.readLine()) != null) {
+            while (!socket.isClosed() && (message = reader.readLine()) != null) {
                 server.processPacket(this, message);
             }
             socket.close();
@@ -45,6 +45,10 @@ public class Connection extends Thread {
     }
 
     public void dispose() {
-
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

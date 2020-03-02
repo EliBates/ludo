@@ -1,7 +1,7 @@
 package game.server.environment;
 
 public class GamePiece {
-
+//Comment
     private int colorId;
 
     public Position getOriginalPosition() {

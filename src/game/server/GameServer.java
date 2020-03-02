@@ -4,17 +4,22 @@ import game.server.io.Connection;
 import game.server.io.Listener;
 import game.server.service.GameManager;
 
+import java.io.IOException;
 import java.util.Vector;
 
 public class GameServer extends Thread implements Runnable{
 
-    private boolean isRunning = false, needsSetup = true;
+    public boolean isRunning = false, needsSetup = true;
 
     private GameManager gameManager;
 
     private Vector<Connection> playerClients = new Vector<>();
 
     public boolean acceptingNewConnections = true;
+
+    private Listener listener;
+
+    private String setupString;
 
     public GameServer() {
         //TODO all the networking stuff later
@@ -34,7 +39,8 @@ public class GameServer extends Thread implements Runnable{
         //System.out.println(packet);
 
         if (packet.startsWith("setup") && needsSetup) {
-            gameManager.buildPlayers(packet.substring(packet.indexOf(':') +1));
+            setupString = packet.substring(packet.indexOf(':') +1);
+            gameManager.buildPlayers(setupString);
             gameManager.start();
             acceptingNewConnections = false;
         } else {
@@ -44,6 +50,12 @@ public class GameServer extends Thread implements Runnable{
             }
             if (packet.startsWith("dice")) {
                 gameManager.getPlayerManager().conductRoll();
+            }
+            if (packet.startsWith("shutdown")) {
+                shutdown();
+            }
+            if (packet.startsWith("restart")) {
+                restart();
             }
         }
     }
@@ -66,10 +78,10 @@ public class GameServer extends Thread implements Runnable{
     }
 
     private void initialize() {
-        Listener listener = new Listener(this, 43594);
+        listener = new Listener(this, 43594);
         listener.start();
         isRunning = true;
-        gameManager = new GameManager();
+        gameManager = new GameManager(this);
     }
 
     private void process() {
@@ -83,11 +95,18 @@ public class GameServer extends Thread implements Runnable{
     }
 
     public void shutdown() {
+        for (Connection c : playerClients) {
+            c.dispose();
+        }
+        listener.dispose();
         isRunning = false;
     }
 
     public void restart() {
-        shutdown();
-        initialize();
+        gameManager.isRunning = false;
+        gameManager = new GameManager(this);
+        gameManager.buildPlayers(setupString);
+        gameManager.start();
+
     }
 }

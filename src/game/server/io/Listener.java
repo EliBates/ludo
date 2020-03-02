@@ -10,9 +10,13 @@ public class Listener extends Thread {
 
     private GameServer server;
 
-    private ServerSocket serverSocket;
+    public ServerSocket serverSocket;
 
     private int port;
+
+    public boolean isRunning = true;
+
+    Socket socket=null;
 
     public Listener(GameServer server, int port) {
         this.server = server;
@@ -26,18 +30,29 @@ public class Listener extends Thread {
 
             System.out.println("Server listening on port " + port);
 
-            Socket socket;
-            while (true) {
-                 socket = serverSocket.accept();
-                 Connection connection = new Connection(socket, server);
-                 if (server.acceptingNewConnections) {
-                     connection.start();
-                     server.addConnection(connection);
-                 }
-                 sleep(200);
+            while (isRunning) {
+                if(!serverSocket.isClosed()) {
+                    socket = serverSocket.accept();
+                    Connection connection = new Connection(socket, server);
+                    if (server.acceptingNewConnections) {
+                        connection.start();
+                        server.addConnection(connection);
+                    }
+                    sleep(200);
+                }
             }
         } catch (IOException | InterruptedException e) {
+            //e.printStackTrace();
+        }
+    }
+
+    public void dispose() {
+        try {
+            socket.close();
+            serverSocket.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        isRunning=false;
     }
 }

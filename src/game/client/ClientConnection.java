@@ -8,6 +8,7 @@ public class ClientConnection extends Thread {
     private Client client;
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
+    private boolean killThread;
 
     public ClientConnection(Client client, String ip, int port) {
         this.client = client;
@@ -30,11 +31,15 @@ public class ClientConnection extends Thread {
         printWriter.flush();
     }
 
+    public void dispose(){
+        killThread = true;
+    }
+
     @Override
     public void run() {
         String feedback;
         try {
-            while ((feedback = bufferedReader.readLine()) != null) {
+            while (((feedback = bufferedReader.readLine()) != null) && !killThread) {
                 if (client != null)
                     client.recieveUpdate(feedback);
                 else
