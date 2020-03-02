@@ -4,11 +4,20 @@ import game.Main;
 import game.server.environment.Position;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.VBox;
 
 public class Controller {
 
     @FXML
     Canvas canvas;
+
+    @FXML
+    VBox chatbox;
+
+    @FXML
+    private void showChatBox(){
+       chatbox.setVisible(!chatbox.isVisible());
+    }
 
     @FXML
     private void initialize() {
