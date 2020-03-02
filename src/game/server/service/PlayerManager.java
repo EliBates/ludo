@@ -1,6 +1,5 @@
 package game.server.service;
 
-import game.server.Config;
 import game.server.Roll;
 import game.server.environment.GamePiece;
 import game.server.environment.Player;
@@ -17,10 +16,6 @@ public class PlayerManager {
 
     protected int activePlayerIndex = -1;
     protected int activeDiceRoll = -1;
-
-    public int getActiveDiceRoll() {
-        return activeDiceRoll;
-    }
 
     protected boolean conductingTurn = false;
     private boolean hasRolledAlready = false;
