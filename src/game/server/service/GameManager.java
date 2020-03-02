@@ -15,7 +15,7 @@ public class GameManager extends Thread {
         playerManager = new PlayerManager(this);
     }
 
-    public void buildPlayers(String playerData) { //TODO add connection later for multiplayer
+    public void buildPlayers(String playerData) { //TODO add connection later for multiplayer  TODO move this call to the packet manager and add this method in playermanager
         String[] info = playerData.split(":"); // divide all the players up
         playerManager.turnOrder = new int[info.length];
         for (int i = 0; i < info.length; i++) { // iterate through each players info
