@@ -1,16 +1,22 @@
 package game.server.service;
 
+import game.server.GameServer;
 import game.server.environment.Player;
 
 public class GameManager extends Thread {
 
     private TileManager tileManager;
 
+    private GameServer gameServer;
+
     private PlayerManager playerManager;
 
     public boolean requestClientUpdate = false;
 
-    public GameManager() {
+    public boolean isRunning = true;
+
+    public GameManager(GameServer gameServer) {
+        this.gameServer = gameServer;
         tileManager = new TileManager();
         playerManager = new PlayerManager(this);
     }
@@ -34,7 +40,7 @@ public class GameManager extends Thread {
     @Override
     public void run() {
         super.run();
-        while (true) {
+        while (isRunning || gameServer.isAlive()) {
             if (!playerManager.conductingTurn) {
                 playerManager.nextTurn();
             } else {

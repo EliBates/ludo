@@ -67,7 +67,7 @@ public class Client extends Thread implements Runnable {
         try {
             super.run();
             Thread.sleep(1000);
-            while (true) {
+            while (connection != null) {
                 gtx.drawImage(ludoBoard, 0, 0);
                 for (GamePiece gamePiece : gamePieces) {
                     if (gamePiece != null)

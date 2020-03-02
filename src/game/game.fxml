@@ -162,8 +162,8 @@
                <children>
                   <Separator prefWidth="200.0" />
                   
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="New Game" textAlignment="CENTER" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Reset" textAlignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#newGame" text="New Game" />
+                  <Button mnemonicParsing="false" onAction="#resetGame" prefHeight="25.0" prefWidth="73.0" text="Reset" textAlignment="CENTER" />
                   <Separator prefWidth="200.0" />
                </children>
             </VBox>

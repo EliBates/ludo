@@ -3,8 +3,10 @@ package game.client;
 import game.Main;
 import game.server.environment.Position;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class Controller {
 
@@ -17,6 +19,21 @@ public class Controller {
     @FXML
     private void showChatBox(){
        chatbox.setVisible(!chatbox.isVisible());
+    }
+
+    @FXML
+    private void newGame(){
+        Main.client.getConnection().sendUpdate("shutdown");
+        Main.client.getConnection().dispose();
+        Stage stage = Main.primaryStage;
+        stage.setScene(Main.menuScene);
+        stage.show();
+        Main.gameServer = null;
+    }
+
+    @FXML
+    private void resetGame(){
+        Main.client.getConnection().sendUpdate("restart");
     }
 
     @FXML
