@@ -1,4 +1,7 @@
 package game.server.service;
 
-public class EventManager {
+public class PacketManager {
+
+
+
 }

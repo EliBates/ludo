@@ -1,19 +1,31 @@
 package game.server.environment;
 
 import game.server.Config;
+import game.server.io.Connection;
 import game.server.service.TileManager;
 
 public class Player {
 
+    private Connection connection;
     private int id;
+    private int type;
     private String name;
     private GamePiece[] gamePiece;
     private Path path;
 
-    public Player(int id, String name) {
+    public Player(int id, String name, int type) {
         this.id = id;
         this.name = name;
+        this.type = type;
         this.path = Config.pathForId(id);
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
     }
 
     public boolean allAtStart() {

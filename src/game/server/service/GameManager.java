@@ -12,21 +12,23 @@ public class GameManager extends Thread {
 
     public GameManager() {
         tileManager = new TileManager();
-        Player[] players = new Player[4];
-        players[0] = new Player(0, "Eli");
-        players[1] = new Player(1, "Jeff");
-        players[2] = new Player(2, "Dom");
-        players[3] = new Player(3, "Maria");
-        for (Player p : players) {
-            if (p != null)
-                p.initGamePieces(tileManager);
-        }
-        playerManager = new PlayerManager(players, this);
+        playerManager = new PlayerManager(this);
     }
 
-    @Override
-    public synchronized void start() {
-        super.start();
+    public void buildPlayers(String playerData) { //TODO add connection later for multiplayer  TODO move this call to the packet manager and add this method in playermanager
+        String[] info = playerData.split(":"); // divide all the players up
+        playerManager.turnOrder = new int[info.length];
+        for (int i = 0; i < info.length; i++) { // iterate through each players info
+            String[] buildData = info[i].split(","); // divide the players info up
+            System.out.println("Building player ID: " + Integer.parseInt(buildData[0]) + " Name: " +  buildData[1] + " Type: " + buildData[2] );
+            Player player = new Player(
+                    Integer.parseInt(buildData[0]), // color (playerID)
+                    buildData[1],                   // player name
+                    Integer.parseInt(buildData[2])  // player type (Human / AI)
+            );
+            playerManager.turnOrder[i] = player.getId();
+            playerManager.addPlayer(player, tileManager);
+        }
     }
 
     @Override

@@ -29,13 +29,11 @@ public class Listener extends Thread {
             Socket socket;
             while (true) {
                  socket = serverSocket.accept();
-                 Connection connection = new Connection(socket);
-
-                 connection.start();
-                 server.addConnection(connection);
-
-                 System.out.println("Got a new conn");
-
+                 Connection connection = new Connection(socket, server);
+                 if (server.acceptingNewConnections) {
+                     connection.start();
+                     server.addConnection(connection);
+                 }
                  sleep(200);
             }
         } catch (IOException | InterruptedException e) {

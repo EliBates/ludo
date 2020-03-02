@@ -1,16 +1,20 @@
 package game.server.io;
 
+import game.server.GameServer;
+
 import java.io.*;
 import java.net.Socket;
 
 public class Connection extends Thread {
 
+    private GameServer server;
     private Socket socket;
     private BufferedReader reader;
     private PrintWriter writer;
 
-    public Connection(Socket socket) {
+    public Connection(Socket socket, GameServer server) {
         this.socket = socket;
+        this.server = server;
 
         try {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -26,11 +30,11 @@ public class Connection extends Thread {
         try {
             String message;
             while ((message = reader.readLine()) != null) {
-                System.out.println("Server Recieved: " + message);
-                sendMessage("Hello world from server!");
+                server.processPacket(this, message);
             }
             socket.close();
         } catch (IOException e) {
+            dispose();
             e.printStackTrace();
         }
     }
@@ -38,5 +42,9 @@ public class Connection extends Thread {
     public void sendMessage(String message) {
         writer.println(message);
         writer.flush();
+    }
+
+    public void dispose() {
+
     }
 }
