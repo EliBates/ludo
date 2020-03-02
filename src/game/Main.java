@@ -32,7 +32,7 @@ public class Main extends Application {
         root = FXMLLoader.load(getClass().getResource("menu.fxml"));
         game = FXMLLoader.load(getClass().getResource("game.fxml"));
         menuScene = new Scene(root, 600, 450);
-        gameScene = new Scene(game, 800, 750);
+        gameScene = new Scene(game, 1100, 750);
         primaryStage.setTitle("ISTE-121 Ludo Project");
         primaryStage.setScene(menuScene);
         primaryStage.show();

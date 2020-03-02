@@ -192,10 +192,6 @@ public class MenuController {
 
     @FXML
     private void startServer() {
-        if (connection != null) {
-            //connection.dispose();
-            connection = null;
-        }
         if (!validColors()) {
             JOptionPane.showMessageDialog(null, "One or more players are trying to use the same color!");
             return;

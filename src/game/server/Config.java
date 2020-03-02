@@ -12,7 +12,7 @@ public class Config {
 
     public enum Color{RED, YELLOW, GREEN, BLUE}
 
-    public static final int[] RED_STARTING = {71, 72, 88, 89};
+    public static final int[] RED_STARTING = {71, 72, 88, 73};
     public static final int[] GREEN_STARTING = {80, 81, 97, 98};
     public static final int[] YELLOW_STARTING = {233, 234, 250, 251};
     public static final int[] BLUE_STARTING = {224, 225, 241, 242};
