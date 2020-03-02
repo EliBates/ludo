@@ -128,8 +128,8 @@ public class MenuController {
     private void joinGame() {
         Main.client = new Client(Main.graphicsContext);
         Stage stage = Main.primaryStage;
-        stage.setScene(new Scene(Main.game, 800, 750));
-        stage.sizeToScene();
+        stage.setScene(new Scene(Main.game, 1800, 1000));
+        //stage.sizeToScene();
         stage.show();
         connect();
     }
