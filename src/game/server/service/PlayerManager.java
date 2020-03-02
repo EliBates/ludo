@@ -1,9 +1,11 @@
 package game.server.service;
 
-import game.server.Roll;
+import game.server.Rand;
 import game.server.environment.GamePiece;
 import game.server.environment.Player;
 import game.server.environment.Position;
+
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -65,33 +67,65 @@ public class PlayerManager {
         if (activePlayerIndex > turnOrder.length -1) {
             activePlayerIndex = 0;
         }
-        System.out.println("Starting a turn for player " + turnOrder[activePlayerIndex]);
+        System.out.print("Starting a turn for player " + turnOrder[activePlayerIndex]);
+
+        if (getActivePlayer().getType() == 1) { // the player is an AI so we will move for him
+            computerMoving = true;
+            conductRoll();
+        }
     }
 
     public void conductRoll() {
+        if (computerMoving) {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         if (hasRolledAlready)
             return;
         hasRolledAlready = true;
-        activeDiceRoll = Roll.getDiceRoll();
+        activeDiceRoll = Rand.getDiceRoll();
         if (activeDiceRoll != 6 && getActivePlayer().allAtStart()) {
-            hasRolledAlready = false;
-            conductingTurn = false;
+            System.out.print(" : They rolled a " + activeDiceRoll + "\n");
+            resetTurn();
         } else {
-            System.out.println("The roll was a " +activeDiceRoll);
+            System.out.println(" : The roll was a " + activeDiceRoll);
+
+
+            if (getActivePlayer().getType() == 1) { // Continue to the movement section for AI
+                ArrayList<Integer> tiles = getActivePlayer().getMoveablePieces(activeDiceRoll, gameManager.getTileManager());
+                if (tiles.size() > 0) {
+                    handleMoveIntent(getActivePlayer(), tiles.get(Rand.getRandom(tiles.size())));
+                } else {
+                    System.out.println("no available moves");
+                }
+
+            }
         }
         gameManager.requestClientUpdate = true;
     }
 
     private boolean secondTurn = false;
+    public boolean computerMoving = false;
     public void handleMoveIntent(Player p, int tileId) {
-        if (!hasRolledAlready)
+        if (!hasRolledAlready) {
+            System.out.println("You haven't rolled yet!");
             return;
-       // System.out.println(gameManager.getTileManager().getTile(tileId).getPosition().toString());
+        }
+//        System.out.println("Move attempt: " + tileId);
+
         if (p.getId() == turnOrder[activePlayerIndex]) { //The active player is the only one that can move a piece
+//            System.out.println("player is active");
             if (gameManager.getTileManager().getTile(tileId).getOccupantColorId() == p.getId()) { // The tile contains a gamePiece the player owns
+//                System.out.println("piece is owned by player");
+//                System.out.println("Attempting to find path for " + tileId + " + " +activeDiceRoll);
                 int destinationId = p.getPath().getDestinationId(tileId, activeDiceRoll); //check if the amount of the roll can be navigated to on the path
                 if (destinationId != -1) { // The player can actually move the gamepiece according to the dice roll
+//                   System.out.println("Destination is valid");
                     if (!gameManager.getTileManager().moveGamePieces(tileId, destinationId)) {
+//                       System.out.println("unable to move piece");
                         return;
                     }
                 } else if (activeDiceRoll == 6) {
@@ -102,18 +136,27 @@ public class PlayerManager {
                         hasRolledAlready = false;
                         gameManager.requestClientUpdate = true;
                         secondTurn = true;
+                        if (computerMoving) {
+                            conductRoll();
+                        }
                         return;
                     }
                 } else {
+                    System.out.println("destination invalid");
                     return;
                 }
-                hasRolledAlready = false;
-                secondTurn = false;
-                conductingTurn = false;
-                gameManager.requestClientUpdate = true;
+                resetTurn();
             } else {
                 System.out.println("Tile "+ tileId + " is currently not occupied by your piece!");
             }
         }
+    }
+
+    public void resetTurn() {
+        hasRolledAlready = false;
+        secondTurn = false;
+        conductingTurn = false;
+        computerMoving = false;
+        gameManager.requestClientUpdate = true;
     }
 }

@@ -46,10 +46,12 @@ public class GameServer extends Thread implements Runnable{
         } else {
             if (packet.startsWith("click")) {
                 int tileId = Integer.parseInt(packet.substring(packet.indexOf(':') + 1));
-                gameManager.getPlayerManager().handleMoveIntent(gameManager.getPlayerManager().getActivePlayer(), tileId);
+                if (!gameManager.getPlayerManager().computerMoving) // the computer AI is moving not the player
+                    gameManager.getPlayerManager().handleMoveIntent(gameManager.getPlayerManager().getActivePlayer(), tileId);
             }
             if (packet.startsWith("dice")) {
-                gameManager.getPlayerManager().conductRoll();
+                if (!gameManager.getPlayerManager().computerMoving) // the computer AI is rolling not the player
+                    gameManager.getPlayerManager().conductRoll();
             }
             if (packet.startsWith("shutdown")) {
                 shutdown();

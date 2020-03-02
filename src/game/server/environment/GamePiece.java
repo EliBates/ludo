@@ -1,5 +1,7 @@
 package game.server.environment;
 
+import game.server.service.TileManager;
+
 public class GamePiece {
 //Comment
     private int colorId;
@@ -36,5 +38,9 @@ public class GamePiece {
 
     public void printPosition() {
         System.out.println("GamePiece: " + getColorId() + " X: " + position.getX() + " Y: " + position.getY());
+    }
+
+    public int getTileId() {
+        return TileManager.getTileId(position);
     }
 }

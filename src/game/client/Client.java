@@ -53,7 +53,7 @@ public class Client extends Thread implements Runnable {
                 int id = Integer.parseInt(playerData[0]);
                 for (int i = 1; i < playerData.length; i++) {
                     String[] pos = playerData[i].split("/");
-                    GamePiece gamePiece = new GamePiece(id, (Integer.parseInt(pos[0]) * 40) +15, Integer.parseInt(pos[1]) * 40);
+                    GamePiece gamePiece = new GamePiece(id, (Integer.parseInt(pos[0]) * 40 + 5), Integer.parseInt(pos[1]) * 40 - 8);
                     //System.out.println("Client game piece: " + id + " X: " + gamePiece.getDrawX()/40 + " Y: " + gamePiece.getDrawY()/40);
                     gamePieces[index] = gamePiece;
                     index++;

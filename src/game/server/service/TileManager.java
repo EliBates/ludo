@@ -2,6 +2,7 @@ package game.server.service;
 
 import game.server.environment.GamePiece;
 import game.server.environment.GameTile;
+import game.server.environment.Player;
 import game.server.environment.Position;
 
 import java.util.ArrayList;
@@ -21,10 +22,14 @@ public class TileManager {
         for (int y = 0; y < 17; y++) {
             for (int x = 0; x < 17; x++) {
                 gameTiles.put(id, new GameTile(new Position(x,y)));
-                //System.out.println("building tile: "+id+ ", " + x + ", " +y);
                 id++;
             }
         }
+    }
+
+    public boolean tileIsBlocked(Player p, int tileId) {
+        GameTile tile = getTile(tileId);
+        return tile.occupiedByFriendly(p.getId());
     }
 
     public GameTile getTile(int tileId) {
@@ -36,9 +41,9 @@ public class TileManager {
         return gameTiles.get(tileId);
     }
 
-    public int getTileId(Position position) {
-        int id = (position.getX() * 17 + position.getY());
-        System.out.println("Position " + position.getX() + ", " + position.getY() + " translated to id: " + id);
+    public static int getTileId(Position position) {
+        int id = (position.getY() * 17 + position.getX());
+       // System.out.println("Position " + position.getX() + ", " + position.getY() + " translated to id: " + id);
         return id; // x * rowLength + y = tileID
     }
 
