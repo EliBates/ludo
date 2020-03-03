@@ -76,6 +76,7 @@ public class GameServer extends Thread implements Runnable{
                     gameManager.requestClientUpdate = false;
                 }
             }
+            gameManager.isRunning = false;
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -86,16 +87,6 @@ public class GameServer extends Thread implements Runnable{
         listener.start();
         isRunning = true;
         gameManager = new GameManager(this);
-    }
-
-    private void process() {
-        while (isRunning) {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public void shutdown() {
@@ -111,6 +102,5 @@ public class GameServer extends Thread implements Runnable{
         gameManager = new GameManager(this);
         gameManager.buildPlayers(setupString);
         gameManager.start();
-
     }
 }

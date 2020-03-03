@@ -141,12 +141,12 @@ public class PlayerManager {
                 int destinationId = p.getPath().getDestinationId(tileId, activeDiceRoll); //check if the amount of the roll can be navigated to on the path
                 if (destinationId != -1) { // The player can actually move the gamepiece according to the dice roll
 //                   System.out.println("Destination is valid");
-                    if (!gameManager.getTileManager().moveGamePieces(tileId, destinationId)) {
+                    if (gameManager.getTileManager().moveGamePieces(tileId, destinationId)) {
 //                       System.out.println("unable to move piece");
                         return;
                     }
                 } else if (activeDiceRoll == 6) {
-                    if (!gameManager.getTileManager().moveGamePieces(tileId, p.getPath().getStartPoint())) {
+                    if (gameManager.getTileManager().moveGamePieces(tileId, p.getPath().getStartPoint())) {
                         return;
                     }
                     if (!secondTurn) { // you get to roll again!

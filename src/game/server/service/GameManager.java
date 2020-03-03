@@ -39,7 +39,6 @@ public class GameManager extends Thread {
 
     @Override
     public void run() {
-        super.run();
         while (isRunning || gameServer.isAlive()) {
             if (!playerManager.conductingTurn) {
                 playerManager.nextTurn();

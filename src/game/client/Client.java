@@ -127,7 +127,7 @@ public class Client extends Thread implements Runnable {
                 Thread.sleep(100);
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("The client has been killed");
         }
     }
 

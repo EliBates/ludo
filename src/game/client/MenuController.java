@@ -6,32 +6,27 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import javax.swing.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class MenuController {
-
-    @FXML
-    private Pane gameMenu;
 
     @FXML
     private VBox mainMenu, newGame;
 
     @FXML
     private BorderPane localLobby;
-
-    @FXML
-    private Button newGameButton, joinGameButton, newLocalGame, localButton, startGame;
 
     @FXML
     private CheckBox disablePlayer3, disablePlayer4;
@@ -139,12 +134,11 @@ public class MenuController {
 
     @FXML
     private void connect() {
-//        if (Ludo.client.getConnection() != null) {
-//            return;
-//        }
         Ludo.client.setConnection(new Connection(Ludo.client, "127.0.0.1", 43594));
         Ludo.client.getConnection().start();
-        Ludo.client.start();
+        if (!Ludo.client.isAlive()) {
+            Ludo.client.start();
+        }
     }
 
     public boolean validColors() {
@@ -158,7 +152,7 @@ public class MenuController {
         if (!disablePlayer4.isSelected())
             colors.add(playerColorOptions.indexOf(player4Color.getValue()));
 
-        Set<Integer> matchCheckSet = new HashSet<Integer>(colors);
+        Set<Integer> matchCheckSet = new HashSet<>(colors);
         return matchCheckSet.size() == colors.size();
     }
 

@@ -29,7 +29,7 @@ public class TileManager {
 
     public boolean tileIsBlocked(Player p, int tileId) {
         GameTile tile = getTile(tileId);
-        return tile.occupiedByFriendly(p.getId());
+        return tile.occupiedByFriendly(p.getId()) && p.getPath().getEndPoint() != tileId;
     }
 
     public GameTile getTile(int tileId) {
@@ -42,9 +42,8 @@ public class TileManager {
     }
 
     public static int getTileId(Position position) {
-        int id = (position.getY() * 17 + position.getX());
-       // System.out.println("Position " + position.getX() + ", " + position.getY() + " translated to id: " + id);
-        return id; // x * rowLength + y = tileID
+        // System.out.println("Position " + position.getX() + ", " + position.getY() + " translated to id: " + id);
+        return (position.getY() * 17 + position.getX()); // x * rowLength + y = tileID
     }
 
     public boolean moveGamePieces(int oldId, int newId) {
@@ -55,12 +54,12 @@ public class TileManager {
 
         for (GamePiece gp : gamePieces) {
             if (!occupyTile(newId, gp)) {
-                return false;
+                return true;
             }
             //System.out.println(gp.getColorId() + " has occupied " + newId);
         }
         oldTile.reset();
-        return true;
+        return false;
     }
 
     public boolean occupyTile(int tileId, GamePiece gamePiece) {

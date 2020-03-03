@@ -31,10 +31,10 @@ public class GameController {
     @FXML
     Label player1Name, player2Name, player3Name, player4Name;
 
-    @FXML
-    private void showChatBox(){
-       chatbox.setVisible(!chatbox.isVisible());
-    }
+//    @FXML
+//    private void showChatBox(){
+//       chatbox.setVisible(!chatbox.isVisible());
+//    }
 
     @FXML
     private void newGame(){
