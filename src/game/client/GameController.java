@@ -53,37 +53,33 @@ public class GameController {
 
     @FXML
     private void initialize() {
+        initImages();
         Ludo.graphicsContext = canvas.getGraphicsContext2D();
+        Ludo.client = new Client(canvas.getGraphicsContext2D());
+        Ludo.client.setGameController(this);
         canvas.setOnMouseClicked(event -> {
             int x = (int)(event.getX() / 40);
             int y = (int)(event.getY() / 40);
             Ludo.client.getConnection().sendUpdate("click:"+getTileId(new Position(x, y)));
         });
-        getImages();
-
     }
 
     public int getTileId(Position position) {
         return (position.getY() * 17 + position.getX()); // y * rowLength + x = tileID
     }
 
-
-
     @FXML
-    protected void diceRoll() { //TODO implement dice
+    protected void diceRoll() {
         if (Ludo.client.getConnection() != null) {
             MediaPlayer player = new MediaPlayer(Ludo.client.roll);
             Ludo.client.getConnection().sendUpdate("dice");
             player.play();
         }
-
     }
 
     @FXML
     public void startGame() {
-        if(Ludo.client.getGc()==null){
-            Ludo.client.setGameController(this);
-        }
+
     }
 
     public void setPlayerNames(String name) {
@@ -135,7 +131,7 @@ public class GameController {
         player4DiceBG.setVisible(false);
     }
 
-    public void getImages() {
+    public void initImages() {
         diceImages[0] = new Image("assets/dice1.png");
         diceImages[1] = new Image("assets/dice2.png");
         diceImages[2] = new Image("assets/dice3.png");
@@ -145,20 +141,22 @@ public class GameController {
     }
 
     public void updateDiceImage(int id, int dice) {
-        Image image = diceImages[dice-1];
-        switch(id) {
-            case 0:
-                player1Dice.setImage(image);
-                break;
-            case 1:
-                player2Dice.setImage(image);
-                break;
-            case 2:
-                player3Dice.setImage(image);
-                break;
-            case 3:
-                player4Dice.setImage(image);
-                break;
+        if (dice > 0) {
+            Image image = diceImages[dice-1];
+            switch(id) {
+                case 0:
+                    player1Dice.setImage(image);
+                    break;
+                case 1:
+                    player2Dice.setImage(image);
+                    break;
+                case 2:
+                    player3Dice.setImage(image);
+                    break;
+                case 3:
+                    player4Dice.setImage(image);
+                    break;
+            }
         }
     }
 

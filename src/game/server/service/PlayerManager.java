@@ -89,6 +89,14 @@ public class PlayerManager {
         }
     }
 
+    private void pause(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void conductRoll() {
         if (hasRolledAlready)
             return;
@@ -96,40 +104,35 @@ public class PlayerManager {
         activeDiceRoll = Rand.getDiceRoll();
         gameManager.requestClientUpdate = true;
 
+        pause(2);
         if (activeDiceRoll != 6 && getActivePlayer().allAtStart()) {
             System.out.print(" : They rolled a " + activeDiceRoll + "\n");
             resetTurn();
         } else {
+
             System.out.println(" : The roll was a " + activeDiceRoll);
             if (getActivePlayer().getType() == 1) { // Continue to the movement section for AI
-                ArrayList<Integer> tiles = getActivePlayer().getMoveablePieces(activeDiceRoll, gameManager.getTileManager());
+                ArrayList<Integer> tiles = getActivePlayer().getAvailablePieces(activeDiceRoll, gameManager.getTileManager());
                 if (tiles.size() > 0) {
                     handleMoveIntent(getActivePlayer(), tiles.get(Rand.getRandom(tiles.size())));
                 } else {
                     System.out.println("no available moves");
                     resetTurn();
                 }
-
             }
         }
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         gameManager.requestClientUpdate = true;
     }
 
     private boolean secondTurn = false;
     public boolean computerMoving = false;
+
     public void handleMoveIntent(Player p, int tileId) {
         if (!hasRolledAlready) {
             System.out.println("You haven't rolled yet!");
             return;
         }
 //        System.out.println("Move attempt: " + tileId);
-
         if (p.getId() == turnOrder[activePlayerIndex]) { //The active player is the only one that can move a piece
 //            System.out.println("player is active");
             if (gameManager.getTileManager().getTile(tileId).getOccupantColorId() == p.getId()) { // The tile contains a gamePiece the player owns

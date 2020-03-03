@@ -21,8 +21,6 @@ import java.util.*;
 
 public class MenuController {
 
-    private Connection connection;
-
     @FXML
     private Pane gameMenu;
 
@@ -141,11 +139,12 @@ public class MenuController {
 
     @FXML
     private void connect() {
-        if (connection != null) {
-            return;
-        }
-        connection = new Connection(Ludo.client, "127.0.0.1", 43594);
-        connection.start();
+//        if (Ludo.client.getConnection() != null) {
+//            return;
+//        }
+        Ludo.client.setConnection(new Connection(Ludo.client, "127.0.0.1", 43594));
+        Ludo.client.getConnection().start();
+        Ludo.client.start();
     }
 
     public boolean validColors() {
@@ -196,7 +195,6 @@ public class MenuController {
             return;
         }
         if (Ludo.gameServer == null) {
-            Ludo.client = new Client(Ludo.graphicsContext);
             MediaPlayer player = new MediaPlayer(Ludo.client.introSound);
             player.setVolume(.5);
             player.play();
@@ -206,7 +204,7 @@ public class MenuController {
             stage.sizeToScene();
             stage.show();
             connect();
-            connection.sendUpdate("setup" + getPlayer1Data() + getPlayer2Data() + getPlayer3Data() + getPlayer4Data());
+            Ludo.client.getConnection().sendUpdate("setup" + getPlayer1Data() + getPlayer2Data() + getPlayer3Data() + getPlayer4Data());
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

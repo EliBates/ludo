@@ -25,10 +25,6 @@ public class Client extends Thread implements Runnable {
 
     public int diceRoll;
 
-    public GameController getGc() {
-        return gc;
-    }
-
     private GameController gc;
 
     public void setConnection(Connection c) {
@@ -76,7 +72,6 @@ public class Client extends Thread implements Runnable {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        this.start();
     }
 
     public void receiveGamePieceUpdate(String update) {

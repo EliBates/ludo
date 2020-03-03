@@ -28,10 +28,11 @@ public class Ludo extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Ludo.primaryStage = primaryStage;
-        root = FXMLLoader.load(getClass().getResource("menu.fxml"));
         game = FXMLLoader.load(getClass().getResource("game.fxml"));
-        menuScene = new Scene(root, 600, 450);
+        root = FXMLLoader.load(getClass().getResource("menu.fxml"));
+
         gameScene = new Scene(game, 1100, 750);
+        menuScene = new Scene(root, 600, 450);
         primaryStage.setTitle("ISTE-121 Ludo Project");
         primaryStage.setScene(menuScene);
         primaryStage.show();

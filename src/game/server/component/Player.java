@@ -58,12 +58,11 @@ public class Player {
             }
             gamePiece[i] = new GamePiece(id);
             gamePiece[i].setPosition(tm.getTile(tileId).getPosition());
-            //System.out.println("Attempting to occupy " +tileId);
             tm.occupyTile(tileId, gamePiece[i]);
         }
     }
 
-    public ArrayList<Integer> getMoveablePieces(int distance, TileManager tm) {
+    public ArrayList<Integer> getAvailablePieces(int distance, TileManager tm) {
         ArrayList<Integer> moveablePieces = new ArrayList<>();
         for (GamePiece gp : gamePiece) {
             int tileAttempt = path.getDestinationId(gp.getTileId(), distance);
@@ -75,17 +74,17 @@ public class Player {
             } else if (tm.tileIsBlocked(this, tileAttempt)) {
 
             } else {
-//                System.out.println("moveable tile: " + gp.getTileId());
+//                System.out.println("movable tile: " + gp.getTileId());
                 moveablePieces.add(gp.getTileId());
             }
         }
         return moveablePieces;
     }
 
-    public String getMoveablePiecesMessage(int distance, TileManager tm) {
-        ArrayList<Integer> moveablePieces = getMoveablePieces(distance, tm);
+    public String getAvailablePiecesMessage(int distance, TileManager tm) {
+        ArrayList<Integer> availablePieces = getAvailablePieces(distance, tm);
         StringBuilder message = new StringBuilder("highlight:");
-        for(int tileID : moveablePieces) {
+        for(int tileID : availablePieces) {
             message.append(tileID).append(",");
         }
         return message.toString();
