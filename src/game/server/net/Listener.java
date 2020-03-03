@@ -1,4 +1,4 @@
-package game.server.io;
+package game.server.net;
 
 import game.server.GameServer;
 

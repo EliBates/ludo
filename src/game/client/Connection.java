@@ -3,14 +3,14 @@ package game.client;
 import java.io.*;
 import java.net.Socket;
 
-public class ClientConnection extends Thread {
+public class Connection extends Thread {
 
     private Client client;
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
     private boolean killThread;
 
-    public ClientConnection(Client client, String ip, int port) {
+    public Connection(Client client, String ip, int port) {
         this.client = client;
         client.setConnection(this);
 

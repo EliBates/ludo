@@ -1,9 +1,9 @@
 package game.server.service;
 
-import game.server.Rand;
-import game.server.environment.GamePiece;
-import game.server.environment.Player;
-import game.server.environment.Position;
+import game.util.Rand;
+import game.server.component.GamePiece;
+import game.server.component.Player;
+import game.server.component.Position;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -92,14 +92,13 @@ public class PlayerManager {
             resetTurn();
         } else {
             System.out.println(" : The roll was a " + activeDiceRoll);
-
-
             if (getActivePlayer().getType() == 1) { // Continue to the movement section for AI
                 ArrayList<Integer> tiles = getActivePlayer().getMoveablePieces(activeDiceRoll, gameManager.getTileManager());
                 if (tiles.size() > 0) {
                     handleMoveIntent(getActivePlayer(), tiles.get(Rand.getRandom(tiles.size())));
                 } else {
                     System.out.println("no available moves");
+                    resetTurn();
                 }
 
             }

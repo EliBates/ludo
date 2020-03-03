@@ -1,6 +1,6 @@
-package game.server;
+package game.util;
 
-import game.server.environment.Path;
+import game.server.component.Path;
 
 public class Config {
 

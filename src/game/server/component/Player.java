@@ -1,7 +1,7 @@
-package game.server.environment;
+package game.server.component;
 
-import game.server.Config;
-import game.server.io.Connection;
+import game.util.Config;
+import game.server.net.Connection;
 import game.server.service.TileManager;
 
 import java.util.ArrayList;

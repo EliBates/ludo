@@ -1,9 +1,9 @@
 package game.server.service;
 
-import game.server.environment.GamePiece;
-import game.server.environment.GameTile;
-import game.server.environment.Player;
-import game.server.environment.Position;
+import game.server.component.GamePiece;
+import game.server.component.GameTile;
+import game.server.component.Player;
+import game.server.component.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;

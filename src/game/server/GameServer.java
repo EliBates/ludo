@@ -1,10 +1,9 @@
 package game.server;
 
-import game.server.io.Connection;
-import game.server.io.Listener;
+import game.server.net.Connection;
+import game.server.net.Listener;
 import game.server.service.GameManager;
 
-import java.io.IOException;
 import java.util.Vector;
 
 public class GameServer extends Thread implements Runnable{

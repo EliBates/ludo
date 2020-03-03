@@ -1,7 +1,7 @@
 package game.server.service;
 
 import game.server.GameServer;
-import game.server.environment.Player;
+import game.server.component.Player;
 
 public class GameManager extends Thread {
 

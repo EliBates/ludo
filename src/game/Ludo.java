@@ -4,13 +4,12 @@ import game.client.Client;
 import game.server.GameServer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Ludo extends Application {
 
     public static Parent root, game;
 
@@ -28,7 +27,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Main.primaryStage = primaryStage;
+        Ludo.primaryStage = primaryStage;
         root = FXMLLoader.load(getClass().getResource("menu.fxml"));
         game = FXMLLoader.load(getClass().getResource("game.fxml"));
         menuScene = new Scene(root, 600, 450);

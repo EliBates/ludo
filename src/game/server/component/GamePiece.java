@@ -1,4 +1,4 @@
-package game.server.environment;
+package game.server.component;
 
 import game.server.service.TileManager;
 

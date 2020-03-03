@@ -2,10 +2,13 @@ package game.client;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+
+import java.net.URISyntaxException;
 
 public class Client extends Thread implements Runnable {
 
-    private ClientConnection connection;
+    private Connection connection;
 
     private GraphicsContext gtx;
 
@@ -15,7 +18,9 @@ public class Client extends Thread implements Runnable {
 
     private GamePiece[] gamePieces;
 
-    public void setConnection(ClientConnection c) {
+    public Media introSound, introVoice, roll;
+
+    public void setConnection(Connection c) {
         this.connection = c;
     }
 
@@ -39,6 +44,13 @@ public class Client extends Thread implements Runnable {
         gamePieceImage[1] = new Image("assets/green-piece.png");
         gamePieceImage[2] = new Image("assets/yellow-piece.png");
         gamePieceImage[3] = new Image("assets/blue-piece.png");
+        try {
+            introSound = new Media(getClass().getResource("/audio/introsound.mp3").toURI().toString());
+            introVoice = new Media(getClass().getResource("/audio/welcome.mp3").toURI().toString());
+            roll = new Media(getClass().getResource("/audio/dice.mp3").toURI().toString());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         this.start();
     }
 
@@ -81,7 +93,7 @@ public class Client extends Thread implements Runnable {
         }
     }
 
-    public ClientConnection getConnection() {
+    public Connection getConnection() {
         return connection;
     }
 }

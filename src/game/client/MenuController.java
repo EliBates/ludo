@@ -1,6 +1,6 @@
 package game.client;
 
-import game.Main;
+import game.Ludo;
 import game.server.GameServer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -20,7 +21,7 @@ import java.util.*;
 
 public class MenuController {
 
-    private ClientConnection connection;
+    private Connection connection;
 
     @FXML
     private Pane gameMenu;
@@ -62,7 +63,6 @@ public class MenuController {
     private ComboBox<String> player3Type;
     @FXML
     private ComboBox<String> player4Type;
-
     @FXML
     private ComboBox<String> player1Color;
     @FXML
@@ -126,9 +126,9 @@ public class MenuController {
 
     @FXML
     private void joinGame() {
-        Main.client = new Client(Main.graphicsContext);
-        Stage stage = Main.primaryStage;
-        stage.setScene(new Scene(Main.game, 1800, 1000));
+        Ludo.client = new Client(Ludo.graphicsContext);
+        Stage stage = Ludo.primaryStage;
+        stage.setScene(new Scene(Ludo.game, 1800, 1000));
         //stage.sizeToScene();
         stage.show();
         connect();
@@ -145,7 +145,7 @@ public class MenuController {
         if (connection != null) {
             return;
         }
-        connection = new ClientConnection(Main.client, "127.0.0.1", 43594);
+        connection = new Connection(Ludo.client, "127.0.0.1", 43594);
         connection.start();
     }
 
@@ -193,18 +193,29 @@ public class MenuController {
     @FXML
     private void startServer() {
         if (!validColors()) {
-            JOptionPane.showMessageDialog(null, "One or more players are trying to use the same color!");
+            JOptionPane.showMessageDialog(null, "More than one player cannot use the same color!");
             return;
         }
-        if (Main.gameServer == null) {
-            Main.client = new Client(Main.graphicsContext);
-            Main.gameServer = new GameServer();
-            Stage stage = Main.primaryStage;
-            stage.setScene(Main.gameScene);
+        if (Ludo.gameServer == null) {
+            Ludo.client = new Client(Ludo.graphicsContext);
+            MediaPlayer player = new MediaPlayer(Ludo.client.introSound);
+            player.setVolume(.5);
+            player.play();
+            Ludo.gameServer = new GameServer();
+            Stage stage = Ludo.primaryStage;
+            stage.setScene(Ludo.gameScene);
             stage.sizeToScene();
             stage.show();
             connect();
             connection.sendUpdate("setup" + getPlayer1Data() + getPlayer2Data() + getPlayer3Data() + getPlayer4Data());
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            player = new MediaPlayer(Ludo.client.introVoice);
+            player.setVolume(1);
+            player.play();
         }
     }
 }
