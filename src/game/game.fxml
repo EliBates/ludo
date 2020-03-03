@@ -45,7 +45,7 @@
                   <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="PLAYER 4" textFill="#fcfcfc" GridPane.columnIndex="1">
+                  <Label fx:id="player3Name" text="PLAYER 3" textFill="#fcfcfc" GridPane.columnIndex="1">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -100,7 +100,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="PLAYER 3 " textFill="#fcfcfc" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <Label fx:id="player2Name" text="PLAYER 2" textFill="#fcfcfc" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -180,11 +180,18 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" style="-fx-translate-x: -30;">
-                     <image>
-                        <Image url="@../assets/dice.png" />
-                     </image>
-                  </ImageView>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="49.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" style="-fx-translate-x: -30;">
+                           <image>
+                              <Image url="@../assets/dice.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                  </HBox>
                   <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <children>
                         <Circle fill="WHITE" radius="8.0" stroke="BLACK" strokeType="INSIDE">
@@ -210,7 +217,7 @@
                      </children>
                   </FlowPane>
                   <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-                  <Label text="PLAYER 1" textFill="#fcfcfc" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="player1Name" text="PLAYER 1" textFill="#fcfcfc" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -265,7 +272,7 @@
                      </children>
                   </FlowPane>
                   <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="PLAYER 2" textFill="#fcfcfc" GridPane.columnIndex="1">
+                  <Label fx:id="player4Name" text="PLAYER 4" textFill="#fcfcfc" GridPane.columnIndex="1">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
