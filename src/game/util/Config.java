@@ -12,10 +12,10 @@ public class Config {
 
     public enum Color{RED, YELLOW, GREEN, BLUE}
 
-    public static final int[] RED_STARTING = {71, 72, 55, 56};
+    public static final int[] RED_STARTING = {70, 71, 54, 55};
     public static final int[] GREEN_STARTING = {63, 64, 79, 80};
-    public static final int[] YELLOW_STARTING = {232, 233, 216, 217};
-    public static final int[] BLUE_STARTING = {208, 209, 224, 225};
+    public static final int[] YELLOW_STARTING = {233, 234, 249, 250};
+    public static final int[] BLUE_STARTING = {224, 225, 240, 241};
 
     public static Path pathForId(int id) {
         switch (id) {
