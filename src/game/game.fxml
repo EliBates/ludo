@@ -45,7 +45,7 @@
                   <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label fx:id="player3Name" text="PLAYER 3" textFill="#fcfcfc" GridPane.columnIndex="1">
+                  <Label fx:id="player3Name" alignment="CENTER" text="PLAYER 3" textAlignment="CENTER" textFill="#fcfcfc" GridPane.columnIndex="1">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -109,7 +109,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label fx:id="player2Name" text="PLAYER 2" textFill="#fcfcfc" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <Label fx:id="player2Name" alignment="CENTER" text="PLAYER 2" textAlignment="CENTER" textFill="#fcfcfc" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
