@@ -45,7 +45,7 @@
                   <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label fx:id="player3Name" alignment="CENTER" text="PLAYER 3" textAlignment="CENTER" textFill="#fcfcfc" GridPane.columnIndex="1">
+                  <Label fx:id="player3Name" alignment="CENTER" text="PLAYER 3" textAlignment="CENTER" textFill="#fcfcfc" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -74,7 +74,7 @@
                         </Circle>
                      </children>
                   </FlowPane>
-                  <ImageView fitHeight="54.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ImageView fitHeight="54.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../assets/yellow-piece.png" />
                      </image>
@@ -138,7 +138,7 @@
                         </Circle>
                      </children>
                   </FlowPane>
-                  <ImageView fitHeight="54.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                  <ImageView fitHeight="54.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../assets/green-piece.png" />
                      </image>
@@ -238,12 +238,12 @@
                      </children>
                   </FlowPane>
                   <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-                  <Label fx:id="player1Name" text="PLAYER 1" textFill="#fcfcfc" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="player1Name" text="PLAYER 1" textFill="#fcfcfc" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="54.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                  <ImageView fitHeight="54.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../assets/red-piece.png" />
                      </image>
@@ -288,12 +288,12 @@
                      </children>
                   </FlowPane>
                   <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label fx:id="player4Name" text="PLAYER 4" textFill="#fcfcfc" GridPane.columnIndex="1">
+                  <Label fx:id="player4Name" text="PLAYER 4" textFill="#fcfcfc" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="54.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ImageView fitHeight="54.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
                         <Image url="@../assets/blue-piece.png" />
                      </image>
