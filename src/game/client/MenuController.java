@@ -106,7 +106,6 @@ public class MenuController {
         player3Type.setItems(playerTypeOptions);
         player4Type.setValue("Ludo Bot");
         player4Type.setItems(playerTypeOptions);
-
         player1Color.setValue("Red");
         player2Color.setValue("Green");
         player3Color.setValue("Yellow");

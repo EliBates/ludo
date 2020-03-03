@@ -4,6 +4,7 @@ import game.Ludo;
 import game.server.component.Position;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -15,6 +16,9 @@ public class GameController {
 
     @FXML
     VBox chatbox;
+
+    @FXML
+    Label player1Name, player2Name, player3Name, player4Name;
 
     @FXML
     private void showChatBox(){
