@@ -17,6 +17,11 @@ public class PlayerManager {
     public int[] turnOrder;
 
     protected int activePlayerIndex = -1;
+
+    public int getActiveDiceRoll() {
+        return activeDiceRoll;
+    }
+
     protected int activeDiceRoll = -1;
 
     protected boolean conductingTurn = false;
@@ -46,6 +51,7 @@ public class PlayerManager {
             players.put(player.getId(), player);
             player.initGamePieces(tm);
         }
+        gameManager.requestClientUpdate=true;
     }
 
     public void removePlayer(Player player) {
@@ -76,17 +82,12 @@ public class PlayerManager {
     }
 
     public void conductRoll() {
-        if (computerMoving) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
         if (hasRolledAlready)
             return;
         hasRolledAlready = true;
         activeDiceRoll = Rand.getDiceRoll();
+        gameManager.requestClientUpdate = true;
+
         if (activeDiceRoll != 6 && getActivePlayer().allAtStart()) {
             System.out.print(" : They rolled a " + activeDiceRoll + "\n");
             resetTurn();
@@ -103,6 +104,12 @@ public class PlayerManager {
 
             }
         }
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         gameManager.requestClientUpdate = true;
     }
 

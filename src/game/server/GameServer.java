@@ -69,6 +69,8 @@ public class GameServer extends Thread implements Runnable{
                 if (gameManager.requestClientUpdate) { // update all the clients
                     for (Connection c : playerClients) {
                         c.sendMessage(gameManager.getPlayerManager().getPlayerData());
+                        c.sendMessage("active" + gameManager.getPlayerManager().getActivePlayer().getId());
+                        c.sendMessage("roll" + gameManager.getPlayerManager().getActiveDiceRoll());
                     }
                     gameManager.requestClientUpdate = false;
                 }

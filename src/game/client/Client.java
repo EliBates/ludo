@@ -20,15 +20,34 @@ public class Client extends Thread implements Runnable {
 
     public Media introSound, introVoice, roll;
 
+    public int activePlayer;
+
+    public int diceRoll;
+
+    public GameController getGc() {
+        return gc;
+    }
+
+    private GameController gc;
+
     public void setConnection(Connection c) {
         this.connection = c;
     }
 
     public void recieveUpdate(String update) {
         //System.out.println("Client Received: " + update);
-
         if (update.startsWith("pieceupdate")) {
             receiveGamePieceUpdate(update.substring(update.indexOf("pieceupdate") + 11));
+        }
+        if (update.startsWith("active")) {
+            if(gc != null) {
+                receiveActivePlayer(update.substring(update.indexOf("active") + 6));
+            }
+        }
+        if (update.startsWith("roll")) {
+            if(gc != null) {
+                receiveDiceRoll(update.substring(update.indexOf("roll") + 4));
+            }
         }
     }
 
@@ -72,6 +91,24 @@ public class Client extends Thread implements Runnable {
                 }
             }
         }
+    }
+
+    public void receiveActivePlayer(String id){
+        if(id !=null) {
+            activePlayer = Integer.parseInt(id);
+            gc.setActivePlayer(activePlayer);
+        }
+    }
+
+    public void receiveDiceRoll(String id){
+        if(id !=null) {
+            diceRoll = Integer.parseInt(id);
+            gc.updateDiceImage(activePlayer, diceRoll);
+        }
+    }
+
+    public void setGameController(GameController gc) {
+        this.gc = gc;
     }
 
     @Override
