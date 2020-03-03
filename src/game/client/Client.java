@@ -34,7 +34,7 @@ public class Client extends Thread implements Runnable {
 
     public Client(GraphicsContext gtx) {
         this.gtx = gtx;
-        this.ludoBoard = new Image("ludo-board3.png");
+        this.ludoBoard = new Image("ludo-board.png");
         gamePieces = new GamePiece[16];
         for (int i = 0; i < 16; i++) {
             gamePieces[i] = new GamePiece(0, 0, 0);
