@@ -86,6 +86,30 @@ public class GameController {
         }
     }
 
+    public void setPlayerNames(String name) {
+        String [] names = name.split(":");
+        for(int i=0; i<names.length; i++) {
+            setPlayerName(names[i], i);
+        }
+    }
+
+    public void setPlayerName(String name, int id){
+        switch(id) {
+            case 0:
+                player1Name.setText(name);
+                break;
+            case 1:
+                player2Name.setText(name);
+                break;
+            case 2:
+                player3Name.setText(name);
+                break;
+            case 3:
+                player4Name.setText(name);
+                break;
+        }
+    }
+
     public void setActivePlayer(int id) {
         clearActivePlayers();
         switch(id) {

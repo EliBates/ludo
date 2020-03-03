@@ -32,6 +32,14 @@ public class PlayerManager {
         players = new LinkedHashMap<>();
     }
 
+    public String getPlayerNames() {
+        StringBuilder output = new StringBuilder();
+        for (Map.Entry<Integer, Player> integerPlayerEntry : players.entrySet()) {
+            output.append(players.get(integerPlayerEntry.getKey()).getName()).append(":");
+        }
+        return output.toString();
+    }
+
     public String getPlayerData() {
         StringBuilder output = new StringBuilder();
         output.append("pieceupdate");

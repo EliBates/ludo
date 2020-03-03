@@ -1,5 +1,6 @@
 package game.client;
 
+import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
@@ -47,6 +48,11 @@ public class Client extends Thread implements Runnable {
         if (update.startsWith("roll")) {
             if(gc != null) {
                 receiveDiceRoll(update.substring(update.indexOf("roll") + 4));
+            }
+        }
+        if (update.startsWith("name")) {
+            if(gc != null) {
+                Platform.runLater(() -> gc.setPlayerNames(update.substring(update.indexOf("name") + 4)));
             }
         }
     }
