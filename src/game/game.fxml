@@ -76,7 +76,7 @@
                   </FlowPane>
                   <ImageView fitHeight="54.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@../assets/yellow-piece.png" />
+                        <Image url="@../assets/pirate.png" />
                      </image>
                   </ImageView>
                   <HBox fx:id="player3DiceBG" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #d6d331;" visible="false" GridPane.rowIndex="2">
@@ -140,7 +140,7 @@
                   </FlowPane>
                   <ImageView fitHeight="54.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@../assets/green-piece.png" />
+                        <Image url="@../assets/pirate.png" />
                      </image>
                   </ImageView>
                   <HBox fx:id="player2DiceBG" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: GREEN;" visible="false">
@@ -245,7 +245,7 @@
                   </Label>
                   <ImageView fitHeight="54.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@../assets/red-piece.png" />
+                        <Image url="@../assets/pirate.png" />
                      </image>
                   </ImageView>
                </children>
@@ -295,7 +295,7 @@
                   </Label>
                   <ImageView fitHeight="54.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@../assets/blue-piece.png" />
+                        <Image url="@../assets/pirate.png" />
                      </image>
                   </ImageView>
                   <HBox fx:id="player4DiceBG" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: BLUE;" visible="false" GridPane.rowIndex="2">
