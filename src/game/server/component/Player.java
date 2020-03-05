@@ -58,6 +58,14 @@ public class Player {
             switch (id) {
                 case Config.RED:
                     tileId = Config.RED_STARTING[i];
+                    if (i == 0)
+                        tileId = 142;
+                    if (i == 1)
+                        tileId = 141;
+                    if (i == 2)
+                        tileId = 140;
+                    if (i==3)
+                        tileId = 139;
                     break;
                 case Config.GREEN:
                     tileId = Config.GREEN_STARTING[i];
@@ -70,7 +78,6 @@ public class Player {
                     break;
             }
             gamePiece[i] = new GamePiece(id);
-            gamePiece[i].setPosition(tm.getTile(tileId).getPosition());
             tm.occupyTile(tileId, gamePiece[i]);
         }
     }

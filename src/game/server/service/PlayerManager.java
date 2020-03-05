@@ -94,7 +94,7 @@ public class PlayerManager {
     }
 
     public void conductRoll() {
-        if (hasRolledAlready)
+        if (hasRolledAlready || !gameManager.isRunning)
             return;
         hasRolledAlready = true;
         activeDiceRoll = Rand.getDiceRoll();
@@ -147,6 +147,8 @@ public class PlayerManager {
                     gameManager.isRunning = false;
                     System.out.println(p.getName() + " has won the game!");
                 }
+            } else {
+                System.out.println("End point: " + p.getPath().getEndPoint() + "   destID: " + destinationId);
             }
             gameManager.getTileManager().moveGamePieces(tileId, destinationId);
             resetTurn();
@@ -160,7 +162,8 @@ public class PlayerManager {
     }
 
     private boolean allPiecesStuckAtStart() {
-        return (activeDiceRoll != 6 && getActivePlayer().allAtStart());
+        return false;
+       // return (activeDiceRoll != 6 && getActivePlayer().allAtStart());
     }
 
     private boolean canMoveStartingPiece(Player p, int tileId) {
