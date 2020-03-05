@@ -30,8 +30,8 @@ public class GameManager extends Thread {
             Player player = new Player(
                     Integer.parseInt(buildData[0]), // color (playerID)
                     buildData[1],                   // player name
-                   // 1
-                   Integer.parseInt(buildData[2])  // player type (Human / AI)
+                    1
+//                   Integer.parseInt(buildData[2])  // player type (Human / AI)
             );
             playerManager.turnOrder[i] = player.getId();
             playerManager.addPlayer(player, tileManager);

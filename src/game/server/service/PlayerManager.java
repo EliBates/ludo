@@ -170,8 +170,7 @@ public class PlayerManager {
     }
 
     private boolean allPiecesStuckAtStart() {
-        return false;
-       // return (activeDiceRoll != 6 && getActivePlayer().allAtStart());
+       return (activeDiceRoll != 6 && getActivePlayer().allAtStart());
     }
 
     private boolean canMoveStartingPiece(Player p, int tileId) {

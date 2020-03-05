@@ -5,6 +5,7 @@ import game.server.GameServer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -12,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -196,6 +198,9 @@ public class MenuController {
             Stage stage = Ludo.primaryStage;
             stage.setScene(Ludo.gameScene);
             stage.sizeToScene();
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            stage.setX((screenBounds.getWidth() - 1100) / 2);
+            stage.setY((screenBounds.getHeight() - 750) / 2);
             stage.show();
             connect();
             Ludo.client.getConnection().sendUpdate("setup" + getPlayer1Data() + getPlayer2Data() + getPlayer3Data() + getPlayer4Data());

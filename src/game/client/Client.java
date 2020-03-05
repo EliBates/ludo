@@ -121,7 +121,7 @@ public class Client extends Thread implements Runnable {
     public void parseScore(String score) {
         if (score != null) {
             String[] scoreArray = score.split(":");
-            for(int i=0; i<scoreArray.length-1;i++){
+            for(int i=0; i<scoreArray.length;i++){
                 String[] data = scoreArray[i].split(",");
                 setScore(Integer.parseInt(data[0]), Integer.parseInt(data[1]));
             }

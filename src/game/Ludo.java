@@ -4,9 +4,11 @@ import game.client.Client;
 import game.server.GameServer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Ludo extends Application {
@@ -33,6 +35,7 @@ public class Ludo extends Application {
 
         gameScene = new Scene(game, 1100, 750);
         menuScene = new Scene(root, 600, 450);
+        
         primaryStage.setTitle("ISTE-121 Ludo Project");
         primaryStage.setScene(menuScene);
         primaryStage.show();
