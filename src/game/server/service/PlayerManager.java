@@ -43,7 +43,10 @@ public class PlayerManager {
     public String getScoreData() {
         StringBuilder output = new StringBuilder();
         for (Map.Entry<Integer, Player> integerPlayerEntry : players.entrySet()) {
-            output.append(integerPlayerEntry.getKey()).append(",").append(integerPlayerEntry.getValue().getScore()).append(":");
+            output.append(integerPlayerEntry.getKey())
+                    .append(",")
+                    .append(integerPlayerEntry.getValue().getScore())
+                    .append(":");
         }
         return output.toString();
     }
@@ -55,7 +58,10 @@ public class PlayerManager {
             output.append(integerPlayerEntry.getKey());
             for (GamePiece gamePiece : integerPlayerEntry.getValue().getGamePieces()) {
                 Position pos = gamePiece.getPosition();
-                output.append(",").append(pos.getX()).append("/").append(pos.getY());
+                output.append(",")
+                        .append(pos.getX())
+                        .append("/")
+                        .append(pos.getY());
             }
             output.append("-");
         }
@@ -95,7 +101,7 @@ public class PlayerManager {
 
     private void pause(int seconds) {
         try {
-            Thread.sleep(seconds * 250);
+            Thread.sleep(seconds * 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -150,7 +156,6 @@ public class PlayerManager {
     private void attemptMoveBoardPiece(Player p, int tileId, int destinationId) {
         if (canMoveToTile(p, destinationId)) {
             if (p.getPath().getEndPoint() == destinationId) {
-                pause(20);
                 if (p.addScore() == 4) {
                     gameManager.isRunning = false;
                     System.out.println(p.getName() + " has won the game!");
