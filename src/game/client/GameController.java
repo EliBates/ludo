@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class GameController {
@@ -19,6 +20,9 @@ public class GameController {
 
     @FXML
     VBox chatbox;
+
+    @FXML
+    Circle redCircle1, redCircle2, redCircle3, redCircle4, yellowCircle1, yellowCircle2, yellowCircle3, yellowCircle4, greenCircle1, greenCircle2, greenCircle3, greenCircle4, blueCircle1, blueCircle2, blueCircle3, blueCircle4;
 
     @FXML
     public HBox player1DiceBG, player2DiceBG, player3DiceBG, player4DiceBG;
@@ -157,6 +161,146 @@ public class GameController {
                     player4Dice.setImage(image);
                     break;
             }
+        }
+    }
+
+    public void setRedScore(int score) {
+        switch(score) {
+            case 0:
+                redCircle1.setVisible(false);
+                redCircle2.setVisible(false);
+                redCircle3.setVisible(false);
+                redCircle4.setVisible(false);
+                break;
+            case 1:
+                redCircle1.setVisible(true);
+                redCircle2.setVisible(false);
+                redCircle3.setVisible(false);
+                redCircle4.setVisible(false);
+                break;
+            case 2:
+                redCircle1.setVisible(true);
+                redCircle2.setVisible(true);
+                redCircle3.setVisible(false);
+                redCircle4.setVisible(false);
+                break;
+            case 3:
+                redCircle1.setVisible(true);
+                redCircle2.setVisible(true);
+                redCircle3.setVisible(true);
+                redCircle4.setVisible(false);
+                break;
+            case 4:
+                redCircle1.setVisible(true);
+                redCircle2.setVisible(true);
+                redCircle3.setVisible(true);
+                redCircle4.setVisible(true);
+                break;
+        }
+    }
+
+    public void setYellowScore(int score) {
+        switch(score) {
+            case 0:
+                yellowCircle1.setVisible(false);
+                yellowCircle2.setVisible(false);
+                yellowCircle3.setVisible(false);
+                yellowCircle4.setVisible(false);
+                break;
+            case 1:
+                yellowCircle1.setVisible(true);
+                yellowCircle2.setVisible(false);
+                yellowCircle3.setVisible(false);
+                yellowCircle4.setVisible(false);
+                break;
+            case 2:
+                yellowCircle1.setVisible(true);
+                yellowCircle2.setVisible(true);
+                yellowCircle3.setVisible(false);
+                yellowCircle4.setVisible(false);
+                break;
+            case 3:
+                yellowCircle1.setVisible(true);
+                yellowCircle2.setVisible(true);
+                yellowCircle3.setVisible(true);
+                yellowCircle4.setVisible(false);
+                break;
+            case 4:
+                yellowCircle1.setVisible(true);
+                yellowCircle2.setVisible(true);
+                yellowCircle3.setVisible(true);
+                yellowCircle4.setVisible(true);
+                break;
+        }
+    }
+
+    public void setGreenScore(int score) {
+        switch(score) {
+            case 0:
+                greenCircle1.setVisible(false);
+                greenCircle2.setVisible(false);
+                greenCircle3.setVisible(false);
+                greenCircle4.setVisible(false);
+                break;
+            case 1:
+                greenCircle1.setVisible(true);
+                greenCircle2.setVisible(false);
+                greenCircle3.setVisible(false);
+                greenCircle4.setVisible(false);
+                break;
+            case 2:
+                greenCircle1.setVisible(true);
+                greenCircle2.setVisible(true);
+                greenCircle3.setVisible(false);
+                greenCircle4.setVisible(false);
+                break;
+            case 3:
+                greenCircle1.setVisible(true);
+                greenCircle2.setVisible(true);
+                greenCircle3.setVisible(true);
+                greenCircle4.setVisible(false);
+                break;
+            case 4:
+                greenCircle1.setVisible(true);
+                greenCircle2.setVisible(true);
+                greenCircle3.setVisible(true);
+                greenCircle4.setVisible(true);
+                break;
+        }
+    }
+
+    public void setBlueScore(int score) {
+        switch(score) {
+            case 0:
+                blueCircle1.setVisible(false);
+                blueCircle2.setVisible(false);
+                blueCircle3.setVisible(false);
+                blueCircle4.setVisible(false);
+                break;
+            case 1:
+                blueCircle1.setVisible(true);
+                blueCircle2.setVisible(false);
+                blueCircle3.setVisible(false);
+                blueCircle4.setVisible(false);
+                break;
+            case 2:
+                blueCircle1.setVisible(true);
+                blueCircle2.setVisible(true);
+                blueCircle3.setVisible(false);
+                blueCircle4.setVisible(false);
+                break;
+            case 3:
+                blueCircle1.setVisible(true);
+                blueCircle2.setVisible(true);
+                blueCircle3.setVisible(true);
+                blueCircle4.setVisible(false);
+                break;
+            case 4:
+                blueCircle1.setVisible(true);
+                blueCircle2.setVisible(true);
+                blueCircle3.setVisible(true);
+                blueCircle4.setVisible(true);
+                break;
         }
     }
 

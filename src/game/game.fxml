@@ -27,6 +27,7 @@
 <!--          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">-->
 <!--</GridPane>-->
 
+<?import java.util.ArrayList?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1001.0" prefWidth="1100.0" style="-fx-background-color: #0071bc;" xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.client.GameController">
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -52,22 +53,22 @@
                   </Label>
                   <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER">
                      <children>
-                        <Circle fill="WHITE" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="yellowCircle1" fill="#d6d331" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets left="17.0" top="5.0" />
                            </FlowPane.margin>
                         </Circle>
-                        <Circle fill="WHITE" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="yellowCircle2" fill="#d6d331" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets top="5.0" />
                            </FlowPane.margin>
                         </Circle>
-                        <Circle fill="WHITE" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="yellowCircle3" fill="#d6d331" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets top="5.0" />
                            </FlowPane.margin>
                         </Circle>
-                        <Circle fill="#fcfcfc" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="yellowCircle4" fill="#d6d331" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets top="5.0" />
                            </FlowPane.margin>
@@ -116,22 +117,22 @@
                   </Label>
                   <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <children>
-                        <Circle fill="WHITE" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="greenCircle1" fill="GREEN" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets left="17.0" top="5.0" />
                            </FlowPane.margin>
                         </Circle>
-                        <Circle fill="WHITE" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="greenCircle2" fill="GREEN" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets top="5.0" />
                            </FlowPane.margin>
                         </Circle>
-                        <Circle fill="WHITE" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="greenCircle3" fill="GREEN" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets top="5.0" />
                            </FlowPane.margin>
                         </Circle>
-                        <Circle fill="#fcfcfc" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="greenCircle4" fill="GREEN" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets top="5.0" />
                            </FlowPane.margin>
@@ -215,22 +216,22 @@
                   </HBox>
                   <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <children>
-                        <Circle fill="WHITE" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="redCircle1" fill="RED" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets left="17.0" top="5.0" />
                            </FlowPane.margin>
                         </Circle>
-                        <Circle fill="WHITE" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="redCircle2" fill="RED" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets top="5.0" />
                            </FlowPane.margin>
                         </Circle>
-                        <Circle fill="WHITE" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="redCircle3" fill="RED" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets top="5.0" />
                            </FlowPane.margin>
                         </Circle>
-                        <Circle fill="#fcfcfc" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="redCircle4" fill="RED" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets top="5.0" />
                            </FlowPane.margin>
@@ -265,22 +266,22 @@
                <children>
                   <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER">
                      <children>
-                        <Circle fill="WHITE" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="blueCircle1" fill="BLUE" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets left="17.0" top="5.0" />
                            </FlowPane.margin>
                         </Circle>
-                        <Circle fill="WHITE" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="blueCircle2" fill="BLUE" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets top="5.0" />
                            </FlowPane.margin>
                         </Circle>
-                        <Circle fill="WHITE" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="blueCircle3" fill="BLUE" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets top="5.0" />
                            </FlowPane.margin>
                         </Circle>
-                        <Circle fill="#fcfcfc" radius="8.0" stroke="BLACK" strokeType="INSIDE">
+                        <Circle fx:id="blueCircle4" fill="BLUE" radius="8.0" stroke="BLACK" strokeType="INSIDE" visible="false">
                            <FlowPane.margin>
                               <Insets top="5.0" />
                            </FlowPane.margin>
@@ -351,3 +352,5 @@
       </VBox>
    </bottom>
 </BorderPane>
+
+

@@ -51,6 +51,12 @@ public class Client extends Thread implements Runnable {
                 Platform.runLater(() -> gc.setPlayerNames(update.substring(update.indexOf("name") + 4)));
             }
         }
+        if (update.startsWith("score")) {
+            if(gc != null) {
+                parseScore(update.substring(update.indexOf("score") + 5));
+            }
+        }
+
     }
 
     public Client(GraphicsContext gtx) {
@@ -110,6 +116,33 @@ public class Client extends Thread implements Runnable {
 
     public void setGameController(GameController gc) {
         this.gc = gc;
+    }
+
+    public void parseScore(String score) {
+        if (score != null) {
+            String[] scoreArray = score.split(":");
+            for(int i=0; i<scoreArray.length-1;i++){
+                String[] data = scoreArray[i].split(",");
+                setScore(Integer.parseInt(data[0]), Integer.parseInt(data[1]));
+            }
+        }
+    }
+
+    public void setScore(int id, int score) {
+        switch(id) {
+            case 0:
+                gc.setRedScore(score);
+                break;
+            case 1:
+                gc.setGreenScore(score);
+                break;
+            case 2:
+                gc.setYellowScore(score);
+                break;
+            case 3:
+                gc.setBlueScore(score);
+                break;
+        }
     }
 
     @Override
