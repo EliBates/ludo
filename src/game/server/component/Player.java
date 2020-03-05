@@ -11,6 +11,12 @@ public class Player {
     private Connection connection;
     private int id;
     private int type;
+
+    public int getScore() {
+        return score;
+    }
+
+    private int score;
     private String name;
     private GamePiece[] gamePiece;
     private Path path;
@@ -20,6 +26,7 @@ public class Player {
         this.name = name;
         this.type = type;
         this.path = Config.pathForId(id);
+        this.score = 0;
     }
 
     public Connection getConnection() {
@@ -36,6 +43,12 @@ public class Player {
                 return false;
         }
         return true;
+    }
+
+    public int addScore() {
+        score++;
+        System.out.println(name + "'s score is: " +score);
+        return score;
     }
 
     public void initGamePieces(TileManager tm) {
@@ -71,10 +84,7 @@ public class Player {
                     moveablePieces.add(gp.getTileId());
 //                    System.out.println("moveable tile: " + gp.getTileId());
                 }
-            } else if (tm.tileIsBlocked(this, tileAttempt)) {
-
-            } else {
-//                System.out.println("movable tile: " + gp.getTileId());
+            } else if (!tm.tileIsBlocked(this, tileAttempt)) {
                 moveablePieces.add(gp.getTileId());
             }
         }

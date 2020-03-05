@@ -32,6 +32,11 @@ public class TileManager {
         return tile.occupiedByFriendly(p.getId()) && p.getPath().getEndPoint() != tileId;
     }
 
+    public boolean playerOnTile(Player p, int tileId) {
+        GameTile tile = getTile(tileId);
+        return tile.occupiedByFriendly(p.getId());
+    }
+
     public GameTile getTile(int tileId) {
         GameTile tile = gameTiles.get(tileId);
         if (tile == null) {
@@ -53,12 +58,12 @@ public class TileManager {
         //System.out.println("The size of gamePieces " +gamePieces.size());
 
         for (GamePiece gp : gamePieces) {
-            if (!occupyTile(newId, gp)) {
+            if (occupyTile(newId, gp)) {
+                oldTile.reset();
                 return true;
             }
             //System.out.println(gp.getColorId() + " has occupied " + newId);
         }
-        oldTile.reset();
         return false;
     }
 
@@ -76,8 +81,6 @@ public class TileManager {
                     System.out.println(enemy.getColorId() + " has had a piece sent back to the start!");
                     tile.reset();
                 }
-            } else {
-                return false;
             }
         }
         //System.out.println("This is the set we are attempting...  Piece: " + gamePiece.getPosition().print() + " Tile: " + tile.getPosition().print());

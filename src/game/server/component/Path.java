@@ -16,6 +16,14 @@ public class Path {
         return getPointAtDistance(point, distance);
     }
 
+    public boolean contains(int tileId) {
+        for (int i : path) {
+            if (i == tileId)
+                return true;
+        }
+        return false;
+    }
+
     public int getStartPoint() {
         return path[0];
     }
