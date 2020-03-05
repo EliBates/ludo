@@ -40,6 +40,14 @@ public class PlayerManager {
         return output.toString();
     }
 
+    public String getScoreData() {
+        StringBuilder output = new StringBuilder();
+        for (Map.Entry<Integer, Player> integerPlayerEntry : players.entrySet()) {
+            output.append(integerPlayerEntry.getKey()).append(",").append(integerPlayerEntry.getValue().getScore()).append(":");
+        }
+        return output.toString();
+    }
+
     public String getPlayerData() {
         StringBuilder output = new StringBuilder();
         output.append("pieceupdate");
@@ -141,7 +149,7 @@ public class PlayerManager {
 
     private void attemptMoveBoardPiece(Player p, int tileId, int destinationId) {
         if (canMoveToTile(p, destinationId)) {
-            if (p.getPath().getEndPoint() == destinationId) { //todo there is the fucking problem this is not being called
+            if (p.getPath().getEndPoint() == destinationId) {
                 pause(20);
                 if (p.addScore() == 4) {
                     gameManager.isRunning = false;

@@ -72,6 +72,7 @@ public class GameServer extends Thread implements Runnable{
                         c.sendMessage("active" + gameManager.getPlayerManager().getActivePlayer().getId());
                         c.sendMessage("roll" + gameManager.getPlayerManager().getActiveDiceRoll());
                         c.sendMessage("name" + gameManager.getPlayerManager().getPlayerNames());
+                        c.sendMessage("score" + gameManager.getPlayerManager().getScoreData());
                     }
                     gameManager.requestClientUpdate = false;
                 }
