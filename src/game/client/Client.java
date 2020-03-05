@@ -31,7 +31,7 @@ public class Client extends Thread implements Runnable {
         this.connection = c;
     }
 
-    public void recieveUpdate(String update) {
+    public void receiveUpdate(String update) {
         //System.out.println("Client Received: " + update);
         if (update.startsWith("pieceupdate")) {
             receiveGamePieceUpdate(update.substring(update.indexOf("pieceupdate") + 11));

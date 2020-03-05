@@ -3,6 +3,10 @@ package game.server.service;
 import game.server.GameServer;
 import game.server.component.Player;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
 public class GameManager extends Thread {
 
     private TileManager tileManager;
@@ -24,18 +28,21 @@ public class GameManager extends Thread {
     public void buildPlayers(String playerData) { //TODO add connection later for multiplayer  TODO move this call to the packet manager and add this method in playermanager
         String[] info = playerData.split(":"); // divide all the players up
         playerManager.turnOrder = new int[info.length];
+        Player[] players = new Player[info.length];
         for (int i = 0; i < info.length; i++) { // iterate through each players info
             String[] buildData = info[i].split(","); // divide the players info up
             System.out.println("Building player ID: " + Integer.parseInt(buildData[0]) + " Name: " +  buildData[1] + " Type: " + buildData[2] );
             Player player = new Player(
                     Integer.parseInt(buildData[0]), // color (playerID)
                     buildData[1],                   // player name
-                    1
-//                   Integer.parseInt(buildData[2])  // player type (Human / AI)
+                    Integer.parseInt(buildData[2])  // player type (Human / AI)
             );
-            playerManager.turnOrder[i] = player.getId();
-            playerManager.addPlayer(player, tileManager);
+            players[player.getId()] = player;
+            playerManager.turnOrder[player.getId()] = player.getId();
+            //playerManager.addPlayer(player, tileManager);
         }
+        Arrays.sort(playerManager.turnOrder);
+        Arrays.stream(players).forEach(p -> playerManager.addPlayer(p, tileManager));
     }
 
     @Override

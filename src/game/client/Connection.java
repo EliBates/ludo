@@ -41,7 +41,7 @@ public class Connection extends Thread {
         try {
             while (((feedback = bufferedReader.readLine()) != null) && !killThread) {
                 if (client != null)
-                    client.recieveUpdate(feedback);
+                    client.receiveUpdate(feedback);
                 else
                     System.out.println("Client is null.. But here is the message anyways: " + feedback);
                 Thread.sleep(100);
