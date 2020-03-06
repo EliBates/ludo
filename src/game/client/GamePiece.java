@@ -1,5 +1,9 @@
 package game.client;
 
+/**
+ * @author Eli
+ * Simple game piece client sided representation for holding its draw location and id
+ */
 public class GamePiece {
 
     private int id;

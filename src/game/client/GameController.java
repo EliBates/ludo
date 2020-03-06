@@ -13,6 +13,12 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
+/**
+ * @author Eli / Jeff
+ * The gui controller class for the game state
+ * Holds a variety of references to the game.FXML gui file
+ */
+
 public class GameController {
 
     @FXML
@@ -30,6 +36,7 @@ public class GameController {
     @FXML
     ImageView player1Dice, player2Dice, player3Dice, player4Dice;
 
+    //The images for the dice
     Image[] diceImages = new Image[6];
 
     @FXML

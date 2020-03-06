@@ -22,6 +22,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author Eli
+ * The gui controller class for the menu state
+ * Holds a variety of references to the menu.FXML gui file
+ */
+
 public class MenuController {
 
     @FXML

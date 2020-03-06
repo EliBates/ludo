@@ -2,15 +2,14 @@ package game.util;
 
 import game.server.component.Path;
 
+/**
+ * @author Eli
+ * Configuration file for server
+ */
+
 public class Config {
 
     public static final int RED = 0, GREEN = 1, YELLOW = 2, BLUE = 3;
-
-    public enum PlayerType {HUMAN, AI}
-
-    public enum GameType {LOCAL, NETWORK}
-
-    public enum Color{RED, YELLOW, GREEN, BLUE}
 
     public static final int[] RED_STARTING = {70, 71, 54, 55};
     public static final int[] GREEN_STARTING = {63, 64, 79, 80};

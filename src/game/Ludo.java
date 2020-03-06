@@ -11,6 +11,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+/**
+ * @author Eli
+ * Main run application, loads fxml files for guis and client instance
+ */
+
 public class Ludo extends Application {
 
     public static Parent root, game;

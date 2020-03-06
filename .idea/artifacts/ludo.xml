@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="ludo">
+    <output-path>$PROJECT_DIR$/out/artifacts/ludo</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="game.Ludo" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="" />
+        <option name="vendor" value="" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="ludo.jar">
+        <element id="module-output" name="ludo" />
+      </element>
+      <element id="library" level="project" name="lib" />
+    </root>
+  </artifact>
+</component>

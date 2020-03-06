@@ -7,16 +7,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
+/**
+ * @author Eli
+ * Handles the entire management of the game, creation, shutting down and all playerManager/tileManager services
+ */
 public class GameManager extends Thread {
 
+    //The Tile manager instance
     private TileManager tileManager;
 
+    //The game Server reference
     private GameServer gameServer;
 
+    //The player Manager instance
     private PlayerManager playerManager;
 
+    //When this is set to true the client will be pushed an update
     public boolean requestClientUpdate = false;
 
+    //determines if the gamemanager needs to continue to run
     public boolean isRunning = true;
 
     public GameManager(GameServer gameServer) {
@@ -25,7 +34,11 @@ public class GameManager extends Thread {
         playerManager = new PlayerManager(this);
     }
 
-    public void buildPlayers(String playerData) { //TODO add connection later for multiplayer  TODO move this call to the packet manager and add this method in playermanager
+    /**
+     * builds all the players with the command sent from the client
+     * @param playerData the data containing what players to make
+     */
+    public void buildPlayers(String playerData) { //TODO add connections later for multiplayer  TODO move this call to the packet manager and add this method in playermanager
         String[] info = playerData.split(":"); // divide all the players up
         playerManager.turnOrder = new int[info.length];
         Player[] players = new Player[info.length];
@@ -41,8 +54,8 @@ public class GameManager extends Thread {
             playerManager.turnOrder[player.getId()] = player.getId();
             //playerManager.addPlayer(player, tileManager);
         }
-        Arrays.sort(playerManager.turnOrder);
-        Arrays.stream(players).forEach(p -> playerManager.addPlayer(p, tileManager));
+        Arrays.sort(playerManager.turnOrder); // sort the players from low-high
+        Arrays.stream(players).forEach(p -> playerManager.addPlayer(p, tileManager)); // add each player to the player manager
     }
 
     @Override

@@ -75,7 +75,7 @@ public class TileManager {
                 System.out.println("enemy found on tile");
                 ArrayList<GamePiece> enemyPieces = tile.getGamePieces(); // get all the enemies
                 for (GamePiece enemy : enemyPieces) {
-                    enemy.sendBackToHome(); // send them back home (set their Position)
+                    enemy.setOriginalLocation(); // send them back home (set their Position)
                     GameTile newEnemyTile = getTile(getTileId(enemy.getOriginalPosition()));
                     newEnemyTile.getGamePieces().add(enemy); // add them to the Tiles occupancy list
                     System.out.println(enemy.getColorId() + " has had a piece sent back to the start!");

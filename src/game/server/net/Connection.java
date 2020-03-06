@@ -5,6 +5,11 @@ import game.server.GameServer;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * @author Eli
+ * A basic thread containing a Connection with the client
+ */
+
 public class Connection extends Thread {
 
     private GameServer server;
@@ -39,11 +44,18 @@ public class Connection extends Thread {
         }
     }
 
+    /**
+     * Sends a message to the client
+     * @param message the message to send
+     */
     public void sendMessage(String message) {
         writer.println(message);
         writer.flush();
     }
 
+    /**
+     * closes the connection
+     */
     public void dispose() {
         try {
             socket.close();

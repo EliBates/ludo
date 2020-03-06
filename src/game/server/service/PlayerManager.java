@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * @author Eli
+ * Most of the player/game logic is handled inside this class as well as the instances of all the players
+ */
 public class PlayerManager {
 
     private GameManager gameManager;
@@ -32,6 +36,10 @@ public class PlayerManager {
         players = new LinkedHashMap<>();
     }
 
+    /**
+     * Returns string of all the player names
+     * @return string of all the player names
+     */
     public String getPlayerNames() {
         StringBuilder output = new StringBuilder();
         for (Map.Entry<Integer, Player> integerPlayerEntry : players.entrySet()) {
@@ -40,6 +48,10 @@ public class PlayerManager {
         return output.toString();
     }
 
+    /**
+     * returns string of all the player scores
+     * @return string of all the player scores
+     */
     public String getScoreData() {
         StringBuilder output = new StringBuilder();
         for (Map.Entry<Integer, Player> integerPlayerEntry : players.entrySet()) {
@@ -51,6 +63,10 @@ public class PlayerManager {
         return output.toString();
     }
 
+    /**
+     * Returns string of all the player data
+     * @return string of all the player data (ID,posX,posY)
+     */
     public String getPlayerData() {
         StringBuilder output = new StringBuilder();
         output.append("pieceupdate");
@@ -68,6 +84,7 @@ public class PlayerManager {
         return output.toString();
     }
 
+    //adds player to the game
     public void addPlayer(Player player, TileManager tm) {
         if (players.size() < 4 && !playerExists(player.getId())) {
             players.put(player.getId(), player);
@@ -76,14 +93,19 @@ public class PlayerManager {
         gameManager.requestClientUpdate=true;
     }
 
+    //checks if player exists in the game
     private boolean playerExists(int playerId) {
         return players.containsKey(playerId);
     }
 
+    //gets the reference to the active player
     public Player getActivePlayer() {
         return players.get(turnOrder[activePlayerIndex]);
     }
 
+    /**
+     * handles the turn order/processing of turns for humans/ai
+     */
     protected void nextTurn() {
         gameManager.requestClientUpdate = true;
         conductingTurn = true; // lock the game loop from calling this while we conduct turn
@@ -99,6 +121,7 @@ public class PlayerManager {
         }
     }
 
+    //Sleep method
     private void pause(int seconds) {
         try {
             Thread.sleep(seconds * 1000);
@@ -107,6 +130,9 @@ public class PlayerManager {
         }
     }
 
+    /**
+     * initiate server side dice roll.
+     */
     public void conductRoll() {
         if (hasRolledAlready || !gameManager.isRunning)
             return;
@@ -134,6 +160,11 @@ public class PlayerManager {
     private boolean secondTurn = false;
     public boolean computerMoving = false;
 
+    /**
+     * process a move intent (player clicks on a piece)
+     * @param p player
+     * @param tileId the tile clicked
+     */
     public void handlePlayerMoveIntent(Player p, int tileId) {
         if (validTurn(p)) { // you are allowed to move pieces
             if (gameManager.getTileManager().playerOnTile(p, tileId)) { // Check if you clicked your own piece
@@ -143,6 +174,11 @@ public class PlayerManager {
         }
     }
 
+    /**
+     * Attemtps to move a starting piece
+     * @param p player instance
+     * @param tileId tileID to move
+     */
     private void attemptMoveStartingPiece(Player p, int tileId) {
         if (canMoveStartingPiece(p, tileId)) {
             gameManager.getTileManager().moveGamePieces(tileId, p.getPath().getStartPoint());
@@ -153,6 +189,12 @@ public class PlayerManager {
         resetTurn();
     }
 
+    /**
+     * attempts to move a board piece (piece that already left the start)
+     * @param p player instance
+     * @param tileId tile id clicked
+     * @param destinationId computed destination, if bad dest. will be -1
+     */
     private void attemptMoveBoardPiece(Player p, int tileId, int destinationId) {
         if (canMoveToTile(p, destinationId)) {
             if (p.getPath().getEndPoint() == destinationId) {
@@ -170,30 +212,55 @@ public class PlayerManager {
         }
     }
 
+    /**
+     *
+     * @return if the player has no available board pieces to move
+     */
     private boolean noAvailableBoardPieces() {
         return (getActivePlayer().getAvailablePieces(activeDiceRoll, gameManager.getTileManager()).size() < 1);
     }
 
+    /**
+     * @return if the player has no available starting pieces to move
+     */
     private boolean allPiecesStuckAtStart() {
        return (activeDiceRoll != 6 && getActivePlayer().allAtStart());
     }
 
+    /**
+     * Check if the tile can be moved
+     * @param p player instance
+     * @param tileId tile clicked
+     * @return if the player can move the starting piece
+     */
     private boolean canMoveStartingPiece(Player p, int tileId) {
         boolean t1 = !p.getPath().contains(tileId),
                 t2 = activeDiceRoll == 6,
                 t3 = !gameManager.getTileManager().tileIsBlocked(p, p.getPath().getStartPoint());
-        System.out.println(t1 + " " + t2 + " " + t3);
+        System.out.println(t1 + " " + t2 + " " + t3); // for troubleshooting
         return (!p.getPath().contains(tileId) && activeDiceRoll == 6 && !gameManager.getTileManager().tileIsBlocked(p, p.getPath().getStartPoint()));
     }
 
+    /**
+     * Checks if the player can move to the given tile
+     * @param p player inst
+     * @param tileId tile to check
+     * @return if the tile can be moved to
+     */
     private boolean canMoveToTile(Player p, int tileId) {
         return ((tileId > 0) && (!gameManager.getTileManager().tileIsBlocked(p, tileId)));
     }
 
+    /**
+     * checks if the player can conduct a turn
+     * @param p player inst
+     * @return if the player is the active player, and has rolled already
+     */
     private boolean validTurn(Player p) {
         return ((p.getId() == turnOrder[activePlayerIndex]) && (hasRolledAlready));
     }
 
+    // give the player a second turn if they roll a 6
     private void giveSecondTurn() {
         secondTurn = true;
         hasRolledAlready = false;
@@ -203,6 +270,7 @@ public class PlayerManager {
         }
     }
 
+    //resets all the turn variables for the next player
     public void resetTurn() {
         if (activeDiceRoll == 6 && !secondTurn) {
             giveSecondTurn();

@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * @author Eli
+ * Listens for incoming client connection and adds them to the server list of connections... right now this is only setup for single player
+ */
 public class Listener extends Thread {
 
     private GameServer server;
@@ -36,7 +40,7 @@ public class Listener extends Thread {
                     Connection connection = new Connection(socket, server);
                     if (server.acceptingNewConnections) {
                         connection.start();
-                        server.addConnection(connection);
+                        server.addConnection(connection); // add to the list of connections in the server
                     }
                     sleep(200);
                 }
