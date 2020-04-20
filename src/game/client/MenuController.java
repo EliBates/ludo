@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -31,6 +33,9 @@ public class MenuController {
 
     @FXML
     private VBox mainMenu, newGame;
+
+    @FXML
+    private VBox player1Options, player2Options, player3Options, player4Options;
 
     @FXML
     private BorderPane localLobby;
@@ -74,6 +79,9 @@ public class MenuController {
     private ComboBox<String> player3Color;
     @FXML
     private ComboBox<String> player4Color;
+
+    @FXML
+    Circle player2Online, player3Online, player4Online;
 
     @FXML
     private void setDisablePlayer3() {
@@ -144,6 +152,12 @@ public class MenuController {
             //if game is not full
             mainMenu.setVisible(false);
             multiplayerLobby.setVisible(true);
+            //example for player 2 connect
+            player1Options.setDisable(true);
+            player3Options.setDisable(true);
+            player4Options.setDisable(true);
+            player2Online.setFill(Color.GREEN);
+            //
             //else
             //Jmessagedialog(the game is full bastard!)
         }
