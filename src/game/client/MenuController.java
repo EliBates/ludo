@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -35,6 +34,9 @@ public class MenuController {
 
     @FXML
     private BorderPane localLobby;
+
+    @FXML
+    private BorderPane multiplayerLobby;
 
     @FXML
     private CheckBox disablePlayer3, disablePlayer4;
@@ -125,22 +127,26 @@ public class MenuController {
     }
 
     @FXML
+    private void newNetworkGame() {
+        newGame.setVisible(false);
+        multiplayerLobby.setVisible(true);
+        if (Ludo.gameServer == null) {
+            Ludo.gameServer = new GameServer();
+            connect();
+        }
+    }
+
+    @FXML
     private void joinGame() {
-        /*
         Ludo.client = new Client(Ludo.graphicsContext);
-        Stage stage = Ludo.primaryStage;
-        stage.setScene(new Scene(Ludo.game, 1800, 1000));
-        //stage.sizeToScene();
-        stage.show();
-        connect();*/
-        Stage stage = Ludo.primaryStage;
-        stage.setScene(Ludo.gameScene);
-        stage.sizeToScene();
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        stage.setX((screenBounds.getWidth() - 1100) / 2);
-        stage.setY((screenBounds.getHeight() - 750) / 2);
-        stage.show();
         connect();
+        if (Ludo.client.isAlive()) {
+            //if game is not full
+            mainMenu.setVisible(false);
+            multiplayerLobby.setVisible(true);
+            //else
+            //Jmessagedialog(the game is full bastard!)
+        }
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

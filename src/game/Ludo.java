@@ -2,6 +2,7 @@ package game;
 
 import game.client.Client;
 import game.server.GameServer;
+import game.util.Config;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -34,6 +35,9 @@ public class Ludo extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        Config.loadProperties();
+
         Ludo.primaryStage = primaryStage;
         game = FXMLLoader.load(getClass().getResource("game.fxml"));
         root = FXMLLoader.load(getClass().getResource("menu.fxml"));

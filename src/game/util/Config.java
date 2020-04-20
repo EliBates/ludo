@@ -9,6 +9,12 @@ import game.server.component.Path;
 
 public class Config {
 
+    private static final String PROPERTIES_FILE = "config.properties";
+
+    private static String GAME_NAME = "Network Ludo";
+
+
+
     public static final int RED = 0, GREEN = 1, YELLOW = 2, BLUE = 3;
 
     public static final int[] RED_STARTING = {70, 71, 54, 55};
@@ -29,5 +35,9 @@ public class Config {
             default:
                 return null;
         }
+    }
+
+    public static void loadProperties() {
+
     }
 }
