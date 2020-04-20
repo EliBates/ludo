@@ -15,7 +15,6 @@
       <element id="archive" name="ludo.jar">
         <element id="module-output" name="ludo" />
       </element>
-      <element id="library" level="project" name="lib" />
     </root>
   </artifact>
 </component>

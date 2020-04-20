@@ -16,10 +16,13 @@ public class Connection extends Thread {
     private Socket socket;
     private BufferedReader reader;
     private PrintWriter writer;
+    private int index;
 
-    public Connection(Socket socket, GameServer server) {
+
+    public Connection(Socket socket, GameServer server, int index) {
         this.socket = socket;
         this.server = server;
+        this.index = index;
 
         try {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -62,5 +65,9 @@ public class Connection extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

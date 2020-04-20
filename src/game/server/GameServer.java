@@ -36,11 +36,16 @@ public class GameServer extends Thread implements Runnable{
         start();
     }
 
+    public int totalConnections() {
+        return playerClients.size();
+    }
+
     public boolean needsSetup() {
         return needsSetup;
     }
 
     public void addConnection(Connection connection) {
+        System.out.println("Added a new connection to the server! ID: " + connection.getIndex());
         playerClients.add(connection);
     }
 
@@ -56,10 +61,11 @@ public class GameServer extends Thread implements Runnable{
             setupString = packet.substring(packet.indexOf(':') +1);
             gameManager.buildPlayers(setupString);
             gameManager.start();
-            acceptingNewConnections = false;
+            //acceptingNewConnections = false; TODO re-enable this later
         } else {
             if (packet.startsWith("click")) {
                 int tileId = Integer.parseInt(packet.substring(packet.indexOf(':') + 1));
+                System.out.println("TileId: " + tileId + " was clicked by client " + c.getIndex());
                 if (!gameManager.getPlayerManager().computerMoving) // the computer AI is moving not the player
                     gameManager.getPlayerManager().handlePlayerMoveIntent(gameManager.getPlayerManager().getActivePlayer(), tileId);
             }
@@ -106,7 +112,7 @@ public class GameServer extends Thread implements Runnable{
         gameManager = new GameManager(this);
     }
 
-    //shutdown the game server, kill all connectioons
+    //shutdown the game server, kill all connections
     public void shutdown() {
         for (Connection c : playerClients) {
             c.dispose();

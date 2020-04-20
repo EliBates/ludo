@@ -37,10 +37,11 @@ public class Listener extends Thread {
             while (isRunning) {
                 if(!serverSocket.isClosed()) {
                     socket = serverSocket.accept();
-                    Connection connection = new Connection(socket, server);
+                    Connection connection = new Connection(socket, server, server.totalConnections());
                     if (server.acceptingNewConnections) {
                         connection.start();
                         server.addConnection(connection); // add to the list of connections in the server
+                        System.out.println("A player has connected... ID:" + connection.getIndex());
                     }
                     sleep(200);
                 }

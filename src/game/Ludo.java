@@ -33,7 +33,7 @@ public class Ludo extends Application {
     public static Client client;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Ludo.primaryStage = primaryStage;
         game = FXMLLoader.load(getClass().getResource("game.fxml"));
         root = FXMLLoader.load(getClass().getResource("menu.fxml"));

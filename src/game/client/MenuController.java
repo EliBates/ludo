@@ -126,12 +126,26 @@ public class MenuController {
 
     @FXML
     private void joinGame() {
+        /*
         Ludo.client = new Client(Ludo.graphicsContext);
         Stage stage = Ludo.primaryStage;
         stage.setScene(new Scene(Ludo.game, 1800, 1000));
         //stage.sizeToScene();
         stage.show();
+        connect();*/
+        Stage stage = Ludo.primaryStage;
+        stage.setScene(Ludo.gameScene);
+        stage.sizeToScene();
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX((screenBounds.getWidth() - 1100) / 2);
+        stage.setY((screenBounds.getHeight() - 750) / 2);
+        stage.show();
         connect();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
