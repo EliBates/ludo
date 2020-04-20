@@ -10,9 +10,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="gameMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.client.MenuController">
+<Pane fx:id="gameMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.241" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.client.MenuController">
    <children>
       <VBox fx:id="mainMenu" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="10.0">
          <children>
@@ -142,7 +143,7 @@
          <bottom>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER_RIGHT">
                <children>
-                  <Button fx:id="startGame" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#startServer" prefHeight="26.0" prefWidth="139.0" text="Start Game" textAlignment="CENTER" />
+                  <Button fx:id="startGame" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#startServer" prefHeight="26.0" prefWidth="139.0" text="Start Game" textAlignment="CENTER" translateY="-20.0" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -150,57 +151,69 @@
             </HBox>
          </bottom>
       </BorderPane>
-      <BorderPane fx:id="multiplayerLobby" layoutX="10.0" layoutY="10.0" prefHeight="337.0" prefWidth="600.0" visible="false">
+      <BorderPane fx:id="multiplayerLobby" prefHeight="337.0" prefWidth="600.0" visible="false">
          <center>
             <HBox alignment="CENTER" prefHeight="271.0" prefWidth="401.0" spacing="20.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox prefHeight="211.0" prefWidth="133.0" spacing="15.0">
+                  <VBox fx:id="player1Options" prefHeight="211.0" prefWidth="133.0" spacing="15.0">
                      <children>
-                        <Label text="Name:" />
-                        <TextField fx:id="player1Name1" prefHeight="26.0" prefWidth="105.0" text="Player 1" />
+                        <Label text="Name:">
+                           <graphic>
+                              <Circle fx:id="player1Online" fill="GREEN" radius="4.0" stroke="BLACK" strokeType="INSIDE" />
+                           </graphic></Label>
+                        <TextField fx:id="player1Name" prefHeight="26.0" prefWidth="105.0" text="Player 1" />
                         <Label text="Color:" />
-                        <ComboBox fx:id="player1Color1" prefWidth="150.0" />
+                        <ComboBox fx:id="player1Color" prefWidth="150.0" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </VBox>
-                  <VBox prefHeight="211.0" prefWidth="133.0" spacing="15.0">
+                  <VBox fx:id="player2Options" prefHeight="211.0" prefWidth="133.0" spacing="15.0">
                      <children>
-                        <Label text="Name:" />
-                        <TextField fx:id="player2Name1" prefHeight="26.0" prefWidth="105.0" text="Player 2" />
+                        <Label text="Name:">
+                           <graphic>
+                              <Circle fx:id="player2Online" fill="RED" radius="4.0" stroke="BLACK" strokeType="INSIDE" />
+                           </graphic></Label>
+                        <TextField fx:id="player2Name" prefHeight="26.0" prefWidth="105.0" text="Player 2" />
                         <Label text="Color:" />
-                        <ComboBox fx:id="player2Color1" prefWidth="150.0" />
+                        <ComboBox fx:id="player2Color" prefWidth="150.0" />
                         <Label text="Player Type:" />
-                        <ComboBox fx:id="player2Type1" prefWidth="150.0" />
+                        <ComboBox fx:id="player2Type" prefWidth="150.0" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </VBox>
-                  <VBox prefHeight="211.0" prefWidth="133.0" spacing="15.0">
+                  <VBox fx:id="player3Options" prefHeight="211.0" prefWidth="133.0" spacing="15.0">
                      <children>
-                        <Label text="Name:" />
-                        <TextField fx:id="player3Name1" prefHeight="26.0" prefWidth="105.0" text="Player 3" />
+                        <Label text="Name:">
+                           <graphic>
+                              <Circle fx:id="player3Online" fill="RED" radius="4.0" stroke="BLACK" strokeType="INSIDE" />
+                           </graphic></Label>
+                        <TextField fx:id="player3Name" prefHeight="26.0" prefWidth="105.0" text="Player 3" />
                         <Label text="Color:" />
-                        <ComboBox fx:id="player3Color1" prefWidth="150.0" />
+                        <ComboBox fx:id="player3Color" prefWidth="150.0" />
                         <Label text="Player Type:" />
-                        <ComboBox fx:id="player3Type1" prefWidth="150.0" />
-                        <CheckBox fx:id="disablePlayer31" mnemonicParsing="false" onAction="#setDisablePlayer3" text="Disabled" />
+                        <ComboBox fx:id="player3Type" prefWidth="150.0" />
+                        <CheckBox fx:id="disablePlayer3" mnemonicParsing="false" onAction="#setDisablePlayer3" text="Disabled" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </VBox>
-                  <VBox prefHeight="211.0" prefWidth="133.0" spacing="15.0">
+                  <VBox fx:id="player4Options" prefHeight="211.0" prefWidth="133.0" spacing="15.0">
                      <children>
-                        <Label text="Name:" />
-                        <TextField fx:id="player4Name1" prefHeight="26.0" prefWidth="105.0" text="Player 4" />
+                        <Label text="Name:">
+                           <graphic>
+                              <Circle fx:id="player4Online" fill="RED" radius="4.0" stroke="BLACK" strokeType="INSIDE" />
+                           </graphic></Label>
+                        <TextField fx:id="player4Name" prefHeight="26.0" prefWidth="105.0" text="Player 4" />
                         <Label text="Color:" />
-                        <ComboBox fx:id="player4Color1" prefWidth="150.0" />
+                        <ComboBox fx:id="player4Color" prefWidth="150.0" />
                         <Label text="Player Type:" />
-                        <ComboBox fx:id="player4Type1" prefWidth="150.0" />
-                        <CheckBox fx:id="disablePlayer41" mnemonicParsing="false" onAction="#setDisablePlayer4" text="Disabled" />
+                        <ComboBox fx:id="player4Type" prefWidth="150.0" />
+                        <CheckBox fx:id="disablePlayer4" mnemonicParsing="false" onAction="#setDisablePlayer4" text="Disabled" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -226,7 +239,7 @@
          <bottom>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER_RIGHT">
                <children>
-                  <Button fx:id="startGame1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#startServer" prefHeight="26.0" prefWidth="139.0" text="Start Game" textAlignment="CENTER" />
+                  <Button fx:id="startGame1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#startServer" prefHeight="26.0" prefWidth="139.0" text="Start Game" textAlignment="CENTER" translateY="-20.0" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
