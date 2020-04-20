@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 
+import java.awt.*;
 import java.net.URISyntaxException;
 
 /**
@@ -40,6 +41,9 @@ public class Client extends Thread implements Runnable {
 
     //The Game controller gui reference
     private GameController gc;
+
+    //The Menu controller gui reference
+    private MenuController mc;
 
     //sets the connection reference
     public void setConnection(Connection c) {
@@ -149,10 +153,12 @@ public class Client extends Thread implements Runnable {
         this.gc = gc;
     }
 
-    /**
-     * Parses the score command sent from server
-     * @param id the string containing the scores for all players
-     */
+    public void setMenuController(MenuController mc) {
+        this.mc = mc;
+    }
+
+
+
     public void parseScore(String score) {
         if (score != null) {
             String[] scoreArray = score.split(":");

@@ -3,6 +3,8 @@ package game.server;
 import game.server.net.Connection;
 import game.server.net.Listener;
 import game.server.service.GameManager;
+import game.server.service.LobbyManager;
+import game.util.Config;
 
 import java.util.Vector;
 
@@ -18,6 +20,8 @@ public class GameServer extends Thread implements Runnable{
     //The game manager instance
     private GameManager gameManager;
 
+    private LobbyManager lobbyManager;
+
     //the list of client connections
     private Vector<Connection> playerClients = new Vector<>();
 
@@ -30,8 +34,9 @@ public class GameServer extends Thread implements Runnable{
     //saves the setup string for restarting the game with same settings
     private String setupString;
 
+    private Config.GameType gameType = Config.GameType.UNASSIGNED;
+
     public GameServer() {
-        //TODO all the networking stuff later
         initialize();
         start();
     }
@@ -40,28 +45,38 @@ public class GameServer extends Thread implements Runnable{
         return playerClients.size();
     }
 
-    public boolean needsSetup() {
-        return needsSetup;
-    }
-
     public void addConnection(Connection connection) {
         System.out.println("Added a new connection to the server! ID: " + connection.getIndex());
         playerClients.add(connection);
     }
 
+    public void removeConnection(Connection connection) {
+        System.out.println("Connection ID: " + connection.getIndex() + " removed from the list");
+        playerClients.remove(connection);
+    }
+
     /**
-     * Handles incoming packeets to the server
+     * Handles incoming packets to the server
      * @param c connection sending packet
      * @param packet packet data as string
      */
     public void processPacket(Connection c, String packet) { //TODO handle packets by connection instance for multiplayer
         //System.out.println(packet);
+        if (packet.startsWith("network") && needsSetup && c.isHost()) {
+            gameType = Config.GameType.NETWORK;
+            lobbyManager = new LobbyManager(this);
+        }
 
-        if (packet.startsWith("setup") && needsSetup) {
+        if (packet.startsWith("local") && needsSetup && c.isHost()) {
+            gameType = Config.GameType.LOCAL;
+            acceptingNewConnections = false;
+        }
+
+        if (packet.startsWith("setup") && needsSetup && c.isHost()) {
             setupString = packet.substring(packet.indexOf(':') +1);
             gameManager.buildPlayers(setupString);
             gameManager.start();
-            //acceptingNewConnections = false; TODO re-enable this later
+            acceptingNewConnections = false;
         } else {
             if (packet.startsWith("click")) {
                 int tileId = Integer.parseInt(packet.substring(packet.indexOf(':') + 1));
@@ -80,6 +95,14 @@ public class GameServer extends Thread implements Runnable{
                 restart();
             }
         }
+    }
+
+    /**
+     * Sends a global message to all clients
+     * @param message the message to send
+     */
+    public void sendMessage(String message) {
+        playerClients.forEach(client -> client.sendMessage(message));
     }
 
     @Override
@@ -110,6 +133,7 @@ public class GameServer extends Thread implements Runnable{
         listener.start();
         isRunning = true;
         gameManager = new GameManager(this);
+
     }
 
     //shutdown the game server, kill all connections

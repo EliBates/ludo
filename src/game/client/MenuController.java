@@ -125,7 +125,6 @@ public class MenuController {
         player2Color.setItems(playerColorOptions);
         player3Color.setItems(playerColorOptions);
         player4Color.setItems(playerColorOptions);
-
     }
 
     @FXML
@@ -143,6 +142,9 @@ public class MenuController {
             connect();
         }
     }
+
+
+    // Need something to receive update from Client to set the options upon joining
 
     @FXML
     private void joinGame() {

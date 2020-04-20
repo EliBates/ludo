@@ -45,6 +45,7 @@ public class Connection extends Thread {
             dispose();
             e.printStackTrace();
         }
+        server.removeConnection(this);
     }
 
     /**
@@ -69,5 +70,9 @@ public class Connection extends Thread {
 
     public int getIndex() {
         return index;
+    }
+
+    public boolean isHost() {
+        return getIndex() == 0;
     }
 }

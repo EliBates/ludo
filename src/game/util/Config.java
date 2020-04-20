@@ -11,16 +11,18 @@ public class Config {
 
     private static final String PROPERTIES_FILE = "config.properties";
 
-    private static String GAME_NAME = "Network Ludo";
-
-
-
     public static final int RED = 0, GREEN = 1, YELLOW = 2, BLUE = 3;
 
     public static final int[] RED_STARTING = {70, 71, 54, 55};
     public static final int[] GREEN_STARTING = {63, 64, 79, 80};
     public static final int[] YELLOW_STARTING = {233, 234, 249, 250};
     public static final int[] BLUE_STARTING = {224, 225, 240, 241};
+
+    public enum GameType {
+        UNASSIGNED,
+        LOCAL,
+        NETWORK
+    }
 
     public static Path pathForId(int id) {
         switch (id) {
