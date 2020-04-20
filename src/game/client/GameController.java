@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
@@ -66,7 +67,8 @@ public class GameController {
     private void initialize() {
         initImages();
         Ludo.graphicsContext = canvas.getGraphicsContext2D();
-        Ludo.client = new Client(canvas.getGraphicsContext2D());
+        //Ludo.client = new Client(canvas.getGraphicsContext2D());
+        Ludo.client.setGtx(canvas.getGraphicsContext2D());
         Ludo.client.setGameController(this);
         canvas.setOnMouseClicked(event -> {
             int x = (int)(event.getX() / 40);
@@ -93,6 +95,8 @@ public class GameController {
 
     }
 
+    public int activeName = 0;
+
     public void setPlayerNames(String name) {
         String [] names = name.split(":");
         for(int i=0; i<names.length; i++) {
@@ -104,21 +108,26 @@ public class GameController {
         switch(id) {
             case 0:
                 player1Name.setText(name);
+                player1Name.setTextFill(activeName == 0 ? Color.RED : javafx.scene.paint.Color.WHITE);
                 break;
             case 1:
                 player2Name.setText(name);
+                player1Name.setTextFill(activeName == 1 ? Color.RED : javafx.scene.paint.Color.WHITE);
                 break;
             case 2:
                 player3Name.setText(name);
+                player1Name.setTextFill(activeName == 2 ? Color.RED : javafx.scene.paint.Color.WHITE);
                 break;
             case 3:
                 player4Name.setText(name);
+                player1Name.setTextFill(activeName == 3 ? Color.RED : javafx.scene.paint.Color.WHITE);
                 break;
         }
     }
 
     public void setActivePlayer(int id) {
         clearActivePlayers();
+        System.out.println("Setting active dice for " + id);
         switch(id) {
             case 0:
                 player1DiceBG.setVisible(true);

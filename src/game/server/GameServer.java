@@ -45,6 +45,14 @@ public class GameServer extends Thread implements Runnable{
         return playerClients.size();
     }
 
+    public Connection getConnection(int index) {
+        return playerClients.get(index);
+    }
+
+    public Vector<Connection> getPlayerClients() {
+        return playerClients;
+    }
+
     public void addConnection(Connection connection) {
         System.out.println("Added a new connection to the server! ID: " + connection.getIndex());
         playerClients.add(connection);
@@ -63,11 +71,13 @@ public class GameServer extends Thread implements Runnable{
     public void processPacket(Connection c, String packet) { //TODO handle packets by connection instance for multiplayer
         //System.out.println(packet);
         if (packet.startsWith("network") && needsSetup && c.isHost()) {
+            System.out.println("The server is now running in NETWORK MODE.");
             gameType = Config.GameType.NETWORK;
             lobbyManager = new LobbyManager(this);
         }
 
         if (packet.startsWith("local") && needsSetup && c.isHost()) {
+            System.out.println("The server is now running in LOCAL MODE.");
             gameType = Config.GameType.LOCAL;
             acceptingNewConnections = false;
         }
@@ -77,15 +87,21 @@ public class GameServer extends Thread implements Runnable{
             gameManager.buildPlayers(setupString);
             gameManager.start();
             acceptingNewConnections = false;
+            if (gameType.equals(Config.GameType.NETWORK)) {
+                sendMessage("startmulti");
+            }
+
         } else {
             if (packet.startsWith("click")) {
                 int tileId = Integer.parseInt(packet.substring(packet.indexOf(':') + 1));
                 System.out.println("TileId: " + tileId + " was clicked by client " + c.getIndex());
-                if (!gameManager.getPlayerManager().computerMoving) // the computer AI is moving not the player
+                if (!gameManager.getPlayerManager().computerMoving && gameManager.getPlayerManager().getActivePlayer().getId() == c.getIndex()) {// make sure correct client is playing
                     gameManager.getPlayerManager().handlePlayerMoveIntent(gameManager.getPlayerManager().getActivePlayer(), tileId);
+                    System.out.println("Attempting to move piece (Client:"+c.getIndex()+") " + gameManager.getPlayerManager().getActivePlayer().getId() + " is active player!");
+                }
             }
             if (packet.startsWith("dice")) {
-                if (!gameManager.getPlayerManager().computerMoving) // the computer AI is rolling not the player
+                if (!gameManager.getPlayerManager().computerMoving && gameManager.getPlayerManager().getActivePlayer().getId() == c.getIndex()) // the computer AI is rolling not the player
                     gameManager.getPlayerManager().conductRoll();
             }
             if (packet.startsWith("shutdown")) {

@@ -1,6 +1,7 @@
 package game.server.net;
 
 import game.server.GameServer;
+import game.server.component.LobbyOptions;
 
 import java.io.*;
 import java.net.Socket;
@@ -16,6 +17,12 @@ public class Connection extends Thread {
     private Socket socket;
     private BufferedReader reader;
     private PrintWriter writer;
+
+    public LobbyOptions getLobbyOptions() {
+        return lobbyOptions;
+    }
+
+    private LobbyOptions lobbyOptions;
     private int index;
 
 
@@ -27,6 +34,7 @@ public class Connection extends Thread {
         try {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+            lobbyOptions = new LobbyOptions(null, null);
         } catch (IOException e) {
             e.printStackTrace();
         }

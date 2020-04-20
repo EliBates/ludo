@@ -1,5 +1,7 @@
 package game.client;
 
+import javafx.application.Platform;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -55,8 +57,11 @@ public class Connection extends Thread {
         String feedback;
         try {
             while (((feedback = bufferedReader.readLine()) != null) && !killThread) {
-                if (client != null)
-                    client.receiveUpdate(feedback); // listens for updates and sends to the client instance
+                if (client != null) {
+                    String finalFeedback = feedback;
+                    Platform.runLater(() -> client.receiveUpdate(finalFeedback));
+                }
+                            //client.receiveUpdate(feedback); // listens for updates and sends to the client instance
                 else
                     System.out.println("Client is null.. But here is the message anyways: " + feedback);
                 Thread.sleep(100);

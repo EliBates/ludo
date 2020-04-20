@@ -138,8 +138,10 @@ public class MenuController {
         newGame.setVisible(false);
         multiplayerLobby.setVisible(true);
         if (Ludo.gameServer == null) {
+            Ludo.client.setMenuController(this);
             Ludo.gameServer = new GameServer();
             connect();
+            Ludo.client.getConnection().sendUpdate("network");
         }
     }
 
@@ -148,7 +150,8 @@ public class MenuController {
 
     @FXML
     private void joinGame() {
-        Ludo.client = new Client(Ludo.graphicsContext);
+        //Ludo.client = new Client(Ludo.graphicsContext);
+        Ludo.client.setMenuController(this);
         connect();
         if (Ludo.client.isAlive()) {
             //if game is not full
@@ -225,6 +228,32 @@ public class MenuController {
                         player4Name.getText() + "," +
                         playerTypeOptions.indexOf(player4Type.getValue());
     }
+
+    public void setPlayerLobbyData(String data) {
+        String[] dataSplit = data.split(":");
+        int playerId = Integer.parseInt(dataSplit[0]);
+    }
+
+    public void loadMultiGame() {
+        Stage stage = Ludo.primaryStage;
+        stage.setScene(Ludo.gameScene);
+        stage.sizeToScene();
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX((screenBounds.getWidth() - 1100) / 2);
+        stage.setY((screenBounds.getHeight() - 750) / 2);
+        stage.show();
+    }
+
+    @FXML
+    public void startMultiGame() {
+        if (!validColors()) {
+            JOptionPane.showMessageDialog(null, "More than one player cannot use the same color!");
+            return;
+        }
+        Ludo.client.getConnection().sendUpdate("setup" + getPlayer1Data() + getPlayer2Data() + getPlayer3Data() + getPlayer4Data());
+    }
+
+
 
     @FXML
     private void startServer() {

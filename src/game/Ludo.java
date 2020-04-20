@@ -38,6 +38,7 @@ public class Ludo extends Application {
 
         Config.loadProperties();
 
+        client = new Client();
         Ludo.primaryStage = primaryStage;
         game = FXMLLoader.load(getClass().getResource("game.fxml"));
         root = FXMLLoader.load(getClass().getResource("menu.fxml"));

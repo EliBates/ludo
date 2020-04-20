@@ -24,6 +24,24 @@ public class Config {
         NETWORK
     }
 
+    public enum Color {
+        RED(0),
+        GREEN(1),
+        YELLOW(2),
+        BLUE(3);
+
+        private final int color;
+
+        Color(int color) {
+            this.color = color;
+        }
+
+        public int getColorOption() {
+            return this.color;
+        }
+    }
+
+
     public static Path pathForId(int id) {
         switch (id) {
             case RED:

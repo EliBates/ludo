@@ -66,7 +66,10 @@ public class Client extends Thread implements Runnable {
         }
         if (update.startsWith("roll")) { // gets the current roll
             if(gc != null) {
+                System.out.println("Client received roll update");
                 receiveDiceRoll(update.substring(update.indexOf("roll") + 4));
+            } else {
+                System.out.println("Client received roll update, but gc was null");
             }
         }
         if (update.startsWith("name")) { // gets the players names
@@ -79,11 +82,29 @@ public class Client extends Thread implements Runnable {
                 parseScore(update.substring(update.indexOf("score") + 5));
             }
         }
+        if (update.startsWith("startmulti")) {
+            if(mc != null) {
+                mc.loadMultiGame();
+                System.out.println("Starting network game");
+            } else {
+                System.out.println("Menu controller is null!");
+            }
+        }
+
+        if (update.startsWith("optionsupdate")) {
+            if(mc != null) {
+                mc.setPlayerLobbyData(update.substring(update.indexOf("optionsupdate") + 13));
+                System.out.println("updated options");
+            }
+        }
 
     }
 
-    public Client(GraphicsContext gtx) {
+    public void setGtx(GraphicsContext gtx) {
         this.gtx = gtx;
+    }
+
+    public Client() {
         this.ludoBoard = new Image("ludo-board.png");
         gamePieces = new GamePiece[16];
         for (int i = 0; i < 16; i++) {
@@ -135,6 +156,7 @@ public class Client extends Thread implements Runnable {
         if(id !=null) {
             activePlayer = Integer.parseInt(id);
             gc.setActivePlayer(activePlayer);
+            gc.activeName = activePlayer;
         }
     }
 

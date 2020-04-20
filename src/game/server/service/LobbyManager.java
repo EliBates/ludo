@@ -11,13 +11,20 @@ public class LobbyManager {
         this.gameServer = gameServer;
     }
 
-    public void changeColor(Connection c, String color) {
-        gameServer.sendMessage("changecolor:" + c.getIndex() + ":" + color);
+    public void changeOptions(Connection c, int id, String data) {
+        if (c.getIndex() != id && !c.isHost()) // a player other than the host attempted to change another players settings
+            return;
+        Connection playerToModify = gameServer.getConnection(id);
+        if (playerToModify != null) {
+            playerToModify.getLobbyOptions().modifyOptions(data);
+            updateOptions(playerToModify);
+        }
     }
 
-    public void changeName(Connection c, String name) {
-        gameServer.sendMessage("changename:" + c.getIndex() + ":" + name);
+    public void updateOptions(Connection updated) {
+        gameServer.sendMessage("optionsupdate:"+updated.getIndex()+":"+updated.getLobbyOptions().getOptions());
     }
+
 
     public void changePlayerType(Connection c, int id, int type) {
         if (c.isHost()) {
@@ -35,6 +42,12 @@ public class LobbyManager {
     public void enable(Connection c, int id) {
         if (c.isHost()) {
             gameServer.sendMessage("enable:" + id);
+        }
+    }
+
+    public void startGame(Connection c) {
+        if (c.isHost()) {
+            gameServer.sendMessage("startgame");
         }
     }
 
