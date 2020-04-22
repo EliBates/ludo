@@ -49,10 +49,6 @@ public class GameServer extends Thread implements Runnable{
         return playerClients.get(index);
     }
 
-    public Vector<Connection> getPlayerClients() {
-        return playerClients;
-    }
-
     public void addConnection(Connection connection) {
         System.out.println("Added a new connection to the server! ID: " + connection.getIndex());
         playerClients.add(connection);

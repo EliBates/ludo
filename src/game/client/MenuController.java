@@ -83,6 +83,26 @@ public class MenuController {
     @FXML
     Circle player2Online, player3Online, player4Online;
 
+    public void setPlayerLobbyData(String data) {
+        String[] dataSplit = data.split(":");
+        int playerId = Integer.parseInt(dataSplit[0]);
+
+        switch (dataSplit[1]) {
+            case "settype":
+                setPlayerType(playerId, Integer.parseInt(dataSplit[2]));
+                break;
+        }
+    }
+
+    public void setPlayerType(int player, int type) {
+        String selected = (type == 0 ? "Human" : "AI");
+        switch (player) {
+            case 1:
+                //player2Type.setSelected(selected);
+                break;
+        }
+    }
+
     @FXML
     private void setDisablePlayer3() {
         if (disablePlayer3.isSelected()) {
@@ -227,11 +247,6 @@ public class MenuController {
                 ":" +   playerColorOptions.indexOf(player4Color.getValue()) + "," +
                         player4Name.getText() + "," +
                         playerTypeOptions.indexOf(player4Type.getValue());
-    }
-
-    public void setPlayerLobbyData(String data) {
-        String[] dataSplit = data.split(":");
-        int playerId = Integer.parseInt(dataSplit[0]);
     }
 
     public void loadMultiGame() {
