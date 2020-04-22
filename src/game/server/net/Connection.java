@@ -51,7 +51,7 @@ public class Connection extends Thread {
             socket.close();
         } catch (IOException e) {
             dispose();
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         server.removeConnection(this);
     }

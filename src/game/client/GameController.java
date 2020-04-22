@@ -2,6 +2,10 @@ package game.client;
 
 import game.Ludo;
 import game.server.component.Position;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
@@ -13,6 +17,9 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eli / Jeff
@@ -42,6 +49,9 @@ public class GameController {
 
     @FXML
     Label player1Name, player2Name, player3Name, player4Name;
+
+    @FXML
+    ObservableList<Label> names = FXCollections.observableArrayList();
 
 //    @FXML
 //    private void showChatBox(){
@@ -101,6 +111,7 @@ public class GameController {
         String [] names = name.split(":");
         for(int i=0; i<names.length; i++) {
             setPlayerName(names[i], i);
+            //names.get(i).setText(names[i]);
         }
     }
 

@@ -27,6 +27,8 @@
 <!--          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">-->
 <!--</GridPane>-->
 
+<?import java.util.ArrayList?>
+<?import javafx.collections.FXCollections?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1001.0" prefWidth="1100.0" style="-fx-background-color: #0071bc;" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.client.GameController">
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -45,6 +47,7 @@
                   <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
+
                   <Label fx:id="player3Name" alignment="CENTER" text="PLAYER 3" textAlignment="CENTER" textFill="#fcfcfc" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font name="System Bold" size="15.0" />
@@ -344,3 +347,4 @@
       </VBox>
    </bottom>
 </BorderPane>
+
