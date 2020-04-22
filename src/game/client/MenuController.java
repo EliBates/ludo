@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -44,10 +45,13 @@ public class MenuController {
     private BorderPane multiplayerLobby;
 
     @FXML
+    private TextArea lobbyTextArea;
+
+    @FXML
     private CheckBox disablePlayer3, disablePlayer4;
 
     @FXML
-    private TextField player1Name, player2Name, player3Name, player4Name;
+    private TextField player1Name, player2Name, player3Name, player4Name, lobbyTextField;
 
     @FXML
     private static final ObservableList<String> playerTypeOptions =
@@ -197,6 +201,14 @@ public class MenuController {
     private void newGame() {
         mainMenu.setVisible(false);
         newGame.setVisible(true);
+    }
+
+    @FXML
+    private void backButton() {
+        multiplayerLobby.setVisible(false);
+        localLobby.setVisible(false);
+        newGame.setVisible(false);
+        mainMenu.setVisible(true);
     }
 
     @FXML
