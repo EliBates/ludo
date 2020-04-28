@@ -91,6 +91,8 @@ public class Client extends Thread implements Runnable {
             }
         }
 
+
+
         if (update.startsWith("optionsupdate")) {
             if(mc != null) {
                 mc.setPlayerLobbyData(update.substring(update.indexOf("optionsupdate") + 13));

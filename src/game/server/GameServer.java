@@ -52,11 +52,21 @@ public class GameServer extends Thread implements Runnable{
     public void addConnection(Connection connection) {
         System.out.println("Added a new connection to the server! ID: " + connection.getIndex());
         playerClients.add(connection);
+
+        if (gameType == Config.GameType.NETWORK) {
+            if (lobbyManager.requestSlot(connection) == -1) {
+                removeConnection(connection); // the lobby is full
+                connection.dispose();
+            }
+        }
     }
 
     public void removeConnection(Connection connection) {
         System.out.println("Connection ID: " + connection.getIndex() + " removed from the list");
         playerClients.remove(connection);
+        if (gameType == Config.GameType.NETWORK) {
+            lobbyManager.removeSlotForConnection(connection);
+        }
     }
 
     /**
@@ -66,10 +76,27 @@ public class GameServer extends Thread implements Runnable{
      */
     public void processPacket(Connection c, String packet) { //TODO handle packets by connection instance for multiplayer
         //System.out.println(packet);
+        final String[] args = packet.split(":");
+
+        if (packet.startsWith("name")) {
+            if (lobbyManager != null && gameType == Config.GameType.NETWORK) {
+                lobbyManager.setName(c, args[1]);
+            }
+        }
+
+        if (packet.startsWith("disable") && c.isHost()) {
+            if (lobbyManager != null && gameType == Config.GameType.NETWORK) {
+                lobbyManager.disableSlot(Integer.parseInt(args[1]));
+            }
+        }
+
         if (packet.startsWith("network") && needsSetup && c.isHost()) {
             System.out.println("The server is now running in NETWORK MODE.");
             gameType = Config.GameType.NETWORK;
             lobbyManager = new LobbyManager(this);
+            if (lobbyManager.requestSlot(c) == -1) {
+                removeConnection(c); // the lobby is full
+            }
         }
 
         if (packet.startsWith("local") && needsSetup && c.isHost()) {
@@ -82,14 +109,15 @@ public class GameServer extends Thread implements Runnable{
             setupString = packet.substring(packet.indexOf(':') +1);
             gameManager.buildPlayers(setupString);
             gameManager.start();
+            lobbyManager.inLobby = false;
             acceptingNewConnections = false;
             if (gameType.equals(Config.GameType.NETWORK)) {
-                sendMessage("startmulti");
+                sendMessage("startmulti"); // tells all the clients we are starting the multiplayer game
             }
 
         } else {
             if (packet.startsWith("click")) {
-                int tileId = Integer.parseInt(packet.substring(packet.indexOf(':') + 1));
+                int tileId = Integer.parseInt(args[1]);
                 System.out.println("TileId: " + tileId + " was clicked by client " + c.getIndex());
                 if (!gameManager.getPlayerManager().computerMoving && gameManager.getPlayerManager().getActivePlayer().getId() == c.getIndex()) {// make sure correct client is playing
                     gameManager.getPlayerManager().handlePlayerMoveIntent(gameManager.getPlayerManager().getActivePlayer(), tileId);
@@ -116,6 +144,15 @@ public class GameServer extends Thread implements Runnable{
     public void sendMessage(String message) {
         playerClients.forEach(client -> client.sendMessage(message));
     }
+
+    public void sendLobbyOptions() {
+        for (Connection c : playerClients) {
+            for (Connection c2 : playerClients) {
+                c.sendMessage("lobbyupdate"+":"+c2.getIndex()+":"+c2.getLobbyOptions());
+            }
+        }
+    }
+
 
     @Override
     public void run() {
