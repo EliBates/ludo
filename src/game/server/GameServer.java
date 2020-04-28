@@ -145,13 +145,13 @@ public class GameServer extends Thread implements Runnable{
         if (packet.startsWith("click")) {
             int tileId = Integer.parseInt(args[1]);
             System.out.println("TileId: " + tileId + " was clicked by client " + c.getIndex());
-            if (!gameManager.getPlayerManager().computerMoving && gameManager.getPlayerManager().getActivePlayer().getId() == c.getIndex()) {// make sure correct client is playing
+            if (!gameManager.getPlayerManager().computerMoving && gameManager.getPlayerManager().getActivePlayer().getId() == (gameType == Config.GameType.LOCAL ? c.getIndex() : c.getLobbyOptions().getColor())) {// make sure correct client is playing
                 gameManager.getPlayerManager().handlePlayerMoveIntent(gameManager.getPlayerManager().getActivePlayer(), tileId);
                 System.out.println("Attempting to move piece (Client:" + c.getIndex() + ") " + gameManager.getPlayerManager().getActivePlayer().getId() + " is active player!");
             }
         }
         if (packet.startsWith("dice")) {
-            if (!gameManager.getPlayerManager().computerMoving && gameManager.getPlayerManager().getActivePlayer().getId() == c.getIndex()) // the computer AI is rolling not the player
+            if (!gameManager.getPlayerManager().computerMoving && gameManager.getPlayerManager().getActivePlayer().getId() == (gameType == Config.GameType.LOCAL ? c.getIndex() : c.getLobbyOptions().getColor())) // the computer AI is rolling not the player
                 gameManager.getPlayerManager().conductRoll();
         }
         if (packet.startsWith("shutdown")) {
