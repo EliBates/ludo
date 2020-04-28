@@ -70,19 +70,19 @@ public class MenuController {
             );
 
     @FXML
-    private ComboBox<String> player2Type;
+    private ComboBox<String> player2Type, player2TypeLocal;
     @FXML
-    private ComboBox<String> player3Type;
+    private ComboBox<String> player3Type, player3TypeLocal;
     @FXML
-    private ComboBox<String> player4Type;
+    private ComboBox<String> player4Type, player4TypeLocal;
     @FXML
-    private ComboBox<String> player1Color;
+    private ComboBox<String> player1Color, player1ColorLocal;
     @FXML
-    private ComboBox<String> player2Color;
+    private ComboBox<String> player2Color, player2ColorLocal;
     @FXML
-    private ComboBox<String> player3Color;
+    private ComboBox<String> player3Color, player3ColorLocal;
     @FXML
-    private ComboBox<String> player4Color;
+    private ComboBox<String> player4Color, player4ColorLocal;
 
     @FXML
     Circle player2Online, player3Online, player4Online;
@@ -286,6 +286,20 @@ public class MenuController {
         player2Color.setItems(playerColorOptions);
         player3Color.setItems(playerColorOptions);
         player4Color.setItems(playerColorOptions);
+        player2TypeLocal.setValue("Open");
+        player2TypeLocal.setItems(playerTypeOptions);
+        player3TypeLocal.setValue("Open");
+        player3TypeLocal.setItems(playerTypeOptions);
+        player4TypeLocal.setValue("Open");
+        player4TypeLocal.setItems(playerTypeOptions);
+        player1ColorLocal.setValue("Red");
+        player2ColorLocal.setValue("Green");
+        player3ColorLocal.setValue("Yellow");
+        player4ColorLocal.setValue("Blue");
+        player1ColorLocal.setItems(playerColorOptions);
+        player2ColorLocal.setItems(playerColorOptions);
+        player3ColorLocal.setItems(playerColorOptions);
+        player4ColorLocal.setItems(playerColorOptions);
     }
 
     @FXML
