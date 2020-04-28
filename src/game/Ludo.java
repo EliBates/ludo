@@ -44,7 +44,7 @@ public class Ludo extends Application {
         root = FXMLLoader.load(getClass().getResource("menu.fxml"));
 
         gameScene = new Scene(game, 1100, 750);
-        menuScene = new Scene(root, 600, 450);
+        menuScene = new Scene(root, 600, 550);
         
         primaryStage.setTitle("ISTE-121 Ludo Project");
         primaryStage.setScene(menuScene);

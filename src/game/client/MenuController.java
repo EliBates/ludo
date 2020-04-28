@@ -7,10 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -22,10 +19,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Eli
@@ -104,13 +98,47 @@ public class MenuController {
 
 
     public void setPlayerLobbyData(String data) {
+        System.out.println(data);
         String[] dataSplit = data.split(":");
-        int playerId = Integer.parseInt(dataSplit[0]);
+        System.out.println(dataSplit[0]);
+        int playerId = Integer.parseInt(dataSplit[1]);
+        int playerColor = Integer.parseInt(dataSplit[2]);
 
-        switch (dataSplit[1]) {
-            case "settype":
-                setPlayerType(playerId, Integer.parseInt(dataSplit[2]));
+        switch(playerId) {
+            case 0:
+                player1Color.setValue(setPlayerColor(playerColor));
+                player1Name.setText(dataSplit[3]);
                 break;
+            case 1:
+                player2Color.setValue(setPlayerColor(playerColor));
+                player2Name.setText(dataSplit[3]);
+                player2Online.setFill(Color.GREEN);
+                break;
+            case 2:
+                player3Color.setValue(setPlayerColor(playerColor));
+                player3Name.setText(dataSplit[3]);
+                player4Online.setFill(Color.GREEN);
+                break;
+            case 3:
+                player4Color.setValue(setPlayerColor(playerColor));
+                player4Name.setText(dataSplit[3]);
+                player4Online.setFill(Color.GREEN);
+                break;
+        }
+    }
+
+    public String setPlayerColor(int color){
+        if(color == 0){
+            return "Red";
+        }
+        else if(color == 1){
+            return "Green";
+        }
+        else if(color == 2){
+            return "Yellow";
+        }
+        else{
+            return "Blue";
         }
     }
 
@@ -118,7 +146,42 @@ public class MenuController {
         String selected = (type == 0 ? "Human" : "AI");
         switch (player) {
             case 1:
-                //player2Type.setSelected(selected);
+                player2Type.setValue(selected);;
+                break;
+            case 2:
+                player3Type.setValue(selected);;
+                break;
+            case 3:
+                player4Type.setValue(selected);;
+                break;
+        }
+    }
+
+    public void disableOtherOptions(int id){
+        switch(id) {
+            case 0:
+                player1Options.setDisable(false);
+                player2Options.setDisable(false);
+                player3Options.setDisable(false);
+                player4Options.setDisable(false);
+                break;
+            case 1:
+                player1Options.setDisable(true);
+                player2Options.setDisable(false);
+                player3Options.setDisable(true);
+                player4Options.setDisable(true);
+                break;
+            case 2:
+                player1Options.setDisable(true);
+                player2Options.setDisable(true);
+                player3Options.setDisable(false);
+                player4Options.setDisable(true);
+                break;
+            case 3:
+                player1Options.setDisable(true);
+                player2Options.setDisable(true);
+                player3Options.setDisable(true);
+                player4Options.setDisable(false);
                 break;
         }
     }
@@ -200,17 +263,10 @@ public class MenuController {
         Ludo.client.setMenuController(this);
         connect();
         if (Ludo.client.isAlive()) {
-            //if game is not full
+
             mainMenu.setVisible(false);
             multiplayerLobby.setVisible(true);
-            //example for player 2 connect
-            player1Options.setDisable(true);
-            player3Options.setDisable(true);
-            player4Options.setDisable(true);
-            player2Online.setFill(Color.GREEN);
-            //
-            //else
-            //Jmessagedialog(the game is full bastard!)
+            setPlayerName();
         }
         try {
             Thread.sleep(1000);
@@ -255,6 +311,23 @@ public class MenuController {
 
         Set<Integer> matchCheckSet = new HashSet<>(colors);
         return matchCheckSet.size() == colors.size();
+    }
+
+    private void setPlayerName() {
+        TextInputDialog dialog = new TextInputDialog("Player");
+        dialog.setTitle("Network Game");
+        dialog.setHeaderText("Ludo");
+        dialog.setContentText("Please enter your name: ");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            Ludo.client.getConnection().sendUpdate("name:" + result.get());
+        }
+    }
+
+    @FXML
+    private void setHostName(){
+        Ludo.client.getConnection().sendUpdate("name:" + player1Name.getText());
     }
 
     private String getPlayer1Data() {
