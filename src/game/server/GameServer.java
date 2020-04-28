@@ -98,7 +98,7 @@ public class GameServer extends Thread implements Runnable{
 
         if (packet.startsWith("color")) {
             if (lobbyManager != null && gameType == Config.GameType.NETWORK && lobbyManager.inLobby) {
-                lobbyManager.setColor(c, Integer.parseInt(args[1]));
+                lobbyManager.setColor(c, Integer.parseInt(args[1]), Integer.parseInt(args[2]));
             }
         }
 

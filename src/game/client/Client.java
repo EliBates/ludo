@@ -191,8 +191,6 @@ public class Client extends Thread implements Runnable {
         this.mc = mc;
     }
 
-
-
     public void parseScore(String score) {
         if (score != null) {
             String[] scoreArray = score.split(":");

@@ -170,7 +170,7 @@
                            </graphic></Label>
                         <TextField fx:id="player1Name" onAction="#setHostName" prefHeight="26.0" prefWidth="105.0" text="Player 1" />
                         <Label text="Color:" />
-                        <ComboBox fx:id="player1Color" prefWidth="150.0" />
+                        <ComboBox fx:id="player1Color" onAction="#changeColorPlayer1" prefWidth="150.0" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -184,7 +184,7 @@
                            </graphic></Label>
                         <TextField fx:id="player2Name" editable="false" prefHeight="26.0" prefWidth="105.0" text="Player 2" />
                         <Label text="Color:" />
-                        <ComboBox fx:id="player2Color" prefWidth="150.0" />
+                        <ComboBox fx:id="player2Color" onAction="#changeColorPlayer2" prefWidth="150.0" />
                         <Label text="Player Type:" />
                         <ComboBox fx:id="player2Type" onAction="#changePlayer2" prefWidth="150.0" />
                         <CheckBox fx:id="disablePlayer2" mnemonicParsing="false" onAction="#setDisablePlayer2" text="Disabled" />
@@ -201,7 +201,7 @@
                            </graphic></Label>
                         <TextField fx:id="player3Name" editable="false" prefHeight="26.0" prefWidth="105.0" text="Player 3" />
                         <Label text="Color:" />
-                        <ComboBox fx:id="player3Color" prefWidth="150.0" />
+                        <ComboBox fx:id="player3Color" onAction="#changeColorPlayer3" prefWidth="150.0" />
                         <Label text="Player Type:" />
                         <ComboBox fx:id="player3Type" onAction="#changePlayer3" prefWidth="150.0" />
                         <CheckBox fx:id="disablePlayer3" mnemonicParsing="false" onAction="#setDisablePlayer3" text="Disabled" />
@@ -218,7 +218,7 @@
                            </graphic></Label>
                         <TextField fx:id="player4Name" editable="false" prefHeight="26.0" prefWidth="105.0" text="Player 4" />
                         <Label text="Color:" />
-                        <ComboBox fx:id="player4Color" prefWidth="150.0" />
+                        <ComboBox fx:id="player4Color" onAction="#changeColorPlayer4" prefWidth="150.0" />
                         <Label text="Player Type:" />
                         <ComboBox fx:id="player4Type" onAction="#changePlayer4" prefWidth="150.0" />
                         <CheckBox fx:id="disablePlayer4" mnemonicParsing="false" onAction="#setDisablePlayer4" text="Disabled" />

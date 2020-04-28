@@ -91,8 +91,9 @@ public class LobbyManager {
      * @param c the client setting color
      * @param color the color code to set
      */
-    public void setColor(Connection c, int color) {
-        c.getLobbyOptions().setColor(color);
+    public void setColor(Connection c, int slot, int color) {
+        Connection change = players[slot].getConnection();
+        //c.getLobbyOptions().setColor(color);
         sendLobbyOptions();
     }
 

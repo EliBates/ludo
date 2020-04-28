@@ -88,6 +88,24 @@ public class MenuController {
     Circle player2Online, player3Online, player4Online;
 
     @FXML
+    public void changeColorPlayer1() {
+        Ludo.client.getConnection().sendUpdate("color:" + 0 + ":" + playerColorOptions.indexOf(player2Color.getValue()));
+    }
+
+    @FXML
+    public void changeColorPlayer2() {
+        Ludo.client.getConnection().sendUpdate("color:" + 1 + ":" + playerColorOptions.indexOf(player2Color.getValue()));
+    }
+    @FXML
+    public void changeColorPlayer3() {
+        Ludo.client.getConnection().sendUpdate("color:" + 2 + ":" + playerColorOptions.indexOf(player2Color.getValue()));
+    }
+    @FXML
+    public void changeColorPlayer4() {
+        Ludo.client.getConnection().sendUpdate("color:" + 3 + ":" + playerColorOptions.indexOf(player2Color.getValue()));
+    }
+
+    @FXML
     public void changePlayer2() {
 
     }
@@ -294,7 +312,6 @@ public class MenuController {
         Ludo.client.setMenuController(this);
         connect();
         if (Ludo.client.isAlive()) {
-
             mainMenu.setVisible(false);
             startGame.setVisible(false);
             disablePlayer2.setVisible(false);
