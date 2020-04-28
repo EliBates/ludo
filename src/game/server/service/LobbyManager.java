@@ -3,6 +3,7 @@ package game.server.service;
 import game.server.GameServer;
 import game.server.component.LobbySlot;
 import game.server.net.Connection;
+import javafx.fxml.FXML;
 
 import java.util.Arrays;
 
@@ -93,7 +94,11 @@ public class LobbyManager {
      */
     public void setColor(Connection c, int slot, int color) {
         Connection change = players[slot].getConnection();
-        //c.getLobbyOptions().setColor(color);
+        if (change.getIndex() == c.getIndex()) {
+            c.getLobbyOptions().setColor(color);
+        } else if (change.getIndex() != c.getIndex() && c.isHost()) {
+            change.getLobbyOptions().setColor(color);
+        }
         sendLobbyOptions();
     }
 

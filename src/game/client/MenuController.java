@@ -56,7 +56,7 @@ public class MenuController {
     @FXML
     private static final ObservableList<String> playerTypeOptions =
             FXCollections.observableArrayList(
-                    "Open",
+                    "Human",
                     "AI"
             );
 
@@ -272,11 +272,11 @@ public class MenuController {
                 lobbyTextField.setText("");
             }
         });
-        player2Type.setValue("Open");
+        player2Type.setValue("AI");
         player2Type.setItems(playerTypeOptions);
-        player3Type.setValue("Open");
+        player3Type.setValue("AI");
         player3Type.setItems(playerTypeOptions);
-        player4Type.setValue("Open");
+        player4Type.setValue("AI");
         player4Type.setItems(playerTypeOptions);
         player1Color.setValue("Red");
         player2Color.setValue("Green");
@@ -418,6 +418,7 @@ public class MenuController {
 
     @FXML
     public void startMultiGame() {
+        System.out.println("made it");
         if (!validColors()) {
             JOptionPane.showMessageDialog(null, "More than one player cannot use the same color!");
             return;
@@ -446,6 +447,7 @@ public class MenuController {
             stage.setY((screenBounds.getHeight() - 750) / 2);
             stage.show();
             connect();
+            System.out.println(getPlayer2Data());
             Ludo.client.getConnection().sendUpdate("setup" + getPlayer1Data() + getPlayer2Data() + getPlayer3Data() + getPlayer4Data());
             try {
                 Thread.sleep(1000);
