@@ -4,13 +4,11 @@ import game.util.Config;
 
 public class LobbyOptions {
 
-    public boolean updated = false;
-
-    public Config.Color getColor() {
+    public int getColor() {
         return color;
     }
 
-    public void setColor(Config.Color color) {
+    public void setColor(int color) {
         this.color = color;
     }
 
@@ -22,18 +20,14 @@ public class LobbyOptions {
         this.name = name;
     }
 
-    public void modifyOptions(String data) {
-
-    }
-
     public String getOptions() {
         return getColor()+":"+getName();
     }
 
-    private Config.Color color;
+    private int color;
     private String name;
 
-    public LobbyOptions(Config.Color color, String name) {
+    public LobbyOptions(int color, String name) {
         this.color = color;
         this.name = name;
     }

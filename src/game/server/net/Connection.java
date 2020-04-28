@@ -34,7 +34,7 @@ public class Connection extends Thread {
         try {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-            lobbyOptions = new LobbyOptions(null, null);
+            lobbyOptions = new LobbyOptions(0, null);
         } catch (IOException e) {
             e.printStackTrace();
         }

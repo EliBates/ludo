@@ -2,6 +2,7 @@ package game.server;
 
 import game.server.net.Connection;
 import game.server.net.Listener;
+import game.server.service.ChatManager;
 import game.server.service.GameManager;
 import game.server.service.LobbyManager;
 import game.util.Config;
@@ -20,10 +21,16 @@ public class GameServer extends Thread implements Runnable{
     //The game manager instance
     private GameManager gameManager;
 
+    public LobbyManager getLobbyManager() {
+        return lobbyManager;
+    }
+
     private LobbyManager lobbyManager;
 
+    private ChatManager chatManager;
+
     //the list of client connections
-    private Vector<Connection> playerClients = new Vector<>();
+    public Vector<Connection> playerClients = new Vector<>();
 
     //set to false to stop accepting new connections (player limit reached)
     public boolean acceptingNewConnections = true;
@@ -71,16 +78,33 @@ public class GameServer extends Thread implements Runnable{
 
     /**
      * Handles incoming packets to the server
-     * @param c connection sending packet
+     *
+     * @param c      connection sending packet
      * @param packet packet data as string
      */
     public void processPacket(Connection c, String packet) { //TODO handle packets by connection instance for multiplayer
         //System.out.println(packet);
         final String[] args = packet.split(":");
 
+        if (packet.startsWith("chatmessage") && gameType == Config.GameType.NETWORK) {
+            chatManager.receiveMessage(c, args[1]);
+        }
+
         if (packet.startsWith("name")) {
-            if (lobbyManager != null && gameType == Config.GameType.NETWORK) {
+            if (lobbyManager != null && gameType == Config.GameType.NETWORK && lobbyManager.inLobby) {
                 lobbyManager.setName(c, args[1]);
+            }
+        }
+
+        if (packet.startsWith("color")) {
+            if (lobbyManager != null && gameType == Config.GameType.NETWORK && lobbyManager.inLobby) {
+                lobbyManager.setColor(c, Integer.parseInt(args[1]));
+            }
+        }
+
+        if (packet.startsWith("enable") && c.isHost()) {
+            if (lobbyManager != null && gameType == Config.GameType.NETWORK) {
+                lobbyManager.enableSlot(Integer.parseInt(args[1]));
             }
         }
 
@@ -94,6 +118,7 @@ public class GameServer extends Thread implements Runnable{
             System.out.println("The server is now running in NETWORK MODE.");
             gameType = Config.GameType.NETWORK;
             lobbyManager = new LobbyManager(this);
+            chatManager = new ChatManager(this);
             if (lobbyManager.requestSlot(c) == -1) {
                 removeConnection(c); // the lobby is full
             }
@@ -106,7 +131,7 @@ public class GameServer extends Thread implements Runnable{
         }
 
         if (packet.startsWith("setup") && needsSetup && c.isHost()) {
-            setupString = packet.substring(packet.indexOf(':') +1);
+            setupString = packet.substring(packet.indexOf(':') + 1);
             gameManager.buildPlayers(setupString);
             gameManager.start();
             lobbyManager.inLobby = false;
@@ -114,27 +139,27 @@ public class GameServer extends Thread implements Runnable{
             if (gameType.equals(Config.GameType.NETWORK)) {
                 sendMessage("startmulti"); // tells all the clients we are starting the multiplayer game
             }
+        }
 
-        } else {
-            if (packet.startsWith("click")) {
-                int tileId = Integer.parseInt(args[1]);
-                System.out.println("TileId: " + tileId + " was clicked by client " + c.getIndex());
-                if (!gameManager.getPlayerManager().computerMoving && gameManager.getPlayerManager().getActivePlayer().getId() == c.getIndex()) {// make sure correct client is playing
-                    gameManager.getPlayerManager().handlePlayerMoveIntent(gameManager.getPlayerManager().getActivePlayer(), tileId);
-                    System.out.println("Attempting to move piece (Client:"+c.getIndex()+") " + gameManager.getPlayerManager().getActivePlayer().getId() + " is active player!");
-                }
-            }
-            if (packet.startsWith("dice")) {
-                if (!gameManager.getPlayerManager().computerMoving && gameManager.getPlayerManager().getActivePlayer().getId() == c.getIndex()) // the computer AI is rolling not the player
-                    gameManager.getPlayerManager().conductRoll();
-            }
-            if (packet.startsWith("shutdown")) {
-                shutdown();
-            }
-            if (packet.startsWith("restart")) {
-                restart();
+        if (packet.startsWith("click")) {
+            int tileId = Integer.parseInt(args[1]);
+            System.out.println("TileId: " + tileId + " was clicked by client " + c.getIndex());
+            if (!gameManager.getPlayerManager().computerMoving && gameManager.getPlayerManager().getActivePlayer().getId() == c.getIndex()) {// make sure correct client is playing
+                gameManager.getPlayerManager().handlePlayerMoveIntent(gameManager.getPlayerManager().getActivePlayer(), tileId);
+                System.out.println("Attempting to move piece (Client:" + c.getIndex() + ") " + gameManager.getPlayerManager().getActivePlayer().getId() + " is active player!");
             }
         }
+        if (packet.startsWith("dice")) {
+            if (!gameManager.getPlayerManager().computerMoving && gameManager.getPlayerManager().getActivePlayer().getId() == c.getIndex()) // the computer AI is rolling not the player
+                gameManager.getPlayerManager().conductRoll();
+        }
+        if (packet.startsWith("shutdown")) {
+            shutdown();
+        }
+        if (packet.startsWith("restart")) {
+            restart();
+        }
+
     }
 
     /**
@@ -143,14 +168,6 @@ public class GameServer extends Thread implements Runnable{
      */
     public void sendMessage(String message) {
         playerClients.forEach(client -> client.sendMessage(message));
-    }
-
-    public void sendLobbyOptions() {
-        for (Connection c : playerClients) {
-            for (Connection c2 : playerClients) {
-                c.sendMessage("lobbyupdate"+":"+c2.getIndex()+":"+c2.getLobbyOptions());
-            }
-        }
     }
 
 

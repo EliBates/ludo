@@ -39,6 +39,10 @@ public class Config {
         public int getColorOption() {
             return this.color;
         }
+
+        public String getName() {
+            return this.name();
+        }
     }
 
 

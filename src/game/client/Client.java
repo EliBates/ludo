@@ -5,7 +5,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 
-import java.awt.*;
 import java.net.URISyntaxException;
 
 /**
@@ -55,6 +54,7 @@ public class Client extends Thread implements Runnable {
      * @param update The update pushed to the client in the form of command. Holds extra data also describing the command function
      */
     public void receiveUpdate(String update) {
+        String[] args = update.split(":");
         //System.out.println("Client Received: " + update);
         if (update.startsWith("pieceupdate")) { // uppdates gamepiece locations for drawing
             receiveGamePieceUpdate(update.substring(update.indexOf("pieceupdate") + 11));
@@ -91,7 +91,17 @@ public class Client extends Thread implements Runnable {
             }
         }
 
-
+        if (update.startsWith("chatmessage")) {
+            if (args[1].equalsIgnoreCase("true")) {
+                if (mc != null) {
+                    mc.receiveMessage(args[2]);
+                }
+            } else {
+                if (gc != null) {
+                    //update game chat area args[1]
+                }
+            }
+        }
 
         if (update.startsWith("optionsupdate")) {
             if(mc != null) {

@@ -4,12 +4,15 @@ import game.Ludo;
 import game.server.GameServer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
@@ -87,6 +90,19 @@ public class MenuController {
     @FXML
     Circle player2Online, player3Online, player4Online;
 
+    public void receiveMessage(String message) {
+        if (lobbyTextArea.getText().length() == 0) {
+            lobbyTextArea.setText(message);
+        } else {
+            lobbyTextArea.setText( message + "\n" + lobbyTextArea.getText());
+        }
+    }
+
+    public void sendMessage(String message) {
+        Ludo.client.getConnection().sendUpdate("chatmessage:" + message);
+    }
+
+
     public void setPlayerLobbyData(String data) {
         String[] dataSplit = data.split(":");
         int playerId = Integer.parseInt(dataSplit[0]);
@@ -135,6 +151,12 @@ public class MenuController {
 
     @FXML
     private void initialize() {
+        lobbyTextField.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)  {
+                sendMessage(lobbyTextField.getText());
+                lobbyTextField.setText("");
+            }
+        });
         player2Type.setValue("Ludo Bot");
         player2Type.setItems(playerTypeOptions);
         player3Type.setValue("Ludo Bot");

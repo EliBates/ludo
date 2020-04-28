@@ -59,6 +59,14 @@ public class LobbyManager {
             gameServer.removeConnection(c);
         setPlayerSlot(null, slot);
         players[slot].setEnabled(false);
+        gameServer.acceptingNewConnections = hasAvailableSlots();
+    }
+
+    public void enableSlot(int slot) {
+        if (slot > 0 && slot < 5) {
+            players[slot].setEnabled(true);
+        }
+        gameServer.acceptingNewConnections = hasAvailableSlots();
     }
 
     public LobbyManager(GameServer gameServer) {
@@ -68,45 +76,37 @@ public class LobbyManager {
         }
     }
 
+    /**
+     * A player setting their own name
+     * @param c the client setting name
+     * @param name the name to be set
+     */
     public void setName(Connection c, String name) {
         c.getLobbyOptions().setName(name);
-        gameServer.sendLobbyOptions();
-    }
-
-    public void changeOptions(Connection c, int id, String data) {
-        if (c.getIndex() != id && !c.isHost()) // a player other than the host attempted to change another players settings
-            return;
-        Connection playerToModify = gameServer.getConnection(id);
-        if (playerToModify != null) {
-            playerToModify.getLobbyOptions().modifyOptions(data);
-            updateOptions(playerToModify);
-        }
-    }
-
-    public void updateOptions(Connection updated) {
-        gameServer.sendMessage("optionsupdate:"+updated.getIndex()+":"+updated.getLobbyOptions().getOptions());
-    }
-
-    public void changePlayerType(Connection c, int id, int type) {
-        if (c.isHost()) {
-            gameServer.sendMessage("changetype:" + id + ":" + type);
-        }
+        sendLobbyOptions();
     }
 
     /**
-     * Disable a user
-     * @param c
-     * @param id
+     * A player setting their own color
+     * @param c the client setting color
+     * @param color the color code to set
      */
-    public void enable(Connection c, int id) {
-        if (c.isHost()) {
-            gameServer.sendMessage("enable:" + id);
-        }
+    public void setColor(Connection c, int color) {
+        c.getLobbyOptions().setColor(color);
+        sendLobbyOptions();
     }
 
     public void startGame(Connection c) {
         if (c.isHost()) {
             gameServer.sendMessage("startgame");
+        }
+    }
+
+    public void sendLobbyOptions() {
+        for (Connection c : gameServer.playerClients) {
+            for (Connection c2 : gameServer.playerClients) {
+                c.sendMessage("lobbyupdate"+":"+c2.getIndex()+":"+c2.getLobbyOptions().getOptions());
+            }
         }
     }
 
