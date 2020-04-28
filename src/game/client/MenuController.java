@@ -89,7 +89,7 @@ public class MenuController {
 
     @FXML
     public void changeColorPlayer1() {
-        Ludo.client.getConnection().sendUpdate("color:" + 0 + ":" + playerColorOptions.indexOf(player2Color.getValue()));
+        Ludo.client.getConnection().sendUpdate("color:" + 0 + ":" + playerColorOptions.indexOf(player1Color.getValue()));
     }
 
     @FXML
@@ -98,11 +98,11 @@ public class MenuController {
     }
     @FXML
     public void changeColorPlayer3() {
-        Ludo.client.getConnection().sendUpdate("color:" + 2 + ":" + playerColorOptions.indexOf(player2Color.getValue()));
+        Ludo.client.getConnection().sendUpdate("color:" + 2 + ":" + playerColorOptions.indexOf(player3Color.getValue()));
     }
     @FXML
     public void changeColorPlayer4() {
-        Ludo.client.getConnection().sendUpdate("color:" + 3 + ":" + playerColorOptions.indexOf(player2Color.getValue()));
+        Ludo.client.getConnection().sendUpdate("color:" + 3 + ":" + playerColorOptions.indexOf(player4Color.getValue()));
     }
 
     @FXML

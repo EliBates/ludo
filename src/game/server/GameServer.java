@@ -134,7 +134,8 @@ public class GameServer extends Thread implements Runnable{
             setupString = packet.substring(packet.indexOf(':') + 1);
             gameManager.buildPlayers(setupString);
             gameManager.start();
-            lobbyManager.inLobby = false;
+            if (lobbyManager != null)
+                lobbyManager.inLobby = false;
             acceptingNewConnections = false;
             if (gameType.equals(Config.GameType.NETWORK)) {
                 sendMessage("startmulti"); // tells all the clients we are starting the multiplayer game
