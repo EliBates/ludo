@@ -9,8 +9,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
@@ -33,7 +36,10 @@ public class GameController {
     Canvas canvas;
 
     @FXML
-    VBox chatbox;
+    TextArea gameTextArea;
+
+    @FXML
+    TextField gameTextField;
 
     @FXML
     Circle redCircle1, redCircle2, redCircle3, redCircle4, yellowCircle1, yellowCircle2, yellowCircle3, yellowCircle4, greenCircle1, greenCircle2, greenCircle3, greenCircle4, blueCircle1, blueCircle2, blueCircle3, blueCircle4;
@@ -85,6 +91,12 @@ public class GameController {
             int y = (int)(event.getY() / 40);
             Ludo.client.getConnection().sendUpdate("click:"+getTileId(new Position(x, y)));
         });
+        gameTextField.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)  {
+                sendMessage(gameTextField.getText());
+                gameTextField.setText("");
+            }
+        });
     }
 
     public int getTileId(Position position) {
@@ -113,6 +125,18 @@ public class GameController {
             setPlayerName(names[i], i);
             //names.get(i).setText(names[i]);
         }
+    }
+
+    public void receiveMessage(String message) {
+        if (gameTextArea.getText().length() == 0) {
+            gameTextArea.setText(message);
+        } else {
+            gameTextArea.setText( message + "\n" + gameTextArea.getText());
+        }
+    }
+
+    public void sendMessage(String message) {
+        Ludo.client.getConnection().sendUpdate("chatmessage:" + message);
     }
 
     public void setPlayerName(String name, int id){

@@ -98,7 +98,7 @@ public class Client extends Thread implements Runnable {
                 }
             } else {
                 if (gc != null) {
-                    //update game chat area args[1]
+                    gc.receiveMessage(args[2]);
                 }
             }
         }
