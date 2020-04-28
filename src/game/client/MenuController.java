@@ -45,16 +45,19 @@ public class MenuController {
     private TextArea lobbyTextArea;
 
     @FXML
-    private CheckBox disablePlayer3, disablePlayer4;
+    private CheckBox disablePlayer2, disablePlayer3, disablePlayer4;
 
     @FXML
     private TextField player1Name, player2Name, player3Name, player4Name, lobbyTextField;
 
     @FXML
+    private Button startGame;
+
+    @FXML
     private static final ObservableList<String> playerTypeOptions =
             FXCollections.observableArrayList(
-                    "Human",
-                    "Ludo Bot"
+                    "Open",
+                    "AI"
             );
 
     @FXML
@@ -83,6 +86,21 @@ public class MenuController {
 
     @FXML
     Circle player2Online, player3Online, player4Online;
+
+    @FXML
+    public void changePlayer2() {
+
+    }
+
+    @FXML
+    public void changePlayer3() {
+
+    }
+
+    @FXML
+    public void changePlayer4() {
+
+    }
 
     public void receiveMessage(String message) {
         if (lobbyTextArea.getText().length() == 0) {
@@ -113,16 +131,19 @@ public class MenuController {
                 player2Color.setValue(setPlayerColor(playerColor));
                 player2Name.setText(dataSplit[3]);
                 player2Online.setFill(Color.GREEN);
+                player2Type.setValue("Human");
                 break;
             case 2:
                 player3Color.setValue(setPlayerColor(playerColor));
                 player3Name.setText(dataSplit[3]);
-                player4Online.setFill(Color.GREEN);
+                player3Online.setFill(Color.GREEN);
+                player3Type.setValue("Human");
                 break;
             case 3:
                 player4Color.setValue(setPlayerColor(playerColor));
                 player4Name.setText(dataSplit[3]);
                 player4Online.setFill(Color.GREEN);
+                player4Type.setValue("Human");
                 break;
         }
     }
@@ -187,6 +208,19 @@ public class MenuController {
     }
 
     @FXML
+    private void setDisablePlayer2() {
+        if (disablePlayer2.isSelected()) {
+            player2Name.setDisable(true);
+            player2Type.setDisable(true);
+            player2Color.setDisable(true);
+        } else {
+            player2Name.setDisable(false);
+            player2Type.setDisable(false);
+            player2Color.setDisable(false);
+        }
+    }
+
+    @FXML
     private void setDisablePlayer3() {
         if (disablePlayer3.isSelected()) {
             player3Name.setDisable(true);
@@ -220,11 +254,11 @@ public class MenuController {
                 lobbyTextField.setText("");
             }
         });
-        player2Type.setValue("Ludo Bot");
+        player2Type.setValue("Open");
         player2Type.setItems(playerTypeOptions);
-        player3Type.setValue("Ludo Bot");
+        player3Type.setValue("Open");
         player3Type.setItems(playerTypeOptions);
-        player4Type.setValue("Ludo Bot");
+        player4Type.setValue("Open");
         player4Type.setItems(playerTypeOptions);
         player1Color.setValue("Red");
         player2Color.setValue("Green");
@@ -251,20 +285,21 @@ public class MenuController {
             Ludo.gameServer = new GameServer();
             connect();
             Ludo.client.getConnection().sendUpdate("network");
+            setPlayerName();
         }
     }
 
-
-    // Need something to receive update from Client to set the options upon joining
-
     @FXML
     private void joinGame() {
-        //Ludo.client = new Client(Ludo.graphicsContext);
         Ludo.client.setMenuController(this);
         connect();
         if (Ludo.client.isAlive()) {
 
             mainMenu.setVisible(false);
+            startGame.setVisible(false);
+            disablePlayer2.setVisible(false);
+            disablePlayer3.setVisible(false);
+            disablePlayer4.setVisible(false);
             multiplayerLobby.setVisible(true);
             setPlayerName();
         }
@@ -320,9 +355,7 @@ public class MenuController {
         dialog.setContentText("Please enter your name: ");
 
         Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()) {
-            Ludo.client.getConnection().sendUpdate("name:" + result.get());
-        }
+        result.ifPresent(s -> Ludo.client.getConnection().sendUpdate("name:" + s));
     }
 
     @FXML

@@ -13,7 +13,7 @@ public class ChatManager {
 
     public void relayMessage(Connection c, String message) {
         gameServer.sendMessage("chatmessage:"
-                + gameServer.getLobbyManager().inLobby + ":" + c.getIndex() + "-> "
+                + gameServer.getLobbyManager().inLobby + ":" + c.getLobbyOptions().getName() + "-> "
                 + message);
     }
 
